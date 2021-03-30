@@ -45,6 +45,7 @@ static const char* kFeedDictErrorMsg =
 
 TF_Session* TF_NewSessionRef(TF_Graph* graph, const TF_SessionOptions* opts,
                              TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************************** TF_NewSessionRef NewSession";
   TF_Session* tf_session = TF_NewSession(graph, opts, status);
   if (tf_session == nullptr) {
     return nullptr;

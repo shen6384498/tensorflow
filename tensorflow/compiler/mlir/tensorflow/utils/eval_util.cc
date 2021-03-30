@@ -78,6 +78,7 @@ void ForceUseLocalhostDevice(NodeDef* node_def) {
 mlir::LogicalResult EvaluateOperation(
     mlir::Operation* inst, llvm::ArrayRef<mlir::ElementsAttr> operands,
     TFE_Context* context, llvm::SmallVectorImpl<mlir::Attribute>* results) {
+    LOG(ERROR) << "hello boy ********************************** mlir EvaluateOperation";
   if (!context) {
     VLOG(1) << "Can't evaluate with null context.";
     return mlir::failure();

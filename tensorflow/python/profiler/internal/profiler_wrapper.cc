@@ -105,6 +105,7 @@ PYBIND11_MODULE(_pywrap_profiler, m) {
 
   m.def("start_server", [](int port) {
     auto profiler_server = absl::make_unique<tensorflow::ProfilerServer>();
+  LOG(ERROR) << "hello boy ********************************** start_server"; 
     profiler_server->StartProfilerServer(port);
     // Intentionally release profiler server. Should transfer ownership to
     // caller instead.
@@ -114,6 +115,7 @@ PYBIND11_MODULE(_pywrap_profiler, m) {
   m.def("trace", [](const char* service_addr, const char* logdir,
                     const char* worker_list, bool include_dataset_ops,
                     int duration_ms, int num_tracing_attempts) {
+  LOG(ERROR) << "hello boy ********************************** trace"; 
     tensorflow::Status status =
         tensorflow::profiler::ValidateHostPortPair(service_addr);
     tensorflow::MaybeRaiseRegisteredFromStatus(status);
@@ -125,6 +127,7 @@ PYBIND11_MODULE(_pywrap_profiler, m) {
 
   m.def("monitor", [](const char* service_addr, int duration_ms,
                       int monitoring_level, bool display_timestamp) {
+  LOG(ERROR) << "hello boy ********************************** monitor"; 
     tensorflow::Status status =
         tensorflow::profiler::ValidateHostPortPair(service_addr);
     tensorflow::MaybeRaiseRegisteredFromStatus(status);

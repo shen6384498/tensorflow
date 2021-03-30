@@ -163,6 +163,7 @@ class DirectSessionFactory : public SessionFactory {
 
   Status NewSession(const SessionOptions& options,
                     Session** out_session) override {
+    LOG(ERROR) << "hello boy ********************************** DirectSessionFactory NewSession";
     const auto& experimental_config = options.config.experimental();
     if (experimental_config.has_session_metadata()) {
       if (experimental_config.session_metadata().version() < 0) {
@@ -290,6 +291,7 @@ static RunHandlerPool* GetOrCreateRunHandlerPool(
 
 bool DirectSession::ShouldUseRunHandlerPool(
     const RunOptions& run_options) const {
+  LOG(ERROR) << "hello boy ********************************** DirectSession ShouldUseRunHandlerPool";
   if (options_.config.use_per_session_threads()) return false;
   if (options_.config.session_inter_op_thread_pool_size() > 0 &&
       run_options.inter_op_thread_pool() > 0)
@@ -312,6 +314,7 @@ DirectSession::DirectSession(const SessionOptions& options,
       factory_(factory),
       cancellation_manager_(new CancellationManager()),
       operation_timeout_in_ms_(options_.config.operation_timeout_in_ms()) {
+  LOG(ERROR) << "hello boy ********************************** DirectSession DirectSession";
   const int thread_pool_size =
       options_.config.session_inter_op_thread_pool_size();
   if (thread_pool_size > 0) {
@@ -374,6 +377,7 @@ DirectSession::DirectSession(const SessionOptions& options,
 }
 
 DirectSession::~DirectSession() {
+  LOG(ERROR) << "hello boy ********************************** DirectSession ~DirectSession";
   if (!closed_) Close().IgnoreError();
   for (auto& it : partial_runs_) {
     it.second.reset(nullptr);
@@ -396,10 +400,12 @@ DirectSession::~DirectSession() {
 }
 
 Status DirectSession::Create(const GraphDef& graph) {
+  LOG(ERROR) << "hello boy ********************************** DirectSession Create";
   return Create(GraphDef(graph));
 }
 
 Status DirectSession::Create(GraphDef&& graph) {
+  LOG(ERROR) << "hello boy ********************************** DirectSession Create";
   TF_RETURN_IF_ERROR(init_error_);
   if (graph.node_size() > 0) {
     mutex_lock l(graph_state_lock_);
@@ -413,16 +419,19 @@ Status DirectSession::Create(GraphDef&& graph) {
 }
 
 Status DirectSession::Extend(const GraphDef& graph) {
+  LOG(ERROR) << "hello boy ********************************** DirectSession Extend";
   return Extend(GraphDef(graph));
 }
 
 Status DirectSession::Extend(GraphDef&& graph) {
+  LOG(ERROR) << "hello boy ********************************** DirectSession Extend";
   TF_RETURN_IF_ERROR(CheckNotClosed());
   mutex_lock l(graph_state_lock_);
   return ExtendLocked(std::move(graph));
 }
 
 Status DirectSession::ExtendLocked(GraphDef graph) {
+  LOG(ERROR) << "hello boy ********************************** DirectSession ExtendLocked";
   if (finalized_) {
     return errors::FailedPrecondition("Session has been finalized.");
   }
@@ -455,6 +464,7 @@ Status DirectSession::Run(const NamedTensorList& inputs,
                           const std::vector<string>& output_names,
                           const std::vector<string>& target_nodes,
                           std::vector<Tensor>* outputs) {
+  LOG(ERROR) << "hello boy ********************************** DirectSession Run";
   RunMetadata run_metadata;
   return Run(RunOptions(), inputs, output_names, target_nodes, outputs,
              &run_metadata);
@@ -464,6 +474,7 @@ Status DirectSession::CreateDebuggerState(
     const CallableOptions& callable_options, int64 global_step,
     int64 session_run_index, int64 executor_step_index,
     std::unique_ptr<DebuggerStateInterface>* debugger_state) {
+  LOG(ERROR) << "hello boy ********************************** DirectSession CreateDebuggerState";
   TF_RETURN_IF_ERROR(DebuggerStateRegistry::CreateState(
       callable_options.run_options().debug_options(), debugger_state));
   std::vector<string> input_names(callable_options.feed().begin(),
@@ -481,6 +492,7 @@ Status DirectSession::CreateDebuggerState(
 
 Status DirectSession::DecorateAndPublishGraphForDebug(
     const DebugOptions& debug_options, Graph* graph, Device* device) {
+  LOG(ERROR) << "hello boy ********************************** DirectSession DecorateAndPublishGraphForDebug";
   std::unique_ptr<DebugGraphDecoratorInterface> decorator;
   TF_RETURN_IF_ERROR(
       DebugGraphDecoratorRegistry::CreateDecorator(debug_options, &decorator));
@@ -495,6 +507,7 @@ Status DirectSession::RunInternal(
     CallFrameInterface* call_frame, ExecutorsAndKeys* executors_and_keys,
     RunMetadata* run_metadata,
     const thread::ThreadPoolOptions& threadpool_options) {
+  LOG(ERROR) << "hello boy ********************************** DirectSession RunInternal";
   const uint64 start_time_usecs = options_.env->NowMicros();
   const int64 executor_step_count = executors_and_keys->step_count.fetch_add(1);
   RunState run_state(step_id, &devices_);
@@ -809,6 +822,7 @@ Status DirectSession::Run(const RunOptions& run_options,
                           const std::vector<string>& target_nodes,
                           std::vector<Tensor>* outputs,
                           RunMetadata* run_metadata) {
+  LOG(ERROR) << "hello boy ********************************** DirectSession Run";
   return Run(run_options, inputs, output_names, target_nodes, outputs,
              run_metadata, thread::ThreadPoolOptions());
 }
@@ -820,6 +834,16 @@ Status DirectSession::Run(const RunOptions& run_options,
                           std::vector<Tensor>* outputs,
                           RunMetadata* run_metadata,
                           const thread::ThreadPoolOptions& threadpool_options) {
+  LOG(ERROR) << "hello boy ********************************** DirectSession Run start";
+  for(const auto& i :inputs){
+  LOG(ERROR) << "hello boy ********************************** DirectSession Run inputs:"<< i.first;
+  }
+  for(const auto& i :output_names){
+  LOG(ERROR) << "hello boy ********************************** DirectSession Run inputs:"<< i;
+  }
+  for(const auto& i :target_nodes){
+  LOG(ERROR) << "hello boy ********************************** DirectSession Run inputs:"<< i;
+  }
   TF_RETURN_IF_ERROR(CheckNotClosed());
   TF_RETURN_IF_ERROR(CheckGraphCreated("Run()"));
   direct_session_runs->GetCell()->IncrementBy(1);
@@ -921,6 +945,7 @@ Status DirectSession::Run(const RunOptions& run_options,
     metrics::RecordGraphOutputTensors(output_size);
   }
 
+  LOG(ERROR) << "hello boy ********************************** DirectSession Run end";
   return Status::OK();
 }
 
@@ -928,6 +953,7 @@ Status DirectSession::PRunSetup(const std::vector<string>& input_names,
                                 const std::vector<string>& output_names,
                                 const std::vector<string>& target_nodes,
                                 string* handle) {
+  LOG(ERROR) << "hello boy ********************************** DirectSession PRunSetup";
   TF_RETURN_IF_ERROR(CheckNotClosed());
   TF_RETURN_IF_ERROR(CheckGraphCreated("PRunSetup()"));
 
@@ -1006,6 +1032,7 @@ Status DirectSession::PRunSetup(const std::vector<string>& input_names,
 Status DirectSession::PRun(const string& handle, const NamedTensorList& inputs,
                            const std::vector<string>& output_names,
                            std::vector<Tensor>* outputs) {
+  LOG(ERROR) << "hello boy ********************************** DirectSession PRun";
   TF_RETURN_IF_ERROR(CheckNotClosed());
   std::vector<string> parts = str_util::Split(handle, ';');
   const string& key = parts[0];
@@ -1106,6 +1133,7 @@ Status DirectSession::PRun(const string& handle, const NamedTensorList& inputs,
 
 Status DirectSession::ResourceHandleToInputTensor(const Tensor& resource_tensor,
                                                   Tensor* retrieved_tensor) {
+  LOG(ERROR) << "hello boy ********************************** DirectSession ResourceHandleToInputTensor";
   if (resource_tensor.dtype() != DT_RESOURCE) {
     return errors::InvalidArgument(strings::StrCat(
         "ResourceHandleToInputTensor() received non-DT_RESOURCE Tensor: ",
@@ -1133,6 +1161,7 @@ Status DirectSession::ResourceHandleToInputTensor(const Tensor& resource_tensor,
 Status DirectSession::SendPRunInputs(const NamedTensorList& inputs,
                                      const ExecutorsAndKeys* executors_and_keys,
                                      IntraProcessRendezvous* rendez) {
+  LOG(ERROR) << "hello boy ********************************** DirectSession SendPRunInputs";
   Status s;
   Rendezvous::ParsedKey parsed;
   // Insert the input tensors into the local rendezvous by their
@@ -1173,6 +1202,7 @@ Status DirectSession::RecvPRunOutputs(
     const std::vector<string>& output_names,
     const ExecutorsAndKeys* executors_and_keys, PartialRunState* run_state,
     std::vector<Tensor>* outputs) {
+  LOG(ERROR) << "hello boy ********************************** DirectSession RecvPRunOutputs";
   Status s;
   if (!output_names.empty()) {
     outputs->resize(output_names.size());
@@ -1218,6 +1248,7 @@ Status DirectSession::CheckFetch(const NamedTensorList& feeds,
                                  const std::vector<string>& fetches,
                                  const ExecutorsAndKeys* executors_and_keys,
                                  const PartialRunState* run_state) {
+  LOG(ERROR) << "hello boy ********************************** DirectSession CheckFetch";
   const Graph* graph = executors_and_keys->graph.get();
   const NameNodeMap* name_to_node = &executors_and_keys->name_to_node;
 
@@ -1280,6 +1311,7 @@ Status DirectSession::CreateExecutors(
     std::unique_ptr<ExecutorsAndKeys>* out_executors_and_keys,
     std::unique_ptr<FunctionInfo>* out_func_info,
     RunStateArgs* run_state_args) {
+  LOG(ERROR) << "hello boy ********************************** DirectSession CreateExecutors";
   BuildGraphOptions options;
   options.callable_options = callable_options;
   options.use_function_convention = !run_state_args->is_partial_run;
@@ -1365,9 +1397,11 @@ Status DirectSession::CreateExecutors(
           // is tied to a particular subgraph. Even if the function itself
           // is stateful, the `CallOp` that invokes it is not.
           if (!OpSegment::ShouldOwnKernel(lib, props->node_def.op())) {
+    LOG(ERROR) << "hello boy ********************************** Call CreateKernel 2 ";
             return lib->CreateKernel(props, kernel);
           }
           auto create_fn = [lib, &props](OpKernel** kernel) {
+    LOG(ERROR) << "hello boy ********************************** Call CreateKernel 3 ";
             return lib->CreateKernel(props, kernel);
           };
           // Kernels created for subgraph nodes need to be cached.  On
@@ -1410,6 +1444,7 @@ Status DirectSession::CreateExecutors(
         options_.config.graph_options().build_cost_model() > 0) {
       item->graph = std::move(partition_graph);
     }
+    LOG(ERROR) << "hello boy ********************************** handle one graph ojbk ";
   }
 
   // Cache the mapping from input/output names to graph elements to
@@ -1454,6 +1489,7 @@ Status DirectSession::GetOrCreateExecutors(
     gtl::ArraySlice<string> inputs, gtl::ArraySlice<string> outputs,
     gtl::ArraySlice<string> target_nodes, ExecutorsAndKeys** executors_and_keys,
     RunStateArgs* run_state_args) {
+  LOG(ERROR) << "hello boy ********************************** DirectSession GetOrCreateExecutors";
   int64 handle_name_counter_value = -1;
   if (LogMemory::IsEnabled() || run_state_args->is_partial_run) {
     handle_name_counter_value = handle_name_counter_.fetch_add(1);
@@ -1572,16 +1608,18 @@ Status DirectSession::CreateGraphs(
     std::unique_ptr<FunctionLibraryDefinition>* flib_def,
     RunStateArgs* run_state_args, DataTypeVector* input_types,
     DataTypeVector* output_types, int64* collective_graph_key) {
+  LOG(ERROR) << "hello boy ********************************** DirectSession CreateGraphs";
   mutex_lock l(graph_state_lock_);
   if (finalized_) {
     return errors::FailedPrecondition("Session has been finalized.");
   }
-
+  LOG(ERROR) << "hello boy ********************************** DirectSession CreateGraphs step1";
   std::unique_ptr<ClientGraph> client_graph;
 
   std::unique_ptr<GraphExecutionState> temp_exec_state_holder;
   GraphExecutionState* execution_state = nullptr;
   if (options_.config.graph_options().place_pruned_graph()) {
+  LOG(ERROR) << "hello boy ********************************** DirectSession CreateGraphs place_pruned_graph true";    
     // Because we are placing pruned graphs, we need to create a
     // new GraphExecutionState for every new unseen graph,
     // and then place it.
@@ -1594,11 +1632,15 @@ Status DirectSession::CreateGraphs(
         *execution_state_, prune_options, subgraph_options,
         &temp_exec_state_holder, &client_graph));
     execution_state = temp_exec_state_holder.get();
-  } else {
+  } else { 
+    LOG(ERROR) << "hello boy ********************************** DirectSession CreateGraphs place_pruned_graph false";    
+  
     execution_state = execution_state_.get();
     TF_RETURN_IF_ERROR(
         execution_state->BuildGraph(subgraph_options, &client_graph));
   }
+  
+  LOG(ERROR) << "hello boy ********************************** DirectSession CreateGraphs step2";
   *collective_graph_key = client_graph->collective_graph_key;
 
   if (subgraph_options.callable_options.feed_size() !=
@@ -1609,6 +1651,8 @@ Status DirectSession::CreateGraphs(
         " versus number of pruned feed endpoints = ",
         client_graph->feed_types.size());
   }
+  
+  LOG(ERROR) << "hello boy ********************************** DirectSession CreateGraphs step3";
   if (subgraph_options.callable_options.fetch_size() !=
       client_graph->fetch_types.size()) {
     return errors::Internal(
@@ -1618,6 +1662,7 @@ Status DirectSession::CreateGraphs(
         client_graph->fetch_types.size());
   }
 
+  LOG(ERROR) << "hello boy ********************************** DirectSession CreateGraphs step4";
   auto current_stateful_placements = execution_state->GetStatefulPlacements();
   // Update our current state based on the execution_state's
   // placements.  If there are any mismatches for a node,
@@ -1635,7 +1680,7 @@ Status DirectSession::CreateGraphs(
           node_name, " to ", iter->second, " does not match ", placement);
     }
   }
-
+  LOG(ERROR) << "hello boy ********************************** DirectSession CreateGraphs step5";
   stateful_placements_ = execution_state->GetStatefulPlacements();
 
   // Remember the graph in run state if this is a partial run.
@@ -1644,31 +1689,40 @@ Status DirectSession::CreateGraphs(
     CopyGraph(*execution_state->full_graph(), run_state_args->graph.get());
   }
 
+  LOG(ERROR) << "hello boy ********************************** DirectSession CreateGraphs step6";
   // Partition the graph across devices.
   PartitionOptions popts;
   popts.node_to_loc = [](const Node* node) {
     return node->assigned_device_name();
   };
+  
+  LOG(ERROR) << "hello boy ********************************** DirectSession CreateGraphs step7";
   popts.new_name = [this](const string& prefix) {
     return strings::StrCat(prefix, "/_", edge_name_counter_.fetch_add(1));
   };
+  
+  LOG(ERROR) << "hello boy ********************************** DirectSession CreateGraphs step8";
   popts.get_incarnation = [](const string& name) {
     // The direct session does not have changing incarnation numbers.
     // Just return '1'.
     return 1;
   };
+
+  LOG(ERROR) << "hello boy ********************************** DirectSession CreateGraphs step9";
   popts.flib_def = &client_graph->graph.flib_def();
   popts.control_flow_added = false;
 
   std::unordered_map<string, GraphDef> partitions;
   TF_RETURN_IF_ERROR(Partition(popts, &client_graph->graph, &partitions));
 
+  LOG(ERROR) << "hello boy ********************************** DirectSession CreateGraphs step10";
   std::vector<string> device_names;
   for (auto device : devices_) {
     // Extract the LocalName from the device.
     device_names.push_back(DeviceNameUtils::LocalName(device->name()));
   }
 
+  LOG(ERROR) << "hello boy ********************************** DirectSession CreateGraphs step11";
   // Check for valid partitions.
   for (const auto& partition : partitions) {
     const string local_partition_name =
@@ -1683,6 +1737,7 @@ Status DirectSession::CreateGraphs(
     }
   }
 
+  LOG(ERROR) << "hello boy ********************************** DirectSession CreateGraphs step12";
   for (auto& partition : partitions) {
     std::unique_ptr<Graph> device_graph(
         new Graph(client_graph->flib_def.get()));
@@ -1695,6 +1750,7 @@ Status DirectSession::CreateGraphs(
     outputs->emplace(partition.first, std::move(device_graph));
   }
 
+  LOG(ERROR) << "hello boy ********************************** DirectSession CreateGraphs step13";
   GraphOptimizationPassOptions optimization_options;
   optimization_options.session_options = &options_;
   optimization_options.flib_def = client_graph->flib_def.get();
@@ -1702,6 +1758,7 @@ Status DirectSession::CreateGraphs(
   TF_RETURN_IF_ERROR(OptimizationPassRegistry::Global()->RunGrouping(
       OptimizationPassRegistry::POST_PARTITIONING, optimization_options));
 
+  LOG(ERROR) << "hello boy ********************************** DirectSession CreateGraphs step14";
   Status s;
   for (auto& partition : *outputs) {
     const string& partition_name = partition.first;
@@ -1719,6 +1776,7 @@ Status DirectSession::CreateGraphs(
       break;
     }
   }
+  LOG(ERROR) << "hello boy ********************************** DirectSession CreateGraphs step15";
   *flib_def = std::move(client_graph->flib_def);
   std::swap(*input_types, client_graph->feed_types);
   std::swap(*output_types, client_graph->fetch_types);
@@ -1727,6 +1785,7 @@ Status DirectSession::CreateGraphs(
 
 ::tensorflow::Status DirectSession::ListDevices(
     std::vector<DeviceAttributes>* response) {
+  LOG(ERROR) << "hello boy ********************************** DirectSession ListDevices";
   response->clear();
   response->reserve(devices_.size());
   for (Device* d : devices_) {
@@ -1738,11 +1797,13 @@ Status DirectSession::CreateGraphs(
 
 ::tensorflow::Status DirectSession::Reset(
     const std::vector<string>& containers) {
+  LOG(ERROR) << "hello boy ********************************** DirectSession Reset";
   device_mgr_->ClearContainers(containers);
   return ::tensorflow::Status::OK();
 }
 
 ::tensorflow::Status DirectSession::Close() {
+  LOG(ERROR) << "hello boy ********************************** DirectSession Close";
   cancellation_manager_->StartCancel();
   {
     mutex_lock l(closed_lock_);
@@ -1756,6 +1817,7 @@ Status DirectSession::CreateGraphs(
 DirectSession::RunState::RunState(int64 step_id,
                                   const std::vector<Device*>* devices)
     : step_container(step_id, [devices, step_id](const string& name) {
+  LOG(ERROR) << "hello boy ********************************** DirectSession RunState";
         for (auto d : *devices) {
           if (!d->resource_manager()->Cleanup(name).ok()) {
             // Do nothing...
@@ -1770,6 +1832,7 @@ DirectSession::PartialRunState::PartialRunState(
     const std::vector<string>& pending_output_names, int64 step_id,
     const std::vector<Device*>* devices)
     : RunState(step_id, devices) {
+  LOG(ERROR) << "hello boy ********************************** DirectSession PartialRunState";
   // Initially all the feeds and fetches are pending.
   for (auto& name : pending_input_names) {
     pending_inputs[name] = false;
@@ -1780,6 +1843,7 @@ DirectSession::PartialRunState::PartialRunState(
 }
 
 DirectSession::PartialRunState::~PartialRunState() {
+  LOG(ERROR) << "hello boy ********************************** DirectSession ~PartialRunState";
   if (rendez != nullptr) {
     rendez->StartAbort(errors::Cancelled("PRun cancellation"));
     executors_done.WaitForNotification();
@@ -1787,6 +1851,7 @@ DirectSession::PartialRunState::~PartialRunState() {
 }
 
 bool DirectSession::PartialRunState::PendingDone() const {
+  LOG(ERROR) << "hello boy ********************************** DirectSession PendingDone";
   for (const auto& it : pending_inputs) {
     if (!it.second) return false;
   }
@@ -1799,6 +1864,7 @@ bool DirectSession::PartialRunState::PendingDone() const {
 void DirectSession::WaitForNotification(Notification* n, RunState* run_state,
                                         CancellationManager* cm,
                                         int64 timeout_in_ms) {
+  LOG(ERROR) << "hello boy ********************************** DirectSession WaitForNotification";
   const Status status = WaitForNotification(n, timeout_in_ms);
   if (!status.ok()) {
     {
@@ -1815,6 +1881,7 @@ void DirectSession::WaitForNotification(Notification* n, RunState* run_state,
 
 ::tensorflow::Status DirectSession::WaitForNotification(
     Notification* notification, int64 timeout_in_ms) {
+  LOG(ERROR) << "hello boy ********************************** DirectSession WaitForNotification";
   if (timeout_in_ms > 0) {
     const int64 timeout_in_us = timeout_in_ms * 1000;
     const bool notified =
@@ -1831,6 +1898,7 @@ void DirectSession::WaitForNotification(Notification* n, RunState* run_state,
 
 Status DirectSession::MakeCallable(const CallableOptions& callable_options,
                                    CallableHandle* out_handle) {
+  LOG(ERROR) << "hello boy ********************************** DirectSession MakeCallable";
   TF_RETURN_IF_ERROR(CheckNotClosed());
   TF_RETURN_IF_ERROR(CheckGraphCreated("MakeCallable()"));
 
@@ -1859,13 +1927,16 @@ class DirectSession::RunCallableCallFrame : public CallFrameInterface {
         fetch_tensors_(fetch_tensors) {}
 
   size_t num_args() const override {
+  LOG(ERROR) << "hello boy ********************************** DirectSession num_args";
     return executors_and_keys_->input_types.size();
   }
   size_t num_retvals() const override {
+  LOG(ERROR) << "hello boy ********************************** DirectSession num_retvals";
     return executors_and_keys_->output_types.size();
   }
 
   Status GetArg(int index, Tensor* val) const override {
+  LOG(ERROR) << "hello boy ********************************** DirectSession GetArg";
     if (index > feed_tensors_->size()) {
       return errors::Internal("Args index out of bounds: ", index);
     } else if (executors_and_keys_->input_types[index] == DT_RESOURCE) {
@@ -1878,6 +1949,7 @@ class DirectSession::RunCallableCallFrame : public CallFrameInterface {
   }
 
   Status SetRetval(int index, const Tensor& val) override {
+  LOG(ERROR) << "hello boy ********************************** DirectSession SetRetval";
     if (index > fetch_tensors_->size()) {
       return errors::Internal("RetVal index out of bounds: ", index);
     }
@@ -1895,6 +1967,7 @@ class DirectSession::RunCallableCallFrame : public CallFrameInterface {
 ::tensorflow::Status DirectSession::RunCallable(
     CallableHandle handle, const std::vector<Tensor>& feed_tensors,
     std::vector<Tensor>* fetch_tensors, RunMetadata* run_metadata) {
+  LOG(ERROR) << "hello boy ********************************** DirectSession RunCallable";
   return RunCallable(handle, feed_tensors, fetch_tensors, run_metadata,
                      thread::ThreadPoolOptions());
 }
@@ -1903,6 +1976,7 @@ class DirectSession::RunCallableCallFrame : public CallFrameInterface {
     CallableHandle handle, const std::vector<Tensor>& feed_tensors,
     std::vector<Tensor>* fetch_tensors, RunMetadata* run_metadata,
     const thread::ThreadPoolOptions& threadpool_options) {
+  LOG(ERROR) << "hello boy ********************************** DirectSession RunCallable";
   TF_RETURN_IF_ERROR(CheckNotClosed());
   TF_RETURN_IF_ERROR(CheckGraphCreated("RunCallable()"));
   direct_session_runs->GetCell()->IncrementBy(1);
@@ -1976,6 +2050,7 @@ class DirectSession::RunCallableCallFrame : public CallFrameInterface {
 }
 
 ::tensorflow::Status DirectSession::ReleaseCallable(CallableHandle handle) {
+  LOG(ERROR) << "hello boy ********************************** DirectSession ReleaseCallable";
   mutex_lock l(callables_lock_);
   if (handle >= next_callable_handle_) {
     return errors::InvalidArgument("No such callable handle: ", handle);
@@ -1985,6 +2060,7 @@ class DirectSession::RunCallableCallFrame : public CallFrameInterface {
 }
 
 Status DirectSession::Finalize() {
+  LOG(ERROR) << "hello boy ********************************** DirectSession Finalize";
   mutex_lock l(graph_state_lock_);
   if (finalized_) {
     return errors::FailedPrecondition("Session already finalized.");
@@ -1999,6 +2075,7 @@ Status DirectSession::Finalize() {
 }
 
 DirectSession::Callable::~Callable() {
+  LOG(ERROR) << "hello boy ********************************** DirectSession ~Callable";
   // We must delete the fields in this order, because the destructor
   // of `executors_and_keys` will call into an object owned by
   // `function_info` (in particular, when deleting a kernel, it relies

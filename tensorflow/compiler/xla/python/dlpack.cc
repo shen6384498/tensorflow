@@ -242,6 +242,7 @@ StatusOr<std::shared_ptr<Device>> DeviceForDLContext(
 }  // namespace
 
 StatusOr<py::capsule> BufferToDLPackManagedTensor(PyLocalBuffer* buffer) {
+  LOG(ERROR) << "hello boy ********************************** BufferToDLPackManagedTensor";
   auto pack = absl::make_unique<DLPackTensor>();
   pack->buffer = buffer->DeviceBuffer();
   if (!pack->buffer) {
@@ -290,6 +291,7 @@ StatusOr<py::capsule> BufferToDLPackManagedTensor(PyLocalBuffer* buffer) {
 
 StatusOr<std::unique_ptr<PyLocalBuffer>> DLPackManagedTensorToBuffer(
     const pybind11::capsule& tensor, std::shared_ptr<PyLocalClient> client) {
+  LOG(ERROR) << "hello boy ********************************** DLPackManagedTensorToBuffer";
   if (absl::string_view(tensor.name()) != kDlTensorCapsuleName) {
     return InvalidArgument(
         "DLPack tensor must be a capsule with name \"dltensor\", got \"%s\". "

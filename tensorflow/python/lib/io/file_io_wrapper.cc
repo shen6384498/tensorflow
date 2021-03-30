@@ -37,6 +37,7 @@ namespace py = pybind11;
 
 PYBIND11_MODULE(_pywrap_file_io, m) {
   m.def("FileExists", [](const std::string& filename) {
+  LOG(ERROR) << "hello boy ********************************** FileExists";
     tensorflow::Status status;
     {
       py::gil_scoped_release release;
@@ -45,10 +46,12 @@ PYBIND11_MODULE(_pywrap_file_io, m) {
     tensorflow::MaybeRaiseRegisteredFromStatus(status);
   });
   m.def("DeleteFile", [](const std::string& filename) {
+  LOG(ERROR) << "hello boy ********************************** DeleteFile";
     tensorflow::MaybeRaiseRegisteredFromStatus(
         tensorflow::Env::Default()->DeleteFile(filename));
   });
   m.def("ReadFileToString", [](const std::string& filename) {
+  LOG(ERROR) << "hello boy ********************************** ReadFileToString";
     std::string data;
     const auto status =
         ReadFileToString(tensorflow::Env::Default(), filename, &data);
@@ -57,9 +60,11 @@ PYBIND11_MODULE(_pywrap_file_io, m) {
   });
   m.def("WriteStringToFile",
         [](const std::string& filename, tensorflow::StringPiece data) {
+  LOG(ERROR) << "hello boy ********************************** WriteStringToFile";
           return WriteStringToFile(tensorflow::Env::Default(), filename, data);
         });
   m.def("GetChildren", [](const std::string& dirname) {
+  LOG(ERROR) << "hello boy ********************************** GetChildren";
     std::vector<std::string> results;
     const auto status =
         tensorflow::Env::Default()->GetChildren(dirname, &results);
@@ -67,6 +72,7 @@ PYBIND11_MODULE(_pywrap_file_io, m) {
     return results;
   });
   m.def("GetMatchingFiles", [](const std::string& pattern) {
+  LOG(ERROR) << "hello boy ********************************** GetMatchingFiles";
     std::vector<std::string> results;
     const auto status =
         tensorflow::Env::Default()->GetMatchingPaths(pattern, &results);
@@ -74,6 +80,7 @@ PYBIND11_MODULE(_pywrap_file_io, m) {
     return results;
   });
   m.def("CreateDir", [](const std::string& dirname) {
+  LOG(ERROR) << "hello boy ********************************** CreateDir";
     const auto status = tensorflow::Env::Default()->CreateDir(dirname);
     if (tensorflow::errors::IsAlreadyExists(status)) {
       return;
@@ -81,11 +88,13 @@ PYBIND11_MODULE(_pywrap_file_io, m) {
     tensorflow::MaybeRaiseRegisteredFromStatus(status);
   });
   m.def("RecursivelyCreateDir", [](const std::string& dirname) {
+  LOG(ERROR) << "hello boy ********************************** RecursivelyCreateDir";
     tensorflow::MaybeRaiseRegisteredFromStatus(
         tensorflow::Env::Default()->RecursivelyCreateDir(dirname));
   });
   m.def("CopyFile",
         [](const std::string& src, const std::string& target, bool overwrite) {
+  LOG(ERROR) << "hello boy ********************************** CopyFile";
           auto* env = tensorflow::Env::Default();
           tensorflow::Status status;
           if (!overwrite && env->FileExists(target).ok()) {
@@ -97,6 +106,7 @@ PYBIND11_MODULE(_pywrap_file_io, m) {
         });
   m.def("RenameFile",
         [](const std::string& src, const std::string& target, bool overwrite) {
+  LOG(ERROR) << "hello boy ********************************** RenameFile";
           auto* env = tensorflow::Env::Default();
           tensorflow::Status status;
           if (!overwrite && env->FileExists(target).ok()) {
@@ -107,6 +117,7 @@ PYBIND11_MODULE(_pywrap_file_io, m) {
           tensorflow::MaybeRaiseRegisteredFromStatus(status);
         });
   m.def("DeleteRecursively", [](const std::string& dirname) {
+  LOG(ERROR) << "hello boy ********************************** DeleteRecursively";
     tensorflow::int64 undeleted_files;
     tensorflow::int64 undeleted_dirs;
     auto status = tensorflow::Env::Default()->DeleteRecursively(
@@ -118,6 +129,7 @@ PYBIND11_MODULE(_pywrap_file_io, m) {
     tensorflow::MaybeRaiseRegisteredFromStatus(status);
   });
   m.def("IsDirectory", [](const std::string& dirname) {
+  LOG(ERROR) << "hello boy ********************************** IsDirectory";
     const auto status = tensorflow::Env::Default()->IsDirectory(dirname);
     // FAILED_PRECONDITION response means path exists but isn't a dir.
     if (tensorflow::errors::IsFailedPrecondition(status)) {
@@ -128,6 +140,7 @@ PYBIND11_MODULE(_pywrap_file_io, m) {
     return true;
   });
   m.def("HasAtomicMove", [](const std::string& path) {
+  LOG(ERROR) << "hello boy ********************************** HasAtomicMove";
     bool has_atomic_move;
     const auto status =
         tensorflow::Env::Default()->HasAtomicMove(path, &has_atomic_move);
@@ -141,6 +154,7 @@ PYBIND11_MODULE(_pywrap_file_io, m) {
       .def_readonly("is_directory", &tensorflow::FileStatistics::is_directory);
 
   m.def("Stat", [](const std::string& filename) {
+  LOG(ERROR) << "hello boy ********************************** Stat";
     std::unique_ptr<tensorflow::FileStatistics> self(
         new tensorflow::FileStatistics);
     const auto status = tensorflow::Env::Default()->Stat(filename, self.get());

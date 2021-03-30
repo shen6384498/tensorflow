@@ -254,6 +254,7 @@ void TF_GraphCopyFunction(TF_Graph* g, const TF_Function* func,
   }
 
   tensorflow::mutex_lock l(g->mu);
+  LOG(ERROR) << "hello boy ********************************** TF_GraphToFunction";
   status->status = g->graph.AddFunctionLibrary(fdef_lib);
 }
 

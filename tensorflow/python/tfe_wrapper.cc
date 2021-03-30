@@ -323,9 +323,11 @@ PYBIND11_MODULE(_pywrap_tfe, m) {
   py::class_<TF_Function> TF_Function_class(m, "TF_Function");
 
   m.def("TFE_Py_RegisterExceptionClass", [](const py::handle& e) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterExceptionClass";
     return tensorflow::pyo_or_throw(TFE_Py_RegisterExceptionClass(e.ptr()));
   });
   m.def("TFE_Py_RegisterFallbackExceptionClass", [](const py::handle& e) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     return tensorflow::pyo_or_throw(
         TFE_Py_RegisterFallbackExceptionClass(e.ptr()));
   });
@@ -343,6 +345,7 @@ PYBIND11_MODULE(_pywrap_tfe, m) {
   m.def(
       "TFE_NewContext",
       [](const TFE_ContextOptions* opts) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
         tensorflow::Safe_TF_StatusPtr status =
             tensorflow::make_safe(TF_NewStatus());
         TFE_Context* context = TFE_NewContext(opts, status.get());
@@ -351,11 +354,13 @@ PYBIND11_MODULE(_pywrap_tfe, m) {
       },
       py::return_value_policy::reference);
   m.def("TFE_DeleteContext", [](py::handle& o) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     TFE_DeleteContext(tensorflow::InputTFE_Context(o));
   });
   m.def(
       "TFE_ContextListDevices",
       [](py::handle& o) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
         tensorflow::Safe_TF_StatusPtr status =
             tensorflow::make_safe(TF_NewStatus());
         auto output = TFE_ContextListDevices(tensorflow::InputTFE_Context(o),
@@ -365,9 +370,11 @@ PYBIND11_MODULE(_pywrap_tfe, m) {
       },
       py::return_value_policy::reference);
   m.def("TFE_HostAddressSpace", [](py::handle& o, TF_Buffer& buf) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     TFE_HostAddressSpace(tensorflow::InputTFE_Context(o), &buf);
   });
   m.def("TFE_ContextAddFunction", [](py::handle& ctx, TF_Function* func) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     tensorflow::Safe_TF_StatusPtr status =
         tensorflow::make_safe(TF_NewStatus());
     TFE_ContextAddFunction(tensorflow::InputTFE_Context(ctx), func,
@@ -376,6 +383,7 @@ PYBIND11_MODULE(_pywrap_tfe, m) {
   });
   m.def("TFE_ContextAddFunctionDef",
         [](py::handle& ctx, const char* serialized_function_def, size_t size) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
           tensorflow::Safe_TF_StatusPtr status =
               tensorflow::make_safe(TF_NewStatus());
           TFE_ContextAddFunctionDef(tensorflow::InputTFE_Context(ctx),
@@ -385,6 +393,7 @@ PYBIND11_MODULE(_pywrap_tfe, m) {
         });
   m.def("TFE_ContextGetFunctionDef",
         [](py::handle& ctx, const char* function_name, TF_Buffer& buf) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
           tensorflow::Safe_TF_StatusPtr status =
               tensorflow::make_safe(TF_NewStatus());
           TFE_ContextGetFunctionDef(tensorflow::InputTFE_Context(ctx),
@@ -392,6 +401,7 @@ PYBIND11_MODULE(_pywrap_tfe, m) {
           tensorflow::MaybeRaiseRegisteredFromTFStatus(status.get());
         });
   m.def("TFE_ContextRemoveFunction", [](py::handle& ctx, const char* name) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     tensorflow::Safe_TF_StatusPtr status =
         tensorflow::make_safe(TF_NewStatus());
     TFE_ContextRemoveFunction(tensorflow::InputTFE_Context(ctx), name,
@@ -399,6 +409,7 @@ PYBIND11_MODULE(_pywrap_tfe, m) {
     tensorflow::MaybeRaiseRegisteredFromTFStatus(status.get());
   });
   m.def("TFE_ContextHasFunction", [](py::handle& ctx, const char* name) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     tensorflow::Safe_TF_StatusPtr status =
         tensorflow::make_safe(TF_NewStatus());
     auto output =
@@ -407,18 +418,23 @@ PYBIND11_MODULE(_pywrap_tfe, m) {
     return output;
   });
   m.def("TFE_ContextEnableRunMetadata", [](py::handle& ctx) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     TFE_ContextEnableRunMetadata(tensorflow::InputTFE_Context(ctx));
   });
   m.def("TFE_ContextDisableRunMetadata", [](py::handle& ctx) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     TFE_ContextEnableRunMetadata(tensorflow::InputTFE_Context(ctx));
   });
   m.def("TFE_ContextEnableGraphCollection", [](py::handle& ctx) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     TFE_ContextEnableGraphCollection(tensorflow::InputTFE_Context(ctx));
   });
   m.def("TFE_ContextDisableGraphCollection", [](py::handle& ctx) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     TFE_ContextDisableGraphCollection(tensorflow::InputTFE_Context(ctx));
   });
   m.def("TFE_ContextExportRunMetadata", [](py::handle& ctx, TF_Buffer& buf) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     tensorflow::Safe_TF_StatusPtr status =
         tensorflow::make_safe(TF_NewStatus());
     TFE_ContextExportRunMetadata(tensorflow::InputTFE_Context(ctx), &buf,
@@ -426,27 +442,33 @@ PYBIND11_MODULE(_pywrap_tfe, m) {
     tensorflow::MaybeRaiseRegisteredFromTFStatus(status.get());
   });
   m.def("TFE_ContextClearCaches", [](py::handle& o) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     TFE_ContextClearCaches(tensorflow::InputTFE_Context(o));
   });
   m.def("TFE_ContextGetDevicePlacementPolicy", [](py::handle& ctx) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     return TFE_ContextGetDevicePlacementPolicy(
         tensorflow::InputTFE_Context(ctx));
   });
   m.def("TFE_ContextGetMirroringPolicy", [](py::handle& ctx) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     return TFE_ContextGetMirroringPolicy(tensorflow::InputTFE_Context(ctx));
   });
   m.def("TFE_ContextSetThreadLocalDevicePlacementPolicy",
         [](py::handle& ctx, TFE_ContextDevicePlacementPolicy policy) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
           TFE_ContextSetThreadLocalDevicePlacementPolicy(
               tensorflow::InputTFE_Context(ctx), policy);
         });
   m.def("TFE_ContextSetThreadLocalMirroringPolicy",
         [](py::handle& ctx, TFE_ContextMirroringPolicy policy) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
           TFE_ContextSetThreadLocalMirroringPolicy(
               tensorflow::InputTFE_Context(ctx), policy);
         });
   m.def("TFE_ContextSetServerDef", [](py::handle& ctx, int keep_alive_secs,
                                       py::str proto) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     tensorflow::Safe_TF_StatusPtr status =
         tensorflow::make_safe(TF_NewStatus());
     tensorflow::Safe_TF_BufferPtr buf =
@@ -457,6 +479,7 @@ PYBIND11_MODULE(_pywrap_tfe, m) {
   });
   m.def("TFE_ContextUpdateServerDef", [](py::handle& ctx, int keep_alive_secs,
                                          py::str proto) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     tensorflow::Safe_TF_StatusPtr status =
         tensorflow::make_safe(TF_NewStatus());
     tensorflow::Safe_TF_BufferPtr buf =
@@ -467,6 +490,7 @@ PYBIND11_MODULE(_pywrap_tfe, m) {
     tensorflow::MaybeRaiseRegisteredFromTFStatus(status.get());
   });
   m.def("TFE_ContextCheckAlive", [](py::handle& ctx, const char* worker_name) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     tensorflow::Safe_TF_StatusPtr status =
         tensorflow::make_safe(TF_NewStatus());
     bool output = TFE_ContextCheckAlive(tensorflow::InputTFE_Context(ctx),
@@ -475,12 +499,14 @@ PYBIND11_MODULE(_pywrap_tfe, m) {
     return output;
   });
   m.def("TFE_ContextSyncExecutors", [](py::handle& ctx) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     tensorflow::Safe_TF_StatusPtr status =
         tensorflow::make_safe(TF_NewStatus());
     TFE_ContextAsyncWait(tensorflow::InputTFE_Context(ctx), status.get());
     tensorflow::MaybeRaiseRegisteredFromTFStatus(status.get());
   });
   m.def("TFE_ContextClearExecutors", [](py::handle& ctx) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     tensorflow::Safe_TF_StatusPtr status =
         tensorflow::make_safe(TF_NewStatus());
     TFE_ContextAsyncWait(tensorflow::InputTFE_Context(ctx), status.get());
@@ -492,6 +518,7 @@ PYBIND11_MODULE(_pywrap_tfe, m) {
   m.def(
       "TFE_NewExecutor",
       [](const bool is_async) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
         TFE_Executor* exc = TFE_NewExecutor(is_async);
         return exc;
       },
@@ -499,6 +526,7 @@ PYBIND11_MODULE(_pywrap_tfe, m) {
   m.def("TFE_DeleteExecutor", &TFE_DeleteExecutor);
   m.def("TFE_ExecutorIsAsync", &TFE_ExecutorIsAsync);
   m.def("TFE_ExecutorWaitForAllPendingNodes", [](TFE_Executor& exc) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     tensorflow::Safe_TF_StatusPtr status =
         tensorflow::make_safe(TF_NewStatus());
     TFE_ExecutorWaitForAllPendingNodes(&exc, status.get());
@@ -507,11 +535,13 @@ PYBIND11_MODULE(_pywrap_tfe, m) {
   m.def("TFE_ExecutorClearError", &TFE_ExecutorClearError);
   m.def("TFE_ContextSetExecutorForThread", [](py::handle& ctx,
                                               TFE_Executor& exc) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     TFE_ContextSetExecutorForThread(tensorflow::InputTFE_Context(ctx), &exc);
   });
   m.def(
       "TFE_ContextGetExecutorForThread",
       [](py::handle& o) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
         return TFE_ContextGetExecutorForThread(tensorflow::InputTFE_Context(o));
       },
       py::return_value_policy::reference);
@@ -519,6 +549,7 @@ PYBIND11_MODULE(_pywrap_tfe, m) {
   m.def("TFE_OpNameGetAttrType",
         [](py::handle& ctx, const char* op_or_function_name,
            const char* attr_name) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
           int temp = 0;
           unsigned char* is_list = reinterpret_cast<unsigned char*>(&temp);
           tensorflow::Safe_TF_StatusPtr status =
@@ -540,19 +571,23 @@ PYBIND11_MODULE(_pywrap_tfe, m) {
           return tensorflow::pyo_or_throw(output_pyo);
         });
   m.def("TFE_Py_InitEagerTensor", [](const py::handle& o) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     return tensorflow::pyo_or_throw(TFE_Py_InitEagerTensor(o.ptr()));
   });
   m.def("TFE_Py_SetEagerTensorProfiler", &TFE_Py_SetEagerTensorProfiler);
   m.def("TFE_Py_RegisterJVPFunction", [](const py::handle& o) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     return tensorflow::pyo_or_throw(TFE_Py_RegisterJVPFunction(o.ptr()));
   });
   m.def("TFE_Py_RegisterGradientFunction", [](const py::handle& o) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     return tensorflow::pyo_or_throw(TFE_Py_RegisterGradientFunction(o.ptr()));
   });
   m.def("TFE_Py_Execute",
         [](const py::handle& context, const char* device_name,
            const char* op_name, const py::handle& inputs,
            const py::handle& attrs, const py::handle& num_outputs) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
           return tensorflow::TFE_Py_ExecuteCancelable_wrapper(
               context, device_name, op_name, inputs, attrs.ptr(), nullptr,
               num_outputs);
@@ -563,11 +598,13 @@ PYBIND11_MODULE(_pywrap_tfe, m) {
          const char* op_name, const py::handle& inputs, const py::handle& attrs,
          TFE_CancellationManager& cancellation_manager,
          const py::handle& num_outputs) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
         return tensorflow::TFE_Py_ExecuteCancelable_wrapper(
             context, device_name, op_name, inputs, attrs.ptr(),
             &cancellation_manager, num_outputs);
       });
   m.def("TFE_Py_FastPathExecute", [](const py::args args) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     // TFE_Py_FastPathExecute requires error checking prior to returning.
     return tensorflow::pyo_or_throw(TFE_Py_FastPathExecute_C(args.ptr()));
   });
@@ -575,33 +612,47 @@ PYBIND11_MODULE(_pywrap_tfe, m) {
         [](const py::handle& op_name, const py::handle& inputs,
            const py::handle& attrs, const py::handle& results,
            const py::handle& forward_pass_name_scope) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
           return tensorflow::pyo_or_throw(TFE_Py_RecordGradient(
               op_name.ptr(), inputs.ptr(), attrs.ptr(), results.ptr(),
               forward_pass_name_scope.ptr()));
         });
-  m.def("TFE_Py_UID", []() { return tensorflow::pyo_or_throw(TFE_Py_UID()); });
+  m.def("TFE_Py_UID", []() { 
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
+  return tensorflow::pyo_or_throw(TFE_Py_UID()); });
 
   // TFE_Py_Tape Logic
   m.def("TFE_Py_TapeSetNew", [](const py::handle& persistent,
                                 const py::handle& watch_accessed_variables) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     return tensorflow::pyo_or_throw(
         TFE_Py_TapeSetNew(persistent.ptr(), watch_accessed_variables.ptr()));
   });
   m.def("TFE_Py_TapeSetAdd",
-        [](const py::handle& tape) { TFE_Py_TapeSetAdd(tape.ptr()); });
+        [](const py::handle& tape) { 
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
+  TFE_Py_TapeSetAdd(tape.ptr()); });
   m.def("TFE_Py_TapeSetRemove",
-        [](const py::handle& tape) { TFE_Py_TapeSetRemove(tape.ptr()); });
+        [](const py::handle& tape) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
+   TFE_Py_TapeSetRemove(tape.ptr()); });
   m.def("TFE_Py_TapeSetStopOnThread", &TFE_Py_TapeSetStopOnThread);
   m.def("TFE_Py_TapeSetRestartOnThread", &TFE_Py_TapeSetRestartOnThread);
   m.def("TFE_Py_TapeSetIsStopped",
-        []() { return tensorflow::pyo_or_throw(TFE_Py_TapeSetIsStopped()); });
+        []() { 
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
+  return tensorflow::pyo_or_throw(TFE_Py_TapeSetIsStopped()); });
   m.def("TFE_Py_TapeSetIsEmpty",
-        []() { return tensorflow::pyo_or_throw(TFE_Py_TapeSetIsEmpty()); });
+        []() { 
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
+  return tensorflow::pyo_or_throw(TFE_Py_TapeSetIsEmpty()); });
   m.def("TFE_Py_TapeSetShouldRecordBackprop", [](const py::handle& tensors) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     return tensorflow::pyo_or_throw(
         TFE_Py_TapeSetShouldRecordBackprop(tensors.ptr()));
   });
   m.def("TFE_Py_TapeSetPossibleGradientTypes", [](const py::handle& tensors) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     return tensorflow::pyo_or_throw(
         TFE_Py_TapeSetPossibleGradientTypes(tensors.ptr()));
   });
@@ -610,6 +661,7 @@ PYBIND11_MODULE(_pywrap_tfe, m) {
         [](const py::handle& op_type, const py::handle& output_tensors,
            const py::handle& input_tensors, const py::handle& backward_function,
            const py::handle& forward_function) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
           return tensorflow::pyo_or_throw(TFE_Py_TapeSetRecordOperation(
               op_type.ptr(), output_tensors.ptr(), input_tensors.ptr(),
               backward_function.ptr(), forward_function.ptr()));
@@ -618,6 +670,7 @@ PYBIND11_MODULE(_pywrap_tfe, m) {
       "TFE_Py_TapeSetRecordOperationBackprop",
       [](const py::handle& op_type, const py::handle& output_tensors,
          const py::handle& input_tensors, const py::handle& backward_function) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
         return tensorflow::pyo_or_throw(TFE_Py_TapeSetRecordOperationBackprop(
             op_type.ptr(), output_tensors.ptr(), input_tensors.ptr(),
             backward_function.ptr()));
@@ -626,6 +679,7 @@ PYBIND11_MODULE(_pywrap_tfe, m) {
         [](const py::handle& op_type, const py::handle& output_tensors,
            const py::handle& input_tensors, const py::handle& backward_function,
            const py::handle& forwardprop_output_indices) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
           return tensorflow::pyo_or_throw(
               TFE_Py_TapeSetRecordOperationForwardprop(
                   op_type.ptr(), output_tensors.ptr(), input_tensors.ptr(),
@@ -636,6 +690,7 @@ PYBIND11_MODULE(_pywrap_tfe, m) {
            const py::handle& sources, const py::handle& output_gradients,
            const py::handle& sources_raw,
            const py::handle& unconnected_gradients) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
           tensorflow::Safe_TF_StatusPtr status =
               tensorflow::make_safe(TF_NewStatus());
           PyObject* output = TFE_Py_TapeGradient(
@@ -646,51 +701,63 @@ PYBIND11_MODULE(_pywrap_tfe, m) {
         });
 
   m.def("TFE_Py_TapeVariableAccessed", [](const py::handle& variable) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     TFE_Py_TapeVariableAccessed(variable.ptr());
   });
   m.def("TFE_Py_TapeWatch",
         [](const py::handle& tape, const py::handle& tensor) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
           TFE_Py_TapeWatch(tape.ptr(), tensor.ptr());
         });
   m.def("TFE_Py_TapeWatchVariable",
         [](const py::handle& tape, const py::handle& variable) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
           TFE_Py_TapeWatchVariable(tape.ptr(), variable.ptr());
         });
   m.def("TFE_Py_TapeWatchedVariables", [](const py::handle& tape) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     return tensorflow::pyo_or_throw(TFE_Py_TapeWatchedVariables(tape.ptr()));
   });
 
   m.def("TFE_Py_ForwardAccumulatorNew", []() {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     return tensorflow::pyo_or_throw(TFE_Py_ForwardAccumulatorNew());
   });
 
   m.def("TFE_Py_ForwardAccumulatorSetAdd", [](const py::handle& accumulator) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     return tensorflow::pyo_or_throw(
         TFE_Py_ForwardAccumulatorSetAdd(accumulator.ptr()));
   });
   m.def("TFE_Py_ForwardAccumulatorSetRemove",
         [](const py::handle& accumulator) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
           TFE_Py_ForwardAccumulatorSetRemove(accumulator.ptr());
         });
 
   m.def("TFE_Py_ForwardAccumulatorWatch",
         [](const py::handle& accumulator, const py::handle& tensor,
            const py::handle& tangent) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
           TFE_Py_ForwardAccumulatorWatch(accumulator.ptr(), tensor.ptr(),
                                          tangent.ptr());
         });
   m.def("TFE_Py_ForwardAccumulatorJVP",
         [](const py::handle& accumulator, const py::handle& tensor) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
           return tensorflow::pyo_or_throw(
               TFE_Py_ForwardAccumulatorJVP(accumulator.ptr(), tensor.ptr()));
         });
   m.def("TFE_Py_ForwardAccumulatorPushState", []() {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     return tensorflow::pyo_or_throw(TFE_Py_ForwardAccumulatorPushState());
   });
   m.def("TFE_Py_ForwardAccumulatorPopState", []() {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     return tensorflow::pyo_or_throw(TFE_Py_ForwardAccumulatorPopState());
   });
   m.def("TFE_Py_PackJVPs", [](const py::handle& tensors) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     return tensorflow::pyo_or_throw(TFE_Py_PackJVPs(tensors.ptr()));
   });
 
@@ -699,6 +766,7 @@ PYBIND11_MODULE(_pywrap_tfe, m) {
         py::return_value_policy::reference);
   m.def("TFE_ContextOptionsSetConfig", [](TFE_ContextOptions* options,
                                           py::str proto) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     tensorflow::Safe_TF_StatusPtr status =
         tensorflow::make_safe(TF_NewStatus());
     tensorflow::Safe_TF_BufferPtr buf =

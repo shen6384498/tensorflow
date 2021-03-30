@@ -357,6 +357,7 @@ Graph::Graph(const OpRegistryInterface* ops)
     : ops_(ops, FunctionDefLibrary()),
       versions_(new VersionDef),
       arena_(8 << 10 /* 8kB */) {
+  LOG(ERROR) << "hello boy ********************************** Graph Graph";
   versions_->set_producer(TF_GRAPH_DEF_VERSION);
   versions_->set_min_consumer(TF_GRAPH_DEF_VERSION_MIN_CONSUMER);
 
@@ -383,6 +384,7 @@ Graph::Graph(const OpRegistryInterface* ops)
 
 Graph::Graph(const FunctionLibraryDefinition& flib_def)
     : Graph(flib_def.default_registry()) {
+  LOG(ERROR) << "hello boy ********************************** Graph Graph2";
   // Need a new-enough consumer to support the functions we add to the graph.
   if (flib_def.num_functions() > 0 && versions_->min_consumer() < 12) {
     versions_->set_min_consumer(12);
@@ -394,6 +396,7 @@ Graph::Graph(const FunctionLibraryDefinition& flib_def)
 Graph::~Graph() {
   // Manually call the destructors for all the Nodes we constructed using
   // placement new.
+  LOG(ERROR) << "hello boy ********************************** Graph ~Graph";
   for (Node* node : nodes_) {
     if (node != nullptr) {
       node->~Node();
@@ -406,10 +409,15 @@ Graph::~Graph() {
   // destroy them.
 }
 
-const VersionDef& Graph::versions() const { return *versions_; }
-void Graph::set_versions(const VersionDef& versions) { *versions_ = versions; }
+const VersionDef& Graph::versions() const {   
+  LOG(ERROR) << "hello boy ********************************** Graph versions";
+  return *versions_; }
+void Graph::set_versions(const VersionDef& versions) { 
+  LOG(ERROR) << "hello boy ********************************** Graph set_versions";
+  *versions_ = versions; }
 
-Node* Graph::AddNode(NodeDef node_def, Status* status) {
+Node* Graph::AddNode(NodeDef node_def, Status* status) {  
+  LOG(ERROR) << "hello boy ********************************** Graph AddNode["<<node_def.name()<<"]";
   const OpRegistrationData* op_reg_data;
   status->Update(ops_.LookUp(node_def.op(), &op_reg_data));
   if (!status->ok()) return nullptr;
@@ -431,6 +439,7 @@ Node* Graph::AddNode(NodeDef node_def, Status* status) {
 }
 
 Node* Graph::CopyNode(const Node* node) {
+  LOG(ERROR) << "hello boy ********************************** Graph CopyNode";
   DCHECK(!node->IsSource());
   DCHECK(!node->IsSink());
   Node* copy =
@@ -451,6 +460,7 @@ Node* Graph::CopyNode(const Node* node) {
 }
 
 void Graph::RemoveNode(Node* node) {
+  LOG(ERROR) << "hello boy ********************************** Graph RemoveNode";
   TF_DCHECK_OK(IsValidNode(node)) << node->DebugString();
   DCHECK(!node->IsSource());
   DCHECK(!node->IsSink());
@@ -474,6 +484,7 @@ void Graph::RemoveNode(Node* node) {
 }
 
 const Edge* Graph::AddEdge(Node* source, int x, Node* dest, int y) {
+  LOG(ERROR) << "hello boy ********************************** Graph AddEdge";
   TF_DCHECK_OK(IsValidNode(source)) << source->DebugString();
   TF_DCHECK_OK(IsValidNode(dest)) << dest->DebugString();
 
@@ -505,6 +516,7 @@ const Edge* Graph::AddEdge(Node* source, int x, Node* dest, int y) {
 }
 
 void Graph::RemoveEdge(const Edge* e) {
+  LOG(ERROR) << "hello boy ********************************** Graph RemoveEdge";
   TF_DCHECK_OK(IsValidNode(e->src_)) << e->src_->DebugString();
   TF_DCHECK_OK(IsValidNode(e->dst_)) << e->dst_->DebugString();
   CHECK_EQ(e->src_->out_edges_.erase(e), size_t{1});
@@ -519,10 +531,12 @@ void Graph::RemoveEdge(const Edge* e) {
 
 void Graph::RecycleEdge(const Edge* e) {
   free_edges_.push_back(const_cast<Edge*>(e));
+  LOG(ERROR) << "hello boy ********************************** Graph RecycleEdge";
 }
 
 const Edge* Graph::AddControlEdge(Node* source, Node* dest,
                                   bool allow_duplicates) {
+  LOG(ERROR) << "hello boy ********************************** Graph AddControlEdge";
   if (!allow_duplicates) {
     for (const Edge* edge : dest->in_edges()) {
       if (edge->IsControlEdge() && edge->src() == source) {
@@ -551,6 +565,7 @@ const Edge* Graph::AddControlEdge(Node* source, Node* dest,
 }
 
 void Graph::RemoveControlEdge(const Edge* e) {
+  LOG(ERROR) << "hello boy ********************************** Graph RemoveControlEdge";
   if (!e->src_->IsSource() && !e->dst_->IsSink()) {
     e->dst_->MaybeCopyOnWrite();
     string e_src_name = strings::StrCat("^", e->src_->name());
@@ -567,6 +582,7 @@ void Graph::RemoveControlEdge(const Edge* e) {
 
 namespace {
 const Edge* FindEdge(const Node* dst, int index) {
+  LOG(ERROR) << "hello boy ********************************** Graph FindEdge";
   for (const Edge* e : dst->in_edges()) {
     if (e->dst_input() == index) return e;
   }
@@ -576,6 +592,7 @@ const Edge* FindEdge(const Node* dst, int index) {
 
 Status Graph::UpdateEdge(Node* new_src, int new_src_index, Node* dst,
                          int dst_index) {
+  LOG(ERROR) << "hello boy ********************************** Graph UpdateEdge";
   TF_RETURN_IF_ERROR(IsValidOutputTensor(new_src, new_src_index));
   TF_RETURN_IF_ERROR(IsValidInputTensor(dst, dst_index));
   const Edge* e = FindEdge(dst, dst_index);
@@ -592,6 +609,7 @@ Status Graph::UpdateEdge(Node* new_src, int new_src_index, Node* dst,
 }
 
 Status Graph::AddWhileInputHack(Node* new_src, int new_src_index, Node* dst) {
+  LOG(ERROR) << "hello boy ********************************** Graph AddWhileInputHack";
   if (!dst->IsWhileNode()) {
     return errors::Internal(
         "dst argument to AddWhileEdgeHack should be a While op, got: ",
@@ -614,6 +632,7 @@ Status Graph::AddWhileInputHack(Node* new_src, int new_src_index, Node* dst) {
 }
 
 Status Graph::AddFunctionLibrary(const FunctionDefLibrary& fdef_lib) {
+  LOG(ERROR) << "hello boy ********************************** Graph AddFunctionLibrary";
   // Need a new-enough consumer to support the functions we add to the graph.
   if (fdef_lib.function_size() > 0 && versions_->min_consumer() < 12) {
     versions_->set_min_consumer(12);
@@ -624,6 +643,7 @@ Status Graph::AddFunctionLibrary(const FunctionDefLibrary& fdef_lib) {
 namespace {
 
 void AddInput(NodeDef* dst, StringPiece src_name, int src_slot) {
+  LOG(ERROR) << "hello boy ********************************** Graph AddInput";
   if (src_slot == Graph::kControlSlot) {
     dst->add_input(strings::StrCat("^", src_name));
   } else if (src_slot == 0) {
@@ -637,15 +657,18 @@ void AddInput(NodeDef* dst, StringPiece src_name, int src_slot) {
 
 void Graph::ToGraphDef(GraphDef* graph_def) const {
   ToGraphDefSubRange(graph_def, 0);
+  LOG(ERROR) << "hello boy ********************************** Graph ToGraphDef";
 }
 
 GraphDef Graph::ToGraphDefDebug() const {
+  LOG(ERROR) << "hello boy ********************************** Graph ToGraphDefDebug";
   GraphDef ret;
   ToGraphDef(&ret);
   return ret;
 }
 
 void Graph::ToGraphDefSubRange(GraphDef* graph_def, int from_node_id) const {
+  LOG(ERROR) << "hello boy ********************************** Graph ToGraphDefSubRange";
   graph_def->Clear();
   *graph_def->mutable_versions() = versions();
   *graph_def->mutable_library() = ops_.ToProto();
@@ -713,10 +736,12 @@ void Graph::ToGraphDefSubRange(GraphDef* graph_def, int from_node_id) const {
 }
 
 string Graph::NewName(StringPiece prefix) {
+  LOG(ERROR) << "hello boy ********************************** Graph NewName";
   return strings::StrCat(prefix, "/_", name_counter_++);
 }
 
 Status Graph::IsValidNode(const Node* node) const {
+  LOG(ERROR) << "hello boy ********************************** Graph IsValidNode";
   if (node == nullptr) {
     return errors::InvalidArgument("Node is null");
   }
@@ -737,6 +762,7 @@ Status Graph::IsValidNode(const Node* node) const {
 }
 
 Status Graph::IsValidOutputTensor(const Node* node, int idx) const {
+  LOG(ERROR) << "hello boy ********************************** Graph IsValidOutputTensor";
   TF_RETURN_IF_ERROR(IsValidNode(node));
   if (idx >= node->num_outputs() || idx < 0) {
     return errors::OutOfRange("Node '", node->name(), "' (type: '",
@@ -748,6 +774,7 @@ Status Graph::IsValidOutputTensor(const Node* node, int idx) const {
 }
 
 Status Graph::IsValidInputTensor(const Node* node, int idx) const {
+  LOG(ERROR) << "hello boy ********************************** Graph IsValidInputTensor";
   TF_RETURN_IF_ERROR(IsValidNode(node));
   if (idx >= node->num_inputs() || idx < 0) {
     return errors::OutOfRange("Node '", node->name(), "' (type: '",
@@ -760,6 +787,7 @@ Status Graph::IsValidInputTensor(const Node* node, int idx) const {
 
 Node* Graph::AllocateNode(std::shared_ptr<NodeProperties> props,
                           const Node* cost_node, bool is_function_op) {
+  LOG(ERROR) << "hello boy ********************************** Graph AllocateNode";
   Node* node = nullptr;
   if (free_nodes_.empty()) {
     node = new (arena_.Alloc(sizeof(Node))) Node;  // placement new
@@ -777,6 +805,7 @@ Node* Graph::AllocateNode(std::shared_ptr<NodeProperties> props,
 }
 
 void Graph::ReleaseNode(Node* node) {
+  LOG(ERROR) << "hello boy ********************************** Graph ReleaseNode";
   TF_DCHECK_OK(IsValidNode(node)) << node->DebugString();
   nodes_[node->id()] = nullptr;
   free_nodes_.push_back(node);
@@ -788,6 +817,7 @@ void Graph::ReleaseNode(Node* node) {
 // the index of that device name. The index is stable, and can be used in
 // calls to Node::set_assigned_device_name_index().
 int Graph::InternDeviceName(const string& device_name) {
+  LOG(ERROR) << "hello boy ********************************** Graph InternDeviceName";
   // Special case, very common.  Also, this allows us to use a single map
   // lookup below, instead of two.  The 'if (index_cell > 0)' test below
   // relies on this check.
@@ -813,6 +843,7 @@ Status Graph::AddWhileContext(StringPiece frame_name,
                               std::vector<OutputTensor> body_inputs,
                               std::vector<OutputTensor> body_outputs,
                               WhileContext** result) {
+  LOG(ERROR) << "hello boy ********************************** Graph AddWhileContext";
   auto pair = while_ctxs_.insert(std::pair<string, WhileContext>(
       string(frame_name),
       WhileContext(frame_name, std::move(enter_nodes), std::move(exit_nodes),
@@ -828,6 +859,7 @@ Status Graph::AddWhileContext(StringPiece frame_name,
 }
 
 std::unordered_map<string, Node*> Graph::BuildNodeNameIndex() const {
+  LOG(ERROR) << "hello boy ********************************** Graph BuildNodeNameIndex";
   std::unordered_map<string, Node*> result;
   for (Node* n : nodes()) {
     result[n->name()] = n;

@@ -115,6 +115,7 @@ Status LoadMetaGraphIntoSession(const MetaGraphDef& meta_graph_def,
                                 const SessionOptions& session_options,
                                 std::unique_ptr<Session>* session) {
   Session* session_p = nullptr;
+  LOG(ERROR) << "hello boy ********************************** LoadMetaGraphIntoSession NewSession";
   TF_RETURN_IF_ERROR(NewSession(session_options, &session_p));
   session->reset(session_p);
   TF_RETURN_IF_ERROR(ValidateSavedTensors(meta_graph_def.graph_def()));

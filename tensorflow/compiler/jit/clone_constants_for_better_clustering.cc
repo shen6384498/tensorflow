@@ -39,6 +39,7 @@ StatusOr<Node*> CloneConstantsForBetterClusteringPass::CloneNode(
   new_in_def.clear_input();
   new_in_def.set_name(GenerateUniqueName(name_set, new_in_def.name()));
   Status s;
+  LOG(ERROR) << "hello boy ********************************** CloneConstantsForBetterClusteringPass";
   Node* new_in = g->AddNode(new_in_def, &s);
   TF_RETURN_IF_ERROR(s);
 

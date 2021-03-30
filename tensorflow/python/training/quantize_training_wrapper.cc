@@ -41,6 +41,7 @@ static PyObject* DoQuantizeTrainingOnGraphDefHelper(const string& input_graph,
 PYBIND11_MODULE(_pywrap_quantize_training, m) {
   m.def("DoQuantizeTrainingOnGraphDefHelper",
         [](const py::object input_graph, int num_bits) {
+  LOG(ERROR) << "hello boy ********************************** DoQuantizeTrainingOnGraphDefHelper";    
           return tensorflow::pyo_or_throw(
               tensorflow::DoQuantizeTrainingOnGraphDefHelper(
                   input_graph.cast<std::string>(), num_bits));

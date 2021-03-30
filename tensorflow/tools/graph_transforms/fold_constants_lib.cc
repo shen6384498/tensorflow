@@ -213,6 +213,7 @@ Status ShapeHandleToTensorShape(const shape_inference::ShapeHandle& handle,
 Status FoldConstants(const GraphDef& input_graph_def,
                      const TransformFuncContext& context,
                      GraphDef* output_graph_def) {
+  LOG(ERROR) << "hello boy ********************************** FoldConstants";
   Graph input_graph(OpRegistry::Global());
   TF_RETURN_IF_ERROR(input_graph.AddFunctionLibrary(input_graph_def.library()));
 

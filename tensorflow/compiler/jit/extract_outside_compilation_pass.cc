@@ -62,6 +62,7 @@ xla::StatusOr<Node*> AddHostComputeKeyPlaceholder(
   Status s = builder.Finalize(&key_def);
   if (!s.ok()) return s;
 
+  LOG(ERROR) << "hello boy ********************************** call AddNode 8";
   Node* n = g->AddNode(key_def, &s);
   if (!s.ok()) return s;
   return n;

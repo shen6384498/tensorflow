@@ -260,6 +260,7 @@ void PopulateXlaArgs(const tf2xla::Config& config,
 
 Status InitGraph(const GraphDef& graph_def, const tf2xla::Config& config,
                  std::unique_ptr<Graph>* graph) {
+  LOG(ERROR) << "hello boy ********************************** InitGraph";
   TF_RETURN_IF_ERROR(ValidateConfig(config));
 
   FunctionLibraryDefinition flib_def(OpRegistry::Global(), graph_def.library());

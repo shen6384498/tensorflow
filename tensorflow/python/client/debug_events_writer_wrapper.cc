@@ -30,6 +30,7 @@ PYBIND11_MODULE(_pywrap_debug_events_writer, m) {
 
   m.def("Init",
         [](const std::string& dump_root, const int64 circular_buffer_size) {
+  LOG(ERROR) << "hello boy ********************************** Init";
           DebugEventsWriter* writer = DebugEventsWriter::GetDebugEventsWriter(
               dump_root, circular_buffer_size);
           if (!writer->Init().ok()) {
@@ -40,6 +41,7 @@ PYBIND11_MODULE(_pywrap_debug_events_writer, m) {
         });
   m.def("WriteSourceFile",
         [](const std::string& dump_root, const py::object obj) {
+  LOG(ERROR) << "hello boy ********************************** WriteSourceFile";
           CheckProtoType(obj, "tensorflow.DebugEvent");
           DebugEventsWriter* writer =
               DebugEventsWriter::GetDebugEventsWriter(dump_root);
@@ -49,6 +51,7 @@ PYBIND11_MODULE(_pywrap_debug_events_writer, m) {
         });
   m.def("WriteStackFrameWithId",
         [](const std::string& dump_root, const py::object& obj) {
+  LOG(ERROR) << "hello boy ********************************** WriteStackFrameWithId";
           CheckProtoType(obj, "tensorflow.DebugEvent");
           DebugEventsWriter* writer =
               DebugEventsWriter::GetDebugEventsWriter(dump_root);
@@ -58,6 +61,7 @@ PYBIND11_MODULE(_pywrap_debug_events_writer, m) {
         });
   m.def("WriteGraphOpCreation",
         [](const std::string& dump_root, const py::object& obj) {
+  LOG(ERROR) << "hello boy ********************************** WriteGraphOpCreation";
           CheckProtoType(obj, "tensorflow.DebugEvent");
           DebugEventsWriter* writer =
               DebugEventsWriter::GetDebugEventsWriter(dump_root);
@@ -67,6 +71,7 @@ PYBIND11_MODULE(_pywrap_debug_events_writer, m) {
         });
   m.def("WriteDebuggedGraph",
         [](const std::string& dump_root, const py::object& obj) {
+  LOG(ERROR) << "hello boy ********************************** WriteDebuggedGraph";
           CheckProtoType(obj, "tensorflow.DebugEvent");
           DebugEventsWriter* writer =
               DebugEventsWriter::GetDebugEventsWriter(dump_root);
@@ -76,6 +81,7 @@ PYBIND11_MODULE(_pywrap_debug_events_writer, m) {
         });
   m.def("WriteExecution",
         [](const std::string& dump_root, const py::object& obj) {
+  LOG(ERROR) << "hello boy ********************************** WriteExecution";
           CheckProtoType(obj, "tensorflow.DebugEvent");
           DebugEventsWriter* writer =
               DebugEventsWriter::GetDebugEventsWriter(dump_root);
@@ -85,6 +91,7 @@ PYBIND11_MODULE(_pywrap_debug_events_writer, m) {
         });
   m.def("WriteGraphExecutionTrace",
         [](const std::string& dump_root, const py::object& obj) {
+  LOG(ERROR) << "hello boy ********************************** WriteGraphExecutionTrace";
           CheckProtoType(obj, "tensorflow.DebugEvent");
           DebugEventsWriter* writer =
               DebugEventsWriter::GetDebugEventsWriter(dump_root);
@@ -94,21 +101,25 @@ PYBIND11_MODULE(_pywrap_debug_events_writer, m) {
         });
   m.def("RegisterDeviceAndGetId",
         [](const std::string& dump_root, const std::string& device_name) {
+  LOG(ERROR) << "hello boy ********************************** RegisterDeviceAndGetId";
           DebugEventsWriter* writer =
               DebugEventsWriter::GetDebugEventsWriter(dump_root);
           return writer->RegisterDeviceAndGetId(device_name);
         });
   m.def("FlushNonExecutionFiles", [](const std::string& dump_root) {
+  LOG(ERROR) << "hello boy ********************************** FlushNonExecutionFiles";
     DebugEventsWriter* writer =
         DebugEventsWriter::GetDebugEventsWriter(dump_root);
     writer->FlushNonExecutionFiles();
   });
   m.def("FlushExecutionFiles", [](const std::string& dump_root) {
+  LOG(ERROR) << "hello boy ********************************** FlushExecutionFiles";
     DebugEventsWriter* writer =
         DebugEventsWriter::GetDebugEventsWriter(dump_root);
     writer->FlushExecutionFiles();
   });
   m.def("Close", [](const std::string& dump_root) {
+  LOG(ERROR) << "hello boy ********************************** Close";
     DebugEventsWriter* writer =
         DebugEventsWriter::GetDebugEventsWriter(dump_root);
     writer->Close();

@@ -241,14 +241,17 @@ Status GraphMgr::InitItem(
           // is tied to a particular subgraph. Even if the function itself
           // is stateful, the `CallOp` that invokes it is not.
           if (!OpSegment::ShouldOwnKernel(lib, props->node_def.op())) {
+    LOG(ERROR) << "hello boy ********************************** Call CreateKernel 7";
             return lib->CreateKernel(props, kernel);
           }
           auto create_fn = [lib, &props](OpKernel** kernel) {
+    LOG(ERROR) << "hello boy ********************************** Call CreateKernel 18";
             return lib->CreateKernel(props, kernel);
           };
           // Kernels created for subgraph nodes need to be cached.  On
           // cache miss, create_fn() is invoked to create a kernel based
           // on the function library here + global op registry.
+    LOG(ERROR) << "hello boy ********************************** Call CreateKernel 8";
           return opseg->FindOrCreate(handle, props->node_def.name(), kernel,
                                      create_fn);
         };

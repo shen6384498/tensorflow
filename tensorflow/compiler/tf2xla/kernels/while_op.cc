@@ -41,6 +41,7 @@ namespace {
 // Verify that input resources are grouped in the end.
 Status VerifyResourceArgsGroupedAtEnd(XlaOpKernelContext* ctx,
                                       const NameAttrList& body_name_attr) {
+  LOG(ERROR) << "hello boy ********************************** while_op VerifyResourceArgsGroupedAtEnd";
   const FunctionBody* body;
   TF_RETURN_IF_ERROR(ctx->compiler()->FindFunctionBody(body_name_attr, &body));
   bool has_seen_resource = false;
@@ -67,6 +68,7 @@ Status MakeXlaCompilerArgumentsFromInputs(
     XlaOpKernelContext* ctx, std::vector<XlaCompiler::Argument>* args,
     bool* has_uninitialized_vars, bool* has_tensor_arrays,
     bool* has_uninitialized_tensor_lists) {
+  LOG(ERROR) << "hello boy ********************************** while_op MakeXlaCompilerArgumentsFromInputs";
   VLOG(2) << "Num inputs " << ctx->num_inputs();
   args->resize(ctx->num_inputs());
   *has_uninitialized_vars = false;
@@ -117,6 +119,7 @@ Status MakeXlaCompilerArgumentsFromInputs(
 void GetLoopInvariants(XlaOpKernelContext* ctx,
                        const NameAttrList& body_name_attr,
                        std::vector<bool>* const loop_invariants) {
+  LOG(ERROR) << "hello boy ********************************** while_op GetLoopInvariants";
   const FunctionBody* body;
   OP_REQUIRES_OK(ctx, ctx->compiler()->FindFunctionBody(body_name_attr, &body));
   for (int i = 0; i < body->ret_nodes.size(); i++) {
@@ -137,6 +140,7 @@ Status ConvertLoopInvariantsToConst(
     std::vector<XlaCompiler::Argument>* args,
     std::vector<bool>* compile_time_const_arg_indices,
     int* num_compile_time_const_args, xla::Client* client) {
+  LOG(ERROR) << "hello boy ********************************** while_op ConvertLoopInvariantsToConst";
   std::vector<bool> loop_invariants(ctx->num_inputs());
   GetLoopInvariants(ctx, body_name_attr, &loop_invariants);
 
@@ -171,6 +175,7 @@ Status VerifyBodyInputAndOutputShapeMatch(
     XlaOpKernelContext* ctx,
     const std::vector<bool>& compile_time_const_arg_indices,
     const XlaCompiler::CompilationResult& body, bool has_token_input_output) {
+  LOG(ERROR) << "hello boy ********************************** while_op VerifyBodyInputAndOutputShapeMatch";
   xla::Shape body_input_shape = body.xla_input_shapes[0];
   xla::Shape body_output_shape;
   body_output_shape.set_element_type(xla::TUPLE);
@@ -196,6 +201,7 @@ Status VerifyBodyInputAndOutputShapeMatch(
 
 xla::StatusOr<xla::XlaComputation> BuildWrappedCond(
     XlaOpKernelContext* ctx, const XlaCompiler::CompilationResult& cond) {
+  LOG(ERROR) << "hello boy ********************************** while_op BuildWrappedCond";
   xla::Shape cond_input_shape = cond.xla_input_shapes[0];
   std::unique_ptr<xla::XlaBuilder> cb =
       ctx->builder()->CreateSubBuilder("cond_wrapper");
@@ -209,6 +215,7 @@ xla::StatusOr<xla::XlaComputation> BuildWrappedBody(
     XlaOpKernelContext* ctx, const XlaCompiler::CompilationResult& body,
     const std::vector<bool>& compile_time_const_arg_indices,
     int num_compile_time_const_args, bool has_token_input_output) {
+  LOG(ERROR) << "hello boy ********************************** while_op BuildWrappedBody";
   if (num_compile_time_const_args <= 0) {
     return xla::XlaComputation(body.computation->proto());
   }
@@ -246,6 +253,7 @@ xla::XlaOp BuildWhile(XlaOpKernelContext* ctx,
                       const std::vector<bool>& compile_time_const_arg_indices,
                       int num_compile_time_const_args,
                       bool has_token_input_output) {
+  LOG(ERROR) << "hello boy ********************************** while_op BuildWhile";
   xla::XlaOp while_result =
       xla::While(wrapped_cond, wrapped_body, initial_values);
   std::vector<xla::XlaOp> padded_while_outputs(ctx->num_outputs());
@@ -270,6 +278,7 @@ xla::XlaOp BuildWhile(XlaOpKernelContext* ctx,
 }  // anonymous namespace
 
 XlaWhileOp::XlaWhileOp(OpKernelConstruction* ctx) : XlaOpKernel(ctx) {
+  LOG(ERROR) << "hello boy ********************************** while_op XlaWhileOp";
   const NameAttrList* name_attr;
   OP_REQUIRES_OK(ctx, ctx->GetAttr("cond", &name_attr));
   cond_name_attr_ = *name_attr;
@@ -287,6 +296,7 @@ XlaWhileOp::XlaWhileOp(OpKernelConstruction* ctx) : XlaOpKernel(ctx) {
 }
 
 void XlaWhileOp::Compile(XlaOpKernelContext* ctx) {
+  LOG(ERROR) << "hello boy ********************************** while_op Compile";
   VLOG(1) << "WhileOp::Compile";
 
   // Input resources need to be grouped in the end of the body function

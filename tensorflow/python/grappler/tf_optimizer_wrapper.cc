@@ -65,6 +65,7 @@ PYBIND11_MODULE(_pywrap_tf_optimizer, m) {
          const py::bytes& serialized_metagraph, bool verbose,
          const std::string& graph_id,
          bool strip_default_attributes) -> py::bytes {
+  LOG(ERROR) << "hello boy ********************************** TF_OptimizeGraph";
         tensorflow::ConfigProto config_proto;
         if (!config_proto.ParseFromString(serialized_config_proto)) {
           throw std::invalid_argument(

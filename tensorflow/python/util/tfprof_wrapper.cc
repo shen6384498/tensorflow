@@ -26,6 +26,7 @@ PYBIND11_MODULE(_pywrap_tfprof, m) {
         [](const std::string* graph, const std::string* run_meta,
            const std::string* op_log, const std::string* command,
            const std::string* options) {
+  LOG(ERROR) << "hello boy ********************************** PrintModelAnalysis";
           std::string temp = tensorflow::tfprof::PrintModelAnalysis(
               graph, run_meta, op_log, command, options);
           return py::bytes(temp);

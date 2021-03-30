@@ -139,6 +139,7 @@ StatusOr<uint64> HashComputation(const XlaComputation& computation) {
 Status PyRegisterCustomCallTarget(const std::string& fn_name,
                                   py::capsule capsule,
                                   const std::string& platform) {
+  LOG(ERROR) << "hello boy ********************************** PyRegisterCustomCallTarget";
   static const char* const kName = "xla._CUSTOM_CALL_TARGET";
   // TODO(phawkins): remove old name after fixing users.
   static const char* const kOldCpuName = "xla._CPU_CUSTOM_CALL_TARGET";
@@ -1174,6 +1175,7 @@ PYBIND11_MODULE(xla_extension, m) {
 
   m.def("hlo_module_to_dot_graph",
         [](const HloModule& hlo_module) -> StatusOr<std::string> {
+  LOG(ERROR) << "hello boy ********************************** hlo_module_to_dot_graph";
           return RenderGraph(*hlo_module.entry_computation(), /*label=*/"",
                              hlo_module.config().debug_options(),
                              RenderedGraphFormat::kDot);

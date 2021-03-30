@@ -259,6 +259,7 @@ Status InitializeSession(int num_threads, const string& graph,
   }
   LOG(INFO) << "Got config, " << config.device_count_size() << " devices";
 
+  LOG(ERROR) << "hello boy ********************************** InitializeSession NewSession";
   session->reset(tensorflow::NewSession(options));
   graph_def->reset(new GraphDef());
   tensorflow::GraphDef tensorflow_graph;

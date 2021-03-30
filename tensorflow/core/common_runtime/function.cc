@@ -266,6 +266,7 @@ Status FunctionLibraryRuntimeOverlay::CreateKernel(
   // When we call Instantiate from the base runtime with the lib_def option,
   // the base runtime implementation is responsible for correctly passing it
   // through to all kernel constructions.
+    LOG(ERROR) << "hello boy ********************************** FunctionLibraryRuntimeOverlay CreateKernel";
   return errors::Internal(
       "Overlay function library runtime doesn't support kernel creation.");
 }
@@ -483,6 +484,7 @@ FunctionLibraryRuntimeImpl::FunctionLibraryRuntimeImpl(
   };
   create_kernel_ = [this](const std::shared_ptr<const NodeProperties>& props,
                           OpKernel** kernel) {
+    LOG(ERROR) << "hello boy ********************************** Call CreateKernel 4";
     return CreateKernel(props, kernel);
   };
   thread::ThreadPool* pool = nullptr;
@@ -597,24 +599,28 @@ Status FunctionLibraryRuntimeImpl::GetRetTypes(Handle h,
 
 Status FunctionLibraryRuntimeImpl::CreateKernel(
     const std::shared_ptr<const NodeProperties>& props, OpKernel** kernel) {
+    LOG(ERROR) << "hello boy ********************************** CreateKernel 1 ";
   return CreateKernel(props, this, kernel);
 }
 
 Status FunctionLibraryRuntimeImpl::CreateKernel(
     const std::shared_ptr<const NodeProperties>& props,
     FunctionLibraryRuntime* flr, OpKernel** kernel) {
+    LOG(ERROR) << "hello boy ********************************** CreateKernel for["<<props->node_def.op()<<"]";
   // If a custom kernel creator is given, try that.
   Status s;
   if (custom_kernel_creator_ != nullptr &&
       custom_kernel_creator_->CanCreateKernel(*this, props)) {
     std::unique_ptr<OpKernel> ret;
+    LOG(ERROR) << "hello boy ********************************** Call CreateKernel 5";
     s = custom_kernel_creator_->CreateKernel(this, props, &ret);
     if (s.ok()) {
       *kernel = ret.release();
     } else {
       VLOG(2) << "Custom creator error: " << s;
     }
-    return s;
+    return s; 
+
   }
 
   const FunctionLibraryDefinition* lib_def =
@@ -965,6 +971,7 @@ Status FunctionLibraryRuntimeImpl::CreateItem(Item** item) {
     params.create_kernel =
         [this, flr](const std::shared_ptr<const NodeProperties>& props,
                     OpKernel** kernel) {
+    LOG(ERROR) << "hello boy ********************************** Call CreateKernel 6";
           return CreateKernel(props, flr, kernel);
         };
   }

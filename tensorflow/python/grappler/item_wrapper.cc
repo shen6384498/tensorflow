@@ -128,6 +128,7 @@ PYBIND11_MODULE(_pywrap_tf_item, m) {
   m.def("TF_NewItem",
         [](const py::bytes& serialized_metagraph, bool ignore_colocation,
            bool ignore_user_placement) -> tensorflow::grappler::GrapplerItem* {
+  LOG(ERROR) << "hello boy ********************************** TF_NewItem";
           tensorflow::MetaGraphDef metagraph;
           if (!metagraph.ParseFromString(serialized_metagraph)) {
             throw std::invalid_argument(
@@ -155,6 +156,7 @@ PYBIND11_MODULE(_pywrap_tf_item, m) {
   m.def("TF_IdentifyImportantOps",
         [](tensorflow::grappler::GrapplerItem* item,
            bool sort_topologically) -> std::vector<std::string> {
+  LOG(ERROR) << "hello boy ********************************** TF_IdentifyImportantOps";
           std::vector<const tensorflow::NodeDef*> main_ops =
               item->MainOpsFanin();
           std::vector<const tensorflow::NodeDef*> enqueue_ops =
@@ -191,6 +193,7 @@ PYBIND11_MODULE(_pywrap_tf_item, m) {
   m.def("TF_GetOpProperties",
         [](tensorflow::grappler::GrapplerItem* item)
             -> std::unordered_map<std::string, std::vector<py::bytes>> {
+  LOG(ERROR) << "hello boy ********************************** TF_GetOpProperties";
           tensorflow::grappler::GraphProperties properties(*item);
           tensorflow::MaybeRaiseFromStatus(properties.InferStatically(false));
 
@@ -213,6 +216,7 @@ PYBIND11_MODULE(_pywrap_tf_item, m) {
   m.def("TF_GetColocationGroups",
         [](tensorflow::grappler::GrapplerItem* item)
             -> std::vector<std::vector<std::string>> {
+  LOG(ERROR) << "hello boy ********************************** TF_GetColocationGroups";
           ColocationGroups groupings;
           tensorflow::OpRegistry* registry = tensorflow::OpRegistry::Global();
           for (const auto& node : item->graph.node()) {

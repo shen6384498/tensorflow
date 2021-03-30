@@ -38,13 +38,18 @@ const char* const kSchemePrefix = "grpc://";
 const size_t kSchemePrefixLength = strlen(kSchemePrefix);
 
 GrpcSession::GrpcSession(const SessionOptions& options)
-    : options_(options), current_graph_version_(-1) {}
+    : options_(options), current_graph_version_(-1) {
+  LOG(ERROR) << "hello boy ********************************** GrpcSession GrpcSession";
+  }
 
-GrpcSession::~GrpcSession() {}
+GrpcSession::~GrpcSession() {
+  LOG(ERROR) << "hello boy ********************************** GrpcSession ~GrpcSession";
+  }
 
 /* static */
 Status GrpcSession::Create(const SessionOptions& options,
                            std::unique_ptr<GrpcSession>* out_session) {
+  LOG(ERROR) << "hello boy ********************************** GrpcSession Create";
   std::unique_ptr<GrpcSession> session(new GrpcSession(options));
   std::unique_ptr<MasterInterface> master;
   // For testing, we enable the client to disable the use of the local
@@ -97,12 +102,14 @@ void ReEncodeConsts(GraphDef* gdef) {
 }  // namespace
 
 void GrpcSession::SetHandleAndGraphVersion(string handle, int64 graph_version) {
+  LOG(ERROR) << "hello boy ********************************** GrpcSession SetHandleAndGraphVersion";
   mutex_lock l(mu_);
   handle_ = std::move(handle);
   current_graph_version_ = graph_version;
 }
 
 Status GrpcSession::Handle(string* out_handle) {
+  LOG(ERROR) << "hello boy ********************************** GrpcSession Handle";
   mutex_lock l(mu_);
   if (handle_.empty()) {
     return errors::InvalidArgument("A session is not created yet....");
@@ -112,6 +119,7 @@ Status GrpcSession::Handle(string* out_handle) {
 }
 
 Status GrpcSession::CreateImpl(CallOptions* call_options, GraphDef graph) {
+  LOG(ERROR) << "hello boy ********************************** GrpcSession CreateImpl";
   {
     mutex_lock l(mu_);
     if (!handle_.empty()) {
@@ -132,27 +140,32 @@ Status GrpcSession::CreateImpl(CallOptions* call_options, GraphDef graph) {
 }
 
 Status GrpcSession::Create(const GraphDef& graph) {
+  LOG(ERROR) << "hello boy ********************************** GrpcSession Create";
   return Create(GraphDef(graph));
 }
 
 Status GrpcSession::Create(const RunOptions& run_options,
                            const GraphDef& graph) {
+  LOG(ERROR) << "hello boy ********************************** GrpcSession Create";
   return Create(run_options, GraphDef(graph));
 }
 
 Status GrpcSession::Create(GraphDef&& graph) {
+  LOG(ERROR) << "hello boy ********************************** GrpcSession Create";
   CallOptions call_options;
   call_options.SetTimeout(options_.config.operation_timeout_in_ms());
   return CreateImpl(&call_options, std::move(graph));
 }
 
 Status GrpcSession::Create(const RunOptions& run_options, GraphDef&& graph) {
+  LOG(ERROR) << "hello boy ********************************** GrpcSession Create";
   CallOptions call_options;
   call_options.SetTimeout(run_options.timeout_in_ms());
   return CreateImpl(&call_options, std::move(graph));
 }
 
 Status GrpcSession::ExtendImpl(CallOptions* call_options, GraphDef graph) {
+  LOG(ERROR) << "hello boy ********************************** GrpcSession ExtendImpl";
   bool handle_is_empty;
   {
     mutex_lock l(mu_);
@@ -176,21 +189,25 @@ Status GrpcSession::ExtendImpl(CallOptions* call_options, GraphDef graph) {
 }
 
 Status GrpcSession::Extend(const GraphDef& graph) {
+  LOG(ERROR) << "hello boy ********************************** GrpcSession Extend";
   return Extend(GraphDef(graph));
 }
 
 Status GrpcSession::Extend(const RunOptions& run_options,
                            const GraphDef& graph) {
+  LOG(ERROR) << "hello boy ********************************** GrpcSession Extend";
   return Extend(run_options, GraphDef(graph));
 }
 
 Status GrpcSession::Extend(GraphDef&& graph) {
+  LOG(ERROR) << "hello boy ********************************** GrpcSession Extend";
   CallOptions call_options;
   call_options.SetTimeout(options_.config.operation_timeout_in_ms());
   return ExtendImpl(&call_options, std::move(graph));
 }
 
 Status GrpcSession::Extend(const RunOptions& run_options, GraphDef&& graph) {
+  LOG(ERROR) << "hello boy ********************************** GrpcSession Extend";
   CallOptions call_options;
   call_options.SetTimeout(run_options.timeout_in_ms());
   return ExtendImpl(&call_options, std::move(graph));
@@ -202,6 +219,7 @@ Status GrpcSession::RunHelper(
     const std::vector<string>& output_tensor_names,
     const std::vector<string>& target_node_names, std::vector<Tensor>* outputs,
     RunMetadata* run_metadata, const string& prun_handle) {
+  LOG(ERROR) << "hello boy ********************************** GrpcSession RunHelper";
   // Convert to proto
   std::unique_ptr<MutableRunStepRequestWrapper> req(
       master_->CreateRunStepRequest());
@@ -289,6 +307,7 @@ Status GrpcSession::Run(const RunOptions& run_options,
                         const std::vector<string>& target_node_names,
                         std::vector<Tensor>* outputs,
                         RunMetadata* run_metadata) {
+  LOG(ERROR) << "hello boy ********************************** GrpcSession Run";
   return RunHelper(run_options, inputs, output_tensor_names, target_node_names,
                    outputs, run_metadata, /* prun_handle */ "");
 }
@@ -297,6 +316,7 @@ Status GrpcSession::Run(const std::vector<std::pair<string, Tensor>>& inputs,
                         const std::vector<string>& output_tensor_names,
                         const std::vector<string>& target_node_names,
                         std::vector<Tensor>* outputs) {
+  LOG(ERROR) << "hello boy ********************************** GrpcSession Run";
   RunOptions run_options;
   run_options.set_timeout_in_ms(options_.config.operation_timeout_in_ms());
   return Run(run_options, inputs, output_tensor_names, target_node_names,
@@ -306,6 +326,7 @@ Status GrpcSession::Run(const std::vector<std::pair<string, Tensor>>& inputs,
 Status GrpcSession::RunProto(CallOptions* call_options,
                              MutableRunStepRequestWrapper* req,
                              MutableRunStepResponseWrapper* resp) {
+  LOG(ERROR) << "hello boy ********************************** GrpcSession RunProto";
   string handle;
   TF_RETURN_IF_ERROR(Handle(&handle));
   req->set_session_handle(handle);
@@ -316,6 +337,7 @@ Status GrpcSession::PRunSetup(const std::vector<string>& input_names,
                               const std::vector<string>& output_names,
                               const std::vector<string>& target_nodes,
                               string* handle) {
+  LOG(ERROR) << "hello boy ********************************** GrpcSession PRunSetup";
   // Convert to proto
   PartialRunSetupRequest req;
   PartialRunSetupResponse resp;
@@ -341,6 +363,7 @@ Status GrpcSession::PRun(const string& handle,
                          const std::vector<std::pair<string, Tensor>>& inputs,
                          const std::vector<string>& output_names,
                          std::vector<Tensor>* outputs) {
+  LOG(ERROR) << "hello boy ********************************** GrpcSession PRun";
   RunOptions run_options;
   run_options.set_timeout_in_ms(options_.config.operation_timeout_in_ms());
   return RunHelper(run_options, inputs, output_names, /* targets */ {}, outputs,
@@ -348,6 +371,7 @@ Status GrpcSession::PRun(const string& handle,
 }
 
 Status GrpcSession::Close() {
+  LOG(ERROR) << "hello boy ********************************** GrpcSession Close";
   CloseSessionRequest req;
   {
     mutex_lock l(mu_);
@@ -364,6 +388,7 @@ Status GrpcSession::Close() {
 }
 
 Status GrpcSession::ListDevices(std::vector<DeviceAttributes>* response) {
+  LOG(ERROR) << "hello boy ********************************** GrpcSession ListDevices";
   ListDevicesRequest req;
   {
     mutex_lock l(mu_);
@@ -401,12 +426,14 @@ Status GrpcSession::ListDevices(std::vector<DeviceAttributes>* response) {
 }
 
 void GrpcSession::SetRemoteMaster(std::unique_ptr<MasterInterface> master) {
+  LOG(ERROR) << "hello boy ********************************** GrpcSession SetRemoteMaster";
   master_ = std::move(master);
 }
 
 // Static method.
 Status GrpcSession::Reset(const SessionOptions& options,
                           const std::vector<string>& containers) {
+  LOG(ERROR) << "hello boy ********************************** GrpcSession Reset";
   SharedGrpcChannelPtr master_channel;
   TF_RETURN_IF_ERROR(
       NewHostPortGrpcChannel(options.target.substr(kSchemePrefixLength),
@@ -424,6 +451,7 @@ Status GrpcSession::Reset(const SessionOptions& options,
 
 Status GrpcSession::MakeCallable(const CallableOptions& callable_options,
                                  CallableHandle* out_handle) {
+  LOG(ERROR) << "hello boy ********************************** GrpcSession MakeCallable";
   MakeCallableRequest req;
   TF_RETURN_IF_ERROR(Handle(req.mutable_session_handle()));
   *req.mutable_options() = callable_options;
@@ -440,6 +468,7 @@ Status GrpcSession::RunCallable(CallableHandle handle,
                                 const std::vector<Tensor>& feed_tensors,
                                 std::vector<Tensor>* fetch_tensors,
                                 RunMetadata* run_metadata) {
+  LOG(ERROR) << "hello boy ********************************** GrpcSession RunCallable";
   RunCallableRequest req;
   TF_RETURN_IF_ERROR(Handle(req.mutable_session_handle()));
   req.set_handle(handle);
@@ -464,6 +493,7 @@ Status GrpcSession::RunCallable(CallableHandle handle,
 }
 
 Status GrpcSession::ReleaseCallable(CallableHandle handle) {
+  LOG(ERROR) << "hello boy ********************************** GrpcSession ReleaseCallable";
   ReleaseCallableRequest req;
   TF_RETURN_IF_ERROR(Handle(req.mutable_session_handle()));
   req.set_handle(handle);
@@ -481,6 +511,7 @@ class GrpcSessionFactory : public SessionFactory {
 
   Status NewSession(const SessionOptions& options,
                     Session** out_session) override {
+    LOG(ERROR) << "hello boy ********************************** GrpcSessionFactory NewSession";
     std::unique_ptr<GrpcSession> session;
     TF_RETURN_IF_ERROR(GrpcSession::Create(options, &session));
     *out_session = session.release();

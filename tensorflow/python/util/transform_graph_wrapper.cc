@@ -65,6 +65,7 @@ PYBIND11_MODULE(_pywrap_transform_graph, m) {
       "TransformGraphWithStringInputs",
       [](const py::object graph_def_string, const py::object inputs_string,
          const py::object outputs_string, const py::object transforms_string) {
+  LOG(ERROR) << "hello boy ********************************** TransformGraphWithStringInputs";
         return py::bytes(tensorflow::TransformGraphWithStringInputs(
             graph_def_string.cast<std::string>(),
             inputs_string.cast<std::string>(),

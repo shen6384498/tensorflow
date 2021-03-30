@@ -71,6 +71,7 @@ Session* NewSession(const SessionOptions& options) {
   // currently a no-op.
   session_created->GetCell()->Set(true);
   Session* out_session;
+  LOG(ERROR) << "hello boy ********************************** NewSession NewSession";
   s = NewSession(options, &out_session);
   if (!s.ok()) {
     LOG(ERROR) << "Failed to create session: " << s;
@@ -91,6 +92,7 @@ Status NewSession(const SessionOptions& options, Session** out_session) {
   // provided). For builds using "tensorflow/core/platform/default", this is
   // currently a no-op.
   session_created->GetCell()->Set(true);
+  LOG(ERROR) << "hello boy ********************************** NewSession NewSession 2";
   s = factory->NewSession(options, out_session);
   if (!s.ok()) {
     *out_session = nullptr;

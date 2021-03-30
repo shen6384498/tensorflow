@@ -107,6 +107,7 @@ TEST_F(XlaKernelCreatorTest, OneFloatOneResourceArgument) {
   (*(callsite->node_def.mutable_attr()))["_XlaMustCompile"] = BoolAttr(true);
 
   // Note: need to set attribute on the created node.
+    LOG(ERROR) << "hello boy ********************************** Call CreateKernel 11";
   Status status = xla_kernel_creator.CreateKernel(flr_, callsite, &kernel_);
   ASSERT_TRUE(status.ok()) << status.ToString();
 
@@ -129,6 +130,7 @@ TEST_F(XlaKernelCreatorTest, FailsIfXlaCompileAttrNotSet) {
   Init({fdef});
   XlaKernelCreator xla_kernel_creator;
 
+    LOG(ERROR) << "hello boy ********************************** Call CreateKernel 12";
   Status status =
       xla_kernel_creator.CreateKernel(flr_, ToNodeProperties(R"proto(
                                         name: 'XTimesY'
@@ -146,6 +148,7 @@ TEST_F(XlaKernelCreatorTest, FailsIfXlaCompileAttrIsSetToFalse) {
   Init({fdef});
   XlaKernelCreator xla_kernel_creator;
 
+    LOG(ERROR) << "hello boy ********************************** Call CreateKernel 13";
   Status status =
       xla_kernel_creator.CreateKernel(flr_, ToNodeProperties(R"proto(
                                         name: 'XTimesY'

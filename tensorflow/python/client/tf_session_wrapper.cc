@@ -329,6 +329,7 @@ PYBIND11_MODULE(_pywrap_tf_session, m) {
         // Release GIL.
         py::gil_scoped_release release;
         auto output = TF_NewSession(graph, opts, status.get());
+        LOG(ERROR) << "hello boy ********************************** TF_NewSession NewSession";
         tensorflow::MaybeRaiseRegisteredFromTFStatusWithGIL(status.get());
         return output;
       },
@@ -337,6 +338,7 @@ PYBIND11_MODULE(_pywrap_tf_session, m) {
   m.def(
       "TF_NewSessionRef",
       [](TF_Graph* graph, const TF_SessionOptions* opts) {
+        LOG(ERROR) << "hello boy ********************************** TF_NewSessionRef";
         tensorflow::Safe_TF_StatusPtr status =
             tensorflow::make_safe(TF_NewStatus());
         // Release GIL.

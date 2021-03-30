@@ -97,6 +97,7 @@ string DebugString(const Tensor& x, const Tensor& y) {
 }
 
 void ConcurrentSteps(const Options* opts, int session_index) {
+  LOG(ERROR) << "hello boy ********************************** ConcurrentSteps NewSession";
   // Creates a session.
   SessionOptions options;
   std::unique_ptr<Session> session(NewSession(options));

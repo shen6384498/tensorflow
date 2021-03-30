@@ -381,7 +381,9 @@ Status EagerServiceImpl::ExecuteOp(const Operation& operation,
 
   absl::FixedArray<tensorflow::TensorHandle*> retvals(num_retvals);
   VLOG(3) << "ServerContext: Calling EagerExecute for op " << operation.id();
+    LOG(ERROR) << "hello boy ********************************** EagerExecute start 2";
   TF_RETURN_IF_ERROR(EagerExecute(op.get(), retvals.data(), &num_retvals));
+    LOG(ERROR) << "hello boy ********************************** EagerExecute end 2";
 
   eager_context->RemoteMgr()->AddOperationOutputs(
       absl::MakeSpan(retvals.data(), num_retvals), operation.id());

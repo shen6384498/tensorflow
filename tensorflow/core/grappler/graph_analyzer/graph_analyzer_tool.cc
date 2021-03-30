@@ -69,6 +69,7 @@ void MaybePruneGraph(const tensorflow::MetaGraphDef& metagraph,
 }
 
 void GraphAnalyzerTool(const string& file_name, int n) {
+  LOG(ERROR) << "hello boy ********************************** GraphAnalyzerTool";
   if (n < 1) {
     LOG(FATAL) << "Invalid subgraph size " << n << ", must be at least 1";
   }

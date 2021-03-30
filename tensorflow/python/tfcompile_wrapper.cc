@@ -41,6 +41,7 @@ PYBIND11_MODULE(_pywrap_tfcompile, m) {
          std::string out_header, std::string out_session_module,
          std::string mlir_components, bool gen_name_to_index,
          bool gen_program_shape) {
+  LOG(ERROR) << "hello boy ********************************** Compile";
         tensorflow::tfcompile::MainFlags flags;
         flags.graph = std::move(graph);
         flags.config = std::move(config);

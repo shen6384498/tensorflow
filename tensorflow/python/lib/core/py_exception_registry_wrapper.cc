@@ -28,5 +28,6 @@ PYBIND11_MODULE(_pywrap_py_exception_registry, m) {
     tensorflow::PyExceptionRegistry::Init(code_to_exc_type_map.ptr());
   });
   m.def("PyExceptionRegistry_Lookup",
-        [](TF_Code code) { tensorflow::PyExceptionRegistry::Lookup(code); });
+        [](TF_Code code) { 
+  tensorflow::PyExceptionRegistry::Lookup(code); });
 };

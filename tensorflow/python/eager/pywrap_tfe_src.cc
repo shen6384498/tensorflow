@@ -75,6 +75,7 @@ TFE_Op* GetOp(TFE_Context* ctx, const char* op_or_function_name,
               const char* raw_device_name, TF_Status* status) {
   std::unique_ptr<TFE_Op> op = ReleaseThreadLocalOp(ctx);
   if (!op) {
+    LOG(ERROR) << "hello boy ********************************** make unique OperationInterface";
     op.reset(new TFE_Op{std::make_unique<tensorflow::OperationInterface>(ctx)});
   }
   status->status = op->operation->Reset(op_or_function_name, raw_device_name);
@@ -840,6 +841,7 @@ void TFE_Py_ExecuteCancelable(TFE_Context* ctx, const char* device_name,
                               TFE_CancellationManager* cancellation_manager,
                               TFE_OutputTensorHandles* outputs,
                               TF_Status* out_status) {
+    LOG(ERROR) << "hello boy ********************************** api TFE_Py_ExecuteCancelable";
   TFE_Op* op = GetOp(ctx, op_name, device_name, out_status);
   auto cleaner = tensorflow::gtl::MakeCleanup([ctx, op] { ReturnOp(ctx, op); });
   if (!out_status->status.ok()) return;
@@ -1667,9 +1669,13 @@ bool* ThreadTapeIsStopped() {
   return &thread_tape_is_stopped;
 }
 
-void TFE_Py_TapeSetStopOnThread() { *ThreadTapeIsStopped() = true; }
+void TFE_Py_TapeSetStopOnThread() {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
+ *ThreadTapeIsStopped() = true; }
 
-void TFE_Py_TapeSetRestartOnThread() { *ThreadTapeIsStopped() = false; }
+void TFE_Py_TapeSetRestartOnThread() { 
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
+  *ThreadTapeIsStopped() = false; }
 
 PyObject* TFE_Py_TapeSetIsStopped() {
   if (*ThreadTapeIsStopped()) {
@@ -2479,6 +2485,7 @@ PyObject* TFE_Py_TapeSetRecordOperationBackprop(PyObject* op_type,
 }
 
 void TFE_Py_TapeSetDeleteTrace(tensorflow::int64 tensor_id) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
   for (TFE_Py_Tape* tape : *GetTapeSet()) {
     tape->tape->DeleteTrace(tensor_id);
   }
@@ -3082,6 +3089,7 @@ void MaybeNotifyVariableAccessed(PyObject* input) {
 bool ReadVariableOp(const FastPathOpExecInfo& parent_op_exec_info,
                     PyObject* input, tensorflow::Safe_PyObjectPtr* output,
                     TF_Status* status) {
+    LOG(ERROR) << "hello boy ********************************** api ReadVariableOp";
   MaybeNotifyVariableAccessed(input);
 
   TFE_Op* op = TFE_NewOp(parent_op_exec_info.ctx, "ReadVariableOp", status);
@@ -3330,6 +3338,7 @@ bool RunCallbacks(
 }  // namespace
 
 PyObject* TFE_Py_FastPathExecute_C(PyObject* args) {
+    LOG(ERROR) << "hello boy ********************************** api TFE_Py_FastPathExecute_C";
   tensorflow::profiler::TraceMe activity(
       "TFE_Py_FastPathExecute_C", tensorflow::profiler::TraceMeLevel::kInfo);
   Py_ssize_t args_size = PyTuple_GET_SIZE(args);

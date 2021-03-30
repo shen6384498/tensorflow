@@ -61,6 +61,7 @@ static std::unique_ptr<Graph> MakeOuterGraph(
           .Finalize(&def));
 
   Status status;
+  LOG(ERROR) << "hello boy ********************************** call AddNode 6";
   Node* launch = scope.graph()->AddNode(def, &status);
   TF_CHECK_OK(status);
   TF_CHECK_OK(scope.DoShapeInference(launch));

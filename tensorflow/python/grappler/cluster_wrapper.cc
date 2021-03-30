@@ -77,6 +77,7 @@ PYBIND11_MODULE(_pywrap_tf_cluster, m) {
   m.def("TF_NewCluster",
         [](bool allow_soft_placement,
            bool disable_detailed_stats) -> tensorflow::grappler::Cluster* {
+  LOG(ERROR) << "hello boy ********************************** TF_NewCluster";
           // TODO(petebu): Make these named arguments with default values
           // instead.
           int num_cpu_cores =
@@ -96,6 +97,7 @@ PYBIND11_MODULE(_pywrap_tf_cluster, m) {
   m.def("TF_NewVirtualCluster",
         [](const std::vector<py::bytes>& serialized_named_devices)
             -> tensorflow::grappler::Cluster* {
+  LOG(ERROR) << "hello boy ********************************** TF_NewVirtualCluster";
           std::vector<tensorflow::NamedDevice> named_devices;
           for (const auto& s : serialized_named_devices) {
             tensorflow::NamedDevice named_device;
@@ -122,6 +124,7 @@ PYBIND11_MODULE(_pywrap_tf_cluster, m) {
         });
 
   m.def("TF_ShutdownCluster", [](tensorflow::grappler::Cluster* cluster) {
+  LOG(ERROR) << "hello boy ********************************** TF_ShutdownCluster";
     // TODO(petebu): Do we need to hold the GIL here?
     py::gil_scoped_acquire acquire;
     cluster->Shutdown();
@@ -129,6 +132,7 @@ PYBIND11_MODULE(_pywrap_tf_cluster, m) {
 
   m.def("TF_ListDevices",
         [](tensorflow::grappler::Cluster* cluster) -> std::vector<py::bytes> {
+  LOG(ERROR) << "hello boy ********************************** TF_ListDevices";
           const std::unordered_map<std::string, tensorflow::DeviceProperties>&
               devices = cluster->GetDevices();
           std::vector<py::bytes> named_devices;
@@ -142,6 +146,7 @@ PYBIND11_MODULE(_pywrap_tf_cluster, m) {
         });
 
   m.def("TF_ListAvailableOps", []() -> std::vector<std::string> {
+  LOG(ERROR) << "hello boy ********************************** TF_ListAvailableOps";
     tensorflow::OpRegistry* registry = tensorflow::OpRegistry::Global();
     std::vector<tensorflow::OpDef> ops;
     registry->GetRegisteredOps(&ops);
@@ -158,6 +163,7 @@ PYBIND11_MODULE(_pywrap_tf_cluster, m) {
       [](tensorflow::grappler::Cluster* cluster,
          tensorflow::grappler::GrapplerItem* item)
           -> std::unordered_map<std::string, std::vector<std::string>> {
+  LOG(ERROR) << "hello boy ********************************** TF_GetSupportedDevices";
         if (cluster == nullptr || item == nullptr) {
           MaybeRaiseRegisteredFromStatus(tensorflow::Status(
               tensorflow::errors::Internal("You need both a cluster and an "
@@ -240,6 +246,7 @@ PYBIND11_MODULE(_pywrap_tf_cluster, m) {
       });
 
   m.def("TF_EstimatePerformance", [](const py::bytes& serialized_device) {
+  LOG(ERROR) << "hello boy ********************************** TF_EstimatePerformance";
     tensorflow::NamedDevice device;
     if (!device.ParseFromString(serialized_device)) {
       throw std::invalid_argument(
@@ -255,6 +262,7 @@ PYBIND11_MODULE(_pywrap_tf_cluster, m) {
         [](tensorflow::grappler::GrapplerItem* item,
            tensorflow::grappler::Cluster* cluster, bool generate_timeline)
             -> std::tuple<std::vector<py::bytes>, double, py::bytes> {
+  LOG(ERROR) << "hello boy ********************************** TF_MeasureCosts";
           const int num_measurements = cluster->type() == "virtual" ? 1 : 10;
           tensorflow::grappler::MeasuringCostEstimator cost_measure(
               cluster, num_measurements, 0);
@@ -296,6 +304,7 @@ PYBIND11_MODULE(_pywrap_tf_cluster, m) {
          tensorflow::grappler::Cluster* cluster)
           -> std::unordered_map<std::string,
                                 std::tuple<int64_t, std::vector<MemoryUsage>>> {
+  LOG(ERROR) << "hello boy ********************************** TF_DeterminePeakMemoryUsage";
         if (item == nullptr || cluster == nullptr) {
           MaybeRaiseRegisteredFromStatus(
               tensorflow::Status(tensorflow::errors::Internal(

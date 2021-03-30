@@ -1101,6 +1101,8 @@ Status BaseGPUDeviceFactory::CreateDevices(
   for (const InterconnectMap& im : interconnect_maps) {
     LOG(INFO) << "Device interconnect " << im.name << " with strength "
               << im.strength << " edge matrix:";
+              
+    LOG(INFO) << "hello boy ****************************************  test";
     string line_buf = "     ";
     for (int i = 0; i < visible_gpu_order.size(); ++i) {
       strings::StrAppend(&line_buf, visible_gpu_order[i].value(), " ");

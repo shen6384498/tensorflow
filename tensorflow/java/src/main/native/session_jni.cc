@@ -102,6 +102,7 @@ JNIEXPORT jlong JNICALL Java_org_tensorflow_Session_allocate2(
   if (target != nullptr) {
     ctarget = env->GetStringUTFChars(target, nullptr);
   }
+  LOG(ERROR) << "hello boy ********************************** Java_org_tensorflow_Session_allocate2 NewSession";
   TF_Session* session = TF_NewSession(graph, opts, status);
   if (config != nullptr) {
     env->ReleaseByteArrayElements(config, cconfig, JNI_ABORT);

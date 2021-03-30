@@ -194,6 +194,8 @@ tensorflow::mutex_lock LockGpu(const se::StreamExecutor* stream_exec) {
 StatusOr<std::unique_ptr<se::KernelBase>> CreateKernel(
     absl::string_view kernel_name, uint64 num_args, absl::string_view ptx,
     absl::Span<const uint8> cubin_data, se::StreamExecutor* stream_exec) {
+      
+    LOG(ERROR) << "hello boy ********************************** Call CreateKernel 16";
   se::MultiKernelLoaderSpec loader_spec(num_args);
   loader_spec.AddCudaPtxInMemory(ptx, kernel_name);
 

@@ -373,6 +373,8 @@ Status MustCompileWithXLA(const EagerOperation* op, const EagerContext& ctx,
 //    running without an explicitly requested device.
 Status EagerLocalExecute(EagerOperation* op, TensorHandle** retvals,
                          int* num_retvals) {
+                           
+    LOG(ERROR) << "hello boy ********************************** EagerLocalExecute start";
   MEMDEBUG_CACHE_OP(op->op_name());
   profiler::TraceMe activity(
       [&] { return absl::StrCat("EagerLocalExecute: ", op->Name()); },
@@ -532,6 +534,7 @@ Status EagerLocalExecute(EagerOperation* op, TensorHandle** retvals,
         get_op_id = [&ctx]() { return ctx.RemoteMgr()->NextOpId(); };
       }
 #endif  // IS_MOBILE_PLATFORM
+    LOG(ERROR) << "hello boy ********************************** new KernelAndDeviceFunc 2";
       kernel.reset(new KernelAndDeviceFunc(
           flr, ctx.pflr(), std::move(input_dev_ptrs),
           std::move(input_resource_variable_dtypes_and_shapes), runner,
@@ -541,11 +544,14 @@ Status EagerLocalExecute(EagerOperation* op, TensorHandle** retvals,
     } else {
       DVLOG(2) << "Running " << ndef.op() << " using op kernel. "
                << ". Full node_def=" << ndef.DebugString();
+      
+    LOG(ERROR) << "hello boy ********************************** new KernelAndDeviceOp 2";
       kernel.reset(new KernelAndDeviceOp(
           ctx.GetRendezvous(), ctx.LogMemory(), flr, runner,
           ctx.GetCollectiveExecutorHandle(), ctx.HostCPU()));
     }
 
+    LOG(ERROR) << "hello boy ********************************** init KernelAndDeviceOp 2";
     TF_RETURN_IF_ERROR(kernel->Init(ndef, graph_collector));
 
     if (op->is_function()) {
@@ -596,7 +602,9 @@ Status EagerLocalExecute(EagerOperation* op, TensorHandle** retvals,
     // input handles are ready before executing them.
     // TODO(b/137118203): Consider executing "cheap" kernels inline for
     // performance.
+    LOG(ERROR) << "hello boy ********************************** AddOrExecute start";
     s = executor.AddOrExecute(std::move(node));
+    LOG(ERROR) << "hello boy ********************************** AddOrExecute end";
   } else {
     for (int i = 0; i < num_outputs; ++i) {
       retvals[i] = nullptr;
@@ -604,7 +612,9 @@ Status EagerLocalExecute(EagerOperation* op, TensorHandle** retvals,
     ExecuteNode node(&ctx, op->Inputs(), op->remote_func_params(), kernel,
                      graph_collector, op->GetCancellationManager(),
                      {retvals, static_cast<size_t>(num_outputs)});
+    LOG(ERROR) << "hello boy ********************************** SyncExecute start";
     s = executor.SyncExecute(&node);
+    LOG(ERROR) << "hello boy ********************************** SyncExecute end";
   }
   // Since the operation failed, we need to Unref any outputs if they were
   // allocated.
@@ -615,6 +625,7 @@ Status EagerLocalExecute(EagerOperation* op, TensorHandle** retvals,
       }
     }
   }
+    LOG(ERROR) << "hello boy ********************************** EagerLocalExecute end";
 
   return s;
 }
@@ -930,6 +941,7 @@ Status MaybeUpdateOpDevice(EagerOperation* op) {
 
 Status EagerExecute(EagerOperation* op, TensorHandle** retvals,
                     int* num_retvals) {
+    LOG(ERROR) << "hello boy ********************************** EagerExecute";
   profiler::TraceMe activity(
       [&] { return absl::StrCat("EagerExecute: ", op->Name()); },
       profiler::TraceMeLevel::kInfo);

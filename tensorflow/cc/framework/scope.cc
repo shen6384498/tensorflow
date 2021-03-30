@@ -500,6 +500,7 @@ CompositeOpScopes Scope::GetCompositeOpScopes(
 
 Status Scope::DoShapeInference(Node* node) const {
   if (impl_->disable_shape_inference_) return Status::OK();
+  LOG(ERROR) << "hello boy ********************************** DoShapeInference";
   return impl_->refiner_->AddNode(node);
 }
 

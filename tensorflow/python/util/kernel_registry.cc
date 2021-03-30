@@ -26,6 +26,7 @@ namespace tensorflow {
 namespace swig {
 
 string TryFindKernelClass(const string& serialized_node_def) {
+  LOG(ERROR) << "hello boy ********************************** TryFindKernelClass";    
   tensorflow::NodeDef node_def;
   if (!node_def.ParseFromString(serialized_node_def)) {
     LOG(WARNING) << "Error parsing node_def";

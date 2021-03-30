@@ -321,6 +321,7 @@ REGISTER_KERNEL_BUILDER(
 class WhileOp : public AsyncOpKernel {
  public:
   explicit WhileOp(OpKernelConstruction* ctx) : AsyncOpKernel(ctx) {
+  LOG(ERROR) << "hello boy ********************************** WhileOp construct";
     OP_REQUIRES_OK(ctx, ctx->GetAttr("cond", &cond_func_));
     OP_REQUIRES_OK(ctx, ctx->GetAttr("body", &body_func_));
   }
@@ -328,6 +329,7 @@ class WhileOp : public AsyncOpKernel {
   ~WhileOp() override {}
 
   void ComputeAsync(OpKernelContext* ctx, DoneCallback done) override {
+  LOG(ERROR) << "hello boy ********************************** WhileOp ComputeAsync";
     auto lib = ctx->function_library();
     OP_REQUIRES_ASYNC(ctx, lib != nullptr,
                       errors::Internal("No function library"), done);

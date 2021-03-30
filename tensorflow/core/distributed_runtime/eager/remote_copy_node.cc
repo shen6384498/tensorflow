@@ -51,6 +51,7 @@ Status CreateUncachedKernelAndDeviceOp(
   }
 
   auto runner = (flr->runner() != nullptr) ? flr->runner() : ctx.runner();
+    LOG(ERROR) << "hello boy ********************************** new KernelAndDeviceOp ";
   kernel->reset(new KernelAndDeviceOp(ctx.GetRendezvous(), ctx.LogMemory(), flr,
                                       runner, ctx.GetCollectiveExecutorHandle(),
                                       ctx.HostCPU()));

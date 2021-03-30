@@ -534,6 +534,7 @@ Status CreateTRTNode(const ConversionParams& params,
 
 Status RegisterGraphToFunctionLibrary(const GraphDef& segment_graph_def,
                                       Graph* graph, const string& engine_name) {
+  LOG(ERROR) << "hello boy ********************************** RegisterGraphToFunctionLibrary";
   Graph segment_graph(graph->flib_def());
   TF_RETURN_IF_ERROR(ConvertGraphDefToGraph(GraphConstructorOptions(),
                                             segment_graph_def, &segment_graph));

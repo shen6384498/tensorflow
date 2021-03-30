@@ -288,8 +288,10 @@ Status OperationInterface::Execute(
     absl::FixedArray<std::unique_ptr<AbstractTensorHandleInterface>>* retvals,
     int* num_retvals) {
   absl::FixedArray<tensorflow::TensorHandle*> handle_retvals(*num_retvals);
+    LOG(ERROR) << "hello boy ********************************** EagerExecute start 1";
   TF_RETURN_IF_ERROR(
       EagerExecute(&operation_, handle_retvals.data(), num_retvals));
+    LOG(ERROR) << "hello boy ********************************** EagerExecute end 1";
   for (int i = 0; i < *num_retvals; ++i) {
     retvals->at(i).reset(
         new tensorflow::TensorHandleInterface(handle_retvals[i]));

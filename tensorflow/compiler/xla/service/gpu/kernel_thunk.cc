@@ -53,6 +53,7 @@ Status KernelThunk::Initialize(const GpuExecutable& executable,
   // profiles.
   auto it = kernel_cache_.find(executor);
   if (kernel_cache_.end() == it) {
+    LOG(ERROR) << "hello boy ********************************** Call CreateKernel 15";
     TF_ASSIGN_OR_RETURN(
         std::unique_ptr<se::KernelBase> kernel,
         CreateKernel(kernel_name_, args_.size(), executable.text(),

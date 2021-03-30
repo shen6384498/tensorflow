@@ -29,6 +29,7 @@ namespace py = ::pybind11;
 
 PYBIND11_MODULE(_pywrap_device_lib, m) {
   m.def("list_devices", [](py::object serialized_config) {
+  LOG(ERROR) << "hello boy ********************************** list_devices";
     tensorflow::ConfigProto config;
     if (!serialized_config.is_none()) {
       config.ParseFromString(
