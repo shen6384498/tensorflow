@@ -98,6 +98,7 @@ Status CreateCond(const Scope& scope, const CondGraphBuilderFn& cond,
   // TODO(skyewm): the control dep will be added to all nodes in the cond graph.
   // This is at best unnecessary, and at worst may prevent different parts of
   // different loop iterations from executing in parallel.
+  VLOG(2) << "hello boy ********************************** CreateCond ";
   Scope cond_scope =
       scope.NewSubScope("cond").WithControlDependencies(inputs[0]);
   Output raw_cond_out;
