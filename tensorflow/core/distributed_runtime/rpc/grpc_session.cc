@@ -481,6 +481,7 @@ class GrpcSessionFactory : public SessionFactory {
 
   Status NewSession(const SessionOptions& options,
                     Session** out_session) override {
+  LOG(ERROR) << "hello boy ********************************** GrpcSessionFactory NewSession";
     std::unique_ptr<GrpcSession> session;
     TF_RETURN_IF_ERROR(GrpcSession::Create(options, &session));
     *out_session = session.release();

@@ -359,6 +359,7 @@ Status SingleMachine::ResetSession() {
   thread_pool_.reset(new thread::ThreadPool(
       Env::Default(), SanitizeThreadSuffix("single_machine"), 2));
 
+  LOG(ERROR) << "hello boy ********************************** ResetSession NewSession";
   session_.reset(NewSession(options_));
   if (!session_) {
     return errors::Unknown("Failed to create session");

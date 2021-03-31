@@ -89,6 +89,7 @@ class FuzzSession {
 
     Scope root = Scope::DisabledShapeInferenceScope().ExitOnError();
     SessionOptions options;
+  LOG(ERROR) << "hello boy ********************************** InitIfNeeded NewSession";
     session_ = std::unique_ptr<Session>(NewSession(options));
 
     BuildGraph(root);

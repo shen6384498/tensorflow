@@ -52,6 +52,7 @@ ClientSession::ClientSession(const Scope& scope) : ClientSession(scope, "") {}
 ClientSession::ClientSession(const Scope& scope,
                              const SessionOptions& session_options) {
   Session* new_session;
+  LOG(ERROR) << "hello boy ********************************** ClientSession NewSession";
   Status status = NewSession(session_options, &new_session);
   TF_CHECK_OK(status) << status;
   impl_.reset(new Impl(new_session, scope.graph_as_shared_ptr()));

@@ -158,6 +158,7 @@ TF_Buffer TF_GetBuffer(TF_Buffer* buffer) { return *buffer; }
 TF_DeprecatedSession* TF_NewDeprecatedSession(const TF_SessionOptions* opt,
                                               TF_Status* status) {
   Session* session;
+  LOG(ERROR) << "hello boy ********************************** TF_NewDeprecatedSession NewSession";
   status->status = NewSession(opt->options, &session);
   if (status->status.ok()) {
     return new TF_DeprecatedSession({session});
@@ -2168,6 +2169,7 @@ TF_Session::TF_Session(tensorflow::Session* s, TF_Graph* g)
 
 TF_Session* TF_NewSession(TF_Graph* graph, const TF_SessionOptions* opt,
                           TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************************** TF_NewSession NewSession";
   Session* session;
   status->status = NewSession(opt->options, &session);
   if (status->status.ok()) {

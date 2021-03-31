@@ -242,6 +242,7 @@ RemoteFusedGraphExecuteUtils::GetExecutorBuildRegistry() {
   CHECK(output_tensors != nullptr);
   SessionOptions session_options;
   session_options.env = Env::Default();
+  LOG(ERROR) << "hello boy ********************************** GetExecutorBuildRegistry NewSession";
   std::unique_ptr<Session> session =
       std::unique_ptr<Session>(NewSession(session_options));
   Status status = session->Create(graph_def);
