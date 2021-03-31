@@ -65,6 +65,7 @@ string NextIterationName(const Scope& scope, int loop_var_idx) {
 // `scope`. `enter_output` is the `loop_var_idx`-th Enter node's output.
 Status CreateMerge(const Scope& scope, int loop_var_idx,
                    const Output& enter_output, Output* merge_output) {
+  LOG(ERROR) << "hello boy ********************************** BuildWhileLoop ";
   // The merge nodes accept the while loop's back edges as an input (i.e. the
   // not-yet-created next iteration nodes). Use the underlying NodeBuilder API
   // directly to create the back edge.
@@ -98,7 +99,7 @@ Status CreateCond(const Scope& scope, const CondGraphBuilderFn& cond,
   // TODO(skyewm): the control dep will be added to all nodes in the cond graph.
   // This is at best unnecessary, and at worst may prevent different parts of
   // different loop iterations from executing in parallel.    
-  LOG(INFO) << "hello boy ********************************** CreateCond ";
+  LOG(ERROR) << "hello boy ********************************** CreateCond ";
   Scope cond_scope =
       scope.NewSubScope("cond").WithControlDependencies(inputs[0]);
   Output raw_cond_out;
@@ -124,7 +125,7 @@ Status CreateBody(const Scope& scope, const BodyGraphBuilderFn& body,
                   std::vector<Output>* outputs) {
   DCHECK(outputs != nullptr);
   DCHECK(outputs->empty());
-  LOG(INFO) << "hello boy ********************************** CreateBody ";
+  LOG(ERROR) << "hello boy ********************************** CreateBody ";
 
   // The control dependency is analogous to that in CreateCond().
   Scope body_scope =
@@ -179,7 +180,7 @@ Status BuildWhileLoop(const Scope& scope, const std::vector<Output>& inputs,
   DCHECK(!inputs.empty());
   DCHECK(outputs != nullptr);
   DCHECK(outputs->empty());
-  LOG(INFO) << "hello boy ********************************** BuildWhileLoop ";
+  LOG(ERROR) << "hello boy ********************************** BuildWhileLoop ";
 
   TF_RETURN_IF_ERROR(scope.status());
   const size_t num_loop_vars = inputs.size();

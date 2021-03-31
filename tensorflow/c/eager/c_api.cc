@@ -672,7 +672,9 @@ tensorflow::Status UpdateTFE_ContextWithServerDef(
 
 extern "C" {
 
-TFE_ContextOptions* TFE_NewContextOptions() { return new TFE_ContextOptions; }
+TFE_ContextOptions* TFE_NewContextOptions() { 
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
+  return new TFE_ContextOptions; }
 
 void TFE_ContextOptionsSetConfig(TFE_ContextOptions* options, const void* proto,
                                  size_t proto_len, TF_Status* status) {
@@ -686,6 +688,7 @@ void TFE_ContextOptionsSetAsync(TFE_ContextOptions* options,
 
 void TFE_ContextOptionsSetDevicePlacementPolicy(
     TFE_ContextOptions* options, TFE_ContextDevicePlacementPolicy policy) {
+  LOG(ERROR) << "hello boy ********************************** TFE_ContextOptionsSetDevicePlacementPolicy";
   options->device_placement_policy = policy;
 }
 

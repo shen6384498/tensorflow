@@ -74,6 +74,7 @@ void TF_EnableXLACompilation(TF_SessionOptions* options, unsigned char enable) {
 }
 
 unsigned char TF_SetXlaEnableLazyCompilation(unsigned char enable) {
+  LOG(ERROR) << "hello boy ********************************** TF_SetXlaEnableLazyCompilation";
   tensorflow::BuildXlaOpsPassFlags* flags =
       tensorflow::GetBuildXlaOpsPassFlags();
   bool original = flags->tf_xla_enable_lazy_compilation;
@@ -82,6 +83,7 @@ unsigned char TF_SetXlaEnableLazyCompilation(unsigned char enable) {
 }
 
 unsigned char TF_SetTfXlaCpuGlobalJit(unsigned char enable) {
+  LOG(ERROR) << "hello boy ********************************** TF_SetTfXlaCpuGlobalJit";
   tensorflow::MarkForCompilationPassFlags* flags =
       tensorflow::GetMarkForCompilationPassFlags();
   bool original = flags->tf_xla_cpu_global_jit;
@@ -90,20 +92,24 @@ unsigned char TF_SetTfXlaCpuGlobalJit(unsigned char enable) {
 }
 
 void TF_SetXlaAutoJitMode(const char* mode) {
+  LOG(ERROR) << "hello boy ********************************** TF_SetXlaAutoJitMode";
   tensorflow::SetXlaAutoJitFlagFromFlagString(mode);
 }
 
 unsigned char TF_GetXlaConstantFoldingDisabled() {
+  LOG(ERROR) << "hello boy ********************************** TF_GetXlaConstantFoldingDisabled";
   return static_cast<unsigned char>(
       tensorflow::GetBuildXlaOpsPassFlags()->tf_xla_disable_constant_folding);
 }
 
 void TF_SetXlaConstantFoldingDisabled(unsigned char should_enable) {
+  LOG(ERROR) << "hello boy ********************************** TF_SetXlaConstantFoldingDisabled";
   tensorflow::GetBuildXlaOpsPassFlags()->tf_xla_disable_constant_folding =
       static_cast<bool>(should_enable);
 }
 
 void TF_SetXlaMinClusterSize(int size) {
+  LOG(ERROR) << "hello boy ********************************** TF_SetXlaMinClusterSize";
   tensorflow::MarkForCompilationPassFlags* flags =
       tensorflow::GetMarkForCompilationPassFlags();
   flags->tf_xla_min_cluster_size = size;
@@ -112,6 +118,7 @@ void TF_SetXlaMinClusterSize(int size) {
 TF_Buffer* TF_CreateConfig(unsigned char enable_xla_compilation,
                            unsigned char gpu_memory_allow_growth,
                            unsigned int num_cpu_devices) {
+  LOG(ERROR) << "hello boy ********************************** TF_CreateConfig";
   tensorflow::ConfigProto config;
   auto* optimizer_options =
       config.mutable_graph_options()->mutable_optimizer_options();
@@ -152,6 +159,7 @@ TF_Buffer* TF_CreateConfig(unsigned char enable_xla_compilation,
 }
 
 TF_Buffer* TF_CreateRunOptions(unsigned char enable_full_trace) {
+  LOG(ERROR) << "hello boy ********************************** TF_CreateRunOptions";
   tensorflow::RunOptions options;
   if (enable_full_trace) {
     options.set_trace_level(tensorflow::RunOptions::FULL_TRACE);
@@ -164,6 +172,7 @@ TF_Buffer* TF_CreateRunOptions(unsigned char enable_full_trace) {
 }
 
 const char* TF_GraphDebugString(TF_Graph* graph, size_t* len) {
+  LOG(ERROR) << "hello boy ********************************** TF_GraphDebugString";
   tensorflow::mutex_lock c(graph->mu);
   const auto& debug_str = graph->graph.ToGraphDefDebug().DebugString();
   *len = debug_str.size();
@@ -173,6 +182,7 @@ const char* TF_GraphDebugString(TF_Graph* graph, size_t* len) {
 }
 
 char* TF_FunctionDebugString(TF_Function* func, size_t* len) {
+  LOG(ERROR) << "hello boy ********************************** TF_FunctionDebugString";
   const auto& debug_str = DebugString(func->fdef);
   *len = debug_str.size();
   char* ret = static_cast<char*>(malloc(*len + 1));

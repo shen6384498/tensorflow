@@ -75,6 +75,7 @@ static StatusOr<std::unique_ptr<se::MultiDeviceAdapter>> CreateBFCAllocator(
 
 StatusOr<std::shared_ptr<PyLocalClient>> GetNvidiaGpuClient(
     bool asynchronous, const GpuAllocatorConfig& allocator_config) {
+  LOG(ERROR) << "hello boy ********************************** GetNvidiaGpuClient";
   TF_ASSIGN_OR_RETURN(se::Platform * platform,
                       PlatformUtil::GetPlatform("CUDA"));
   if (platform->VisibleDeviceCount() <= 0) {

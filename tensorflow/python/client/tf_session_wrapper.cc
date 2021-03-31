@@ -338,6 +338,7 @@ PYBIND11_MODULE(_pywrap_tf_session, m) {
   m.def(
       "TF_NewSessionRef",
       [](TF_Graph* graph, const TF_SessionOptions* opts) {
+        LOG(ERROR) << "hello boy ********************************** TF_NewSessionRef";
         tensorflow::Safe_TF_StatusPtr status =
             tensorflow::make_safe(TF_NewStatus());
         // Release GIL.

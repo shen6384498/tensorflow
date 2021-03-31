@@ -23,6 +23,7 @@ limitations under the License.
 PYBIND11_MODULE(_pywrap_mlir, m) {
   m.def("ImportGraphDef",
         [](const std::string &graphdef, const std::string &pass_pipeline) {
+  LOG(ERROR) << "hello boy ********************************** ImportGraphDef";
           tensorflow::Safe_TF_StatusPtr status =
               tensorflow::make_safe(TF_NewStatus());
           std::string output =
@@ -34,6 +35,7 @@ PYBIND11_MODULE(_pywrap_mlir, m) {
   m.def("ExperimentalConvertSavedModelToMlir",
         [](const std::string &saved_model_path,
            const std::string &exported_names, bool show_debug_info) {
+  LOG(ERROR) << "hello boy ********************************** ExperimentalConvertSavedModelToMlir";
           tensorflow::Safe_TF_StatusPtr status =
               tensorflow::make_safe(TF_NewStatus());
           std::string output = tensorflow::ExperimentalConvertSavedModelToMlir(
@@ -45,6 +47,7 @@ PYBIND11_MODULE(_pywrap_mlir, m) {
   m.def("ExperimentalConvertSavedModelV1ToMlir",
         [](const std::string &saved_model_path, const std::string &tags,
            bool show_debug_info) {
+  LOG(ERROR) << "hello boy ********************************** ExperimentalConvertSavedModelV1ToMlir";
           tensorflow::Safe_TF_StatusPtr status =
               tensorflow::make_safe(TF_NewStatus());
           std::string output =
@@ -57,6 +60,7 @@ PYBIND11_MODULE(_pywrap_mlir, m) {
   m.def("ExperimentalRunPassPipeline",
         [](const std::string &mlir_txt, const std::string &pass_pipeline,
            bool show_debug_info) {
+  LOG(ERROR) << "hello boy ********************************** ExperimentalRunPassPipeline";
           tensorflow::Safe_TF_StatusPtr status =
               tensorflow::make_safe(TF_NewStatus());
           std::string output = tensorflow::ExperimentalRunPassPipeline(

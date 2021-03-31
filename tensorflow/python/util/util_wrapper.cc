@@ -27,12 +27,14 @@ PYBIND11_MODULE(_pywrap_utils, m) {
   )pbdoc";
   m.def("RegisterType",
         [](const py::handle& type_name, const py::handle& type) {
+  LOG(ERROR) << "hello boy ********************************** RegisterType";
           return tensorflow::pyo_or_throw(
               tensorflow::swig::RegisterType(type_name.ptr(), type.ptr()));
         });
   m.def(
       "IsTensor",
       [](const py::handle& o) {
+  LOG(ERROR) << "hello boy ********************************** IsTensor";
         bool result = tensorflow::swig::IsTensor(o.ptr());
         if (PyErr_Occurred()) {
           throw py::error_already_set();
@@ -45,6 +47,7 @@ PYBIND11_MODULE(_pywrap_utils, m) {
   m.def(
       "IsSequence",
       [](const py::handle& o) {
+  LOG(ERROR) << "hello boy ********************************** IsSequence";
         bool result = tensorflow::swig::IsSequence(o.ptr());
         return result;
       },
@@ -61,6 +64,7 @@ PYBIND11_MODULE(_pywrap_utils, m) {
   m.def(
       "IsSequenceOrComposite",
       [](const py::handle& o) {
+  LOG(ERROR) << "hello boy ********************************** IsSequenceOrComposite";
         bool result = tensorflow::swig::IsSequenceOrComposite(o.ptr());
         if (PyErr_Occurred()) {
           throw py::error_already_set();
@@ -80,6 +84,7 @@ PYBIND11_MODULE(_pywrap_utils, m) {
   m.def(
       "IsCompositeTensor",
       [](const py::handle& o) {
+  LOG(ERROR) << "hello boy ********************************** IsCompositeTensor";
         bool result = tensorflow::swig::IsCompositeTensor(o.ptr());
         if (PyErr_Occurred()) {
           throw py::error_already_set();
@@ -98,6 +103,7 @@ PYBIND11_MODULE(_pywrap_utils, m) {
   m.def(
       "IsTypeSpec",
       [](const py::handle& o) {
+  LOG(ERROR) << "hello boy ********************************** AssertSameStructureForData";
         bool result = tensorflow::swig::IsTypeSpec(o.ptr());
         if (PyErr_Occurred()) {
           throw py::error_already_set();
@@ -116,6 +122,7 @@ PYBIND11_MODULE(_pywrap_utils, m) {
   m.def(
       "IsNamedtuple",
       [](const py::handle& o, bool strict) {
+  LOG(ERROR) << "hello boy ********************************** AssertSameStructureForData";
         return tensorflow::pyo_or_throw(
             tensorflow::swig::IsNamedtuple(o.ptr(), strict));
       },
@@ -125,6 +132,7 @@ PYBIND11_MODULE(_pywrap_utils, m) {
   m.def(
       "IsMapping",
       [](const py::handle& o) {
+  LOG(ERROR) << "hello boy ********************************** AssertSameStructureForData";
         bool result = tensorflow::swig::IsMapping(o.ptr());
         if (PyErr_Occurred()) {
           throw py::error_already_set();
@@ -143,6 +151,7 @@ PYBIND11_MODULE(_pywrap_utils, m) {
   m.def(
       "IsMutableMapping",
       [](const py::handle& o) {
+  LOG(ERROR) << "hello boy ********************************** AssertSameStructureForData";
         bool result = tensorflow::swig::IsMutableMapping(o.ptr());
         if (PyErr_Occurred()) {
           throw py::error_already_set();
@@ -161,6 +170,7 @@ PYBIND11_MODULE(_pywrap_utils, m) {
   m.def(
       "IsMappingView",
       [](const py::handle& o) {
+  LOG(ERROR) << "hello boy ********************************** AssertSameStructureForData";
         bool result = tensorflow::swig::IsMappingView(o.ptr());
         if (PyErr_Occurred()) {
           throw py::error_already_set();
@@ -181,6 +191,7 @@ PYBIND11_MODULE(_pywrap_utils, m) {
       [](const py::handle& o) {
         bool result = tensorflow::swig::IsAttrs(o.ptr());
         if (PyErr_Occurred()) {
+  LOG(ERROR) << "hello boy ********************************** AssertSameStructureForData";
           throw py::error_already_set();
         }
         return result;
@@ -197,6 +208,7 @@ PYBIND11_MODULE(_pywrap_utils, m) {
   m.def(
       "SameNamedtuples",
       [](const py::handle& o1, const py::handle& o2) {
+  LOG(ERROR) << "hello boy ********************************** AssertSameStructureForData";
         return tensorflow::pyo_or_throw(
             tensorflow::swig::SameNamedtuples(o1.ptr(), o2.ptr()));
       },
@@ -207,6 +219,7 @@ PYBIND11_MODULE(_pywrap_utils, m) {
       "AssertSameStructure",
       [](const py::handle& o1, const py::handle& o2, bool check_types,
          bool expand_composites) {
+  LOG(ERROR) << "hello boy ********************************** AssertSameStructureForData";
         bool result = tensorflow::swig::AssertSameStructure(
             o1.ptr(), o2.ptr(), check_types, expand_composites);
         if (PyErr_Occurred()) {
@@ -220,6 +233,7 @@ PYBIND11_MODULE(_pywrap_utils, m) {
   m.def(
       "Flatten",
       [](const py::handle& o, bool expand_composites) {
+  LOG(ERROR) << "hello boy ********************************** AssertSameStructureForData";
         return tensorflow::pyo_or_throw(
             tensorflow::swig::Flatten(o.ptr(), expand_composites));
       },
@@ -256,6 +270,7 @@ PYBIND11_MODULE(_pywrap_utils, m) {
   m.def(
       "IsSequenceForData",
       [](const py::handle& o) {
+  LOG(ERROR) << "hello boy ********************************** AssertSameStructureForData";
         bool result = tensorflow::swig::IsSequenceForData(o.ptr());
         if (PyErr_Occurred()) {
           throw py::error_already_set();
@@ -280,6 +295,7 @@ PYBIND11_MODULE(_pywrap_utils, m) {
   m.def(
       "FlattenForData",
       [](const py::handle& o) {
+  LOG(ERROR) << "hello boy ********************************** AssertSameStructureForData";
         return tensorflow::pyo_or_throw(
             tensorflow::swig::FlattenForData(o.ptr()));
       },
@@ -298,6 +314,7 @@ PYBIND11_MODULE(_pywrap_utils, m) {
   m.def(
       "AssertSameStructureForData",
       [](const py::handle& o1, const py::handle& o2, bool check_types) {
+  LOG(ERROR) << "hello boy ********************************** AssertSameStructureForData";
         bool result = tensorflow::swig::AssertSameStructureForData(
             o1.ptr(), o2.ptr(), check_types);
         if (PyErr_Occurred()) {
@@ -311,6 +328,7 @@ PYBIND11_MODULE(_pywrap_utils, m) {
   m.def(
       "IsResourceVariable",
       [](const py::handle& o) {
+  LOG(ERROR) << "hello boy ********************************** IsResourceVariable";
         bool result = tensorflow::swig::IsResourceVariable(o.ptr());
         if (PyErr_Occurred()) {
           throw py::error_already_set();
@@ -329,6 +347,7 @@ PYBIND11_MODULE(_pywrap_utils, m) {
   m.def(
       "IsVariable",
       [](const py::handle& o) {
+  LOG(ERROR) << "hello boy ********************************** IsVariable";
         bool result = tensorflow::swig::IsVariable(o.ptr());
         if (PyErr_Occurred()) {
           throw py::error_already_set();

@@ -1667,9 +1667,13 @@ bool* ThreadTapeIsStopped() {
   return &thread_tape_is_stopped;
 }
 
-void TFE_Py_TapeSetStopOnThread() { *ThreadTapeIsStopped() = true; }
+void TFE_Py_TapeSetStopOnThread() {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
+ *ThreadTapeIsStopped() = true; }
 
-void TFE_Py_TapeSetRestartOnThread() { *ThreadTapeIsStopped() = false; }
+void TFE_Py_TapeSetRestartOnThread() { 
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
+  *ThreadTapeIsStopped() = false; }
 
 PyObject* TFE_Py_TapeSetIsStopped() {
   if (*ThreadTapeIsStopped()) {
@@ -2479,6 +2483,7 @@ PyObject* TFE_Py_TapeSetRecordOperationBackprop(PyObject* op_type,
 }
 
 void TFE_Py_TapeSetDeleteTrace(tensorflow::int64 tensor_id) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
   for (TFE_Py_Tape* tape : *GetTapeSet()) {
     tape->tape->DeleteTrace(tensor_id);
   }
