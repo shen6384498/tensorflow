@@ -18,7 +18,7 @@ limitations under the License.
 #include "tensorflow/python/lib/core/pybind11_lib.h"
 #include "tensorflow/python/util/util.h"
 #include "tensorflow/core/framework/logging.h"
-
+using namespace tensorflow;
 namespace py = pybind11;
 const int ERROR=2;
 PYBIND11_MODULE(_pywrap_utils, m) {
