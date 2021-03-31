@@ -73,12 +73,14 @@ SessionOptions ClientSession::Impl::MakeDefaultSessionOptions(
 
 Status ClientSession::Run(const std::vector<Output>& fetch_outputs,
                           std::vector<Tensor>* outputs) const {
+  LOG(INFO) << "hello boy ********************************** ClientSession::Run 1";
   return Run(FeedType{}, fetch_outputs, {}, outputs);
 }
 
 Status ClientSession::Run(const FeedType& inputs,
                           const std::vector<Output>& fetch_outputs,
                           std::vector<Tensor>* outputs) const {
+  LOG(INFO) << "hello boy ********************************** ClientSession::Run 2";
   return Run(inputs, fetch_outputs, {}, outputs);
 }
 
@@ -86,6 +88,7 @@ Status ClientSession::Run(const FeedType& inputs,
                           const std::vector<Output>& fetch_outputs,
                           const std::vector<Operation>& run_outputs,
                           std::vector<Tensor>* outputs) const {
+  LOG(INFO) << "hello boy ********************************** ClientSession::Run 3";
   return Run(RunOptions(), inputs, fetch_outputs, run_outputs, outputs,
              nullptr);
 }
@@ -107,6 +110,7 @@ Status ClientSession::Run(const RunOptions& run_options, const FeedType& inputs,
                           const std::vector<Operation>& run_outputs,
                           std::vector<Tensor>* outputs,
                           RunMetadata* run_metadata) const {
+  LOG(INFO) << "hello boy ********************************** ClientSession::Run 4";
   std::vector<std::pair<string, Tensor>> feeds;
   for (auto const& feed : inputs) {
     TF_RETURN_IF_ERROR(feed.second.status);
@@ -133,6 +137,7 @@ Status ClientSession::Run(
     const std::vector<Operation>& run_outputs, std::vector<Tensor>* outputs,
     RunMetadata* run_metadata,
     const thread::ThreadPoolOptions& threadpool_options) const {
+  LOG(INFO) << "hello boy ********************************** ClientSession::Run 5";
   std::vector<std::pair<string, Tensor>> feeds;
   for (auto const& feed : inputs) {
     TF_RETURN_IF_ERROR(feed.second.status);
