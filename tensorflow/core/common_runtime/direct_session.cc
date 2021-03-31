@@ -835,6 +835,9 @@ Status DirectSession::Run(const RunOptions& run_options,
                           RunMetadata* run_metadata,
                           const thread::ThreadPoolOptions& threadpool_options) {
   LOG(ERROR) << "hello boy ********************************** DirectSession Run";
+  for(const auto& i :inputs){
+  LOG(ERROR) << "hello boy ********************************** DirectSession Run inputs:"<< i.first;
+  }
   TF_RETURN_IF_ERROR(CheckNotClosed());
   TF_RETURN_IF_ERROR(CheckGraphCreated("Run()"));
   direct_session_runs->GetCell()->IncrementBy(1);
