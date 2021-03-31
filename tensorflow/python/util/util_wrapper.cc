@@ -17,7 +17,7 @@ limitations under the License.
 #include "pybind11/pytypes.h"
 #include "tensorflow/python/lib/core/pybind11_lib.h"
 #include "tensorflow/python/util/util.h"
-#include "tensorflow/core/framework/logging.h"
+#include "tensorflow/core/platform/logging.h"
 using namespace tensorflow;
 using namespace tensorflow::internal;
 namespace py = pybind11;
