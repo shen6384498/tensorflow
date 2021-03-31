@@ -838,6 +838,12 @@ Status DirectSession::Run(const RunOptions& run_options,
   for(const auto& i :inputs){
   LOG(ERROR) << "hello boy ********************************** DirectSession Run inputs:"<< i.first;
   }
+  for(const auto& i :output_names){
+  LOG(ERROR) << "hello boy ********************************** DirectSession Run inputs:"<< i;
+  }
+  for(const auto& i :target_nodes){
+  LOG(ERROR) << "hello boy ********************************** DirectSession Run inputs:"<< i;
+  }
   TF_RETURN_IF_ERROR(CheckNotClosed());
   TF_RETURN_IF_ERROR(CheckGraphCreated("Run()"));
   direct_session_runs->GetCell()->IncrementBy(1);
