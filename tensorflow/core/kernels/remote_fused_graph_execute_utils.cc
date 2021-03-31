@@ -32,6 +32,7 @@ limitations under the License.
 
 namespace tensorflow {
 namespace {
+  const int ERROR=2;
 const Node* FindNodeByName(const string& name, const Graph& graph) {
   for (const Node* node : graph.nodes()) {
     CHECK_NOTNULL(node);
