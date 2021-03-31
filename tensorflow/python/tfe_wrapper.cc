@@ -409,8 +409,8 @@ PYBIND11_MODULE(_pywrap_tfe, m) {
     tensorflow::MaybeRaiseRegisteredFromTFStatus(status.get());
   });
   m.def("TFE_ContextHasFunction", [](py::handle& ctx, const char* name) {
-    tensorflow::Safe_TF_StatusPtr status =
   LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
+    tensorflow::Safe_TF_StatusPtr status =
         tensorflow::make_safe(TF_NewStatus());
     auto output =
         TFE_ContextHasFunction(tensorflow::InputTFE_Context(ctx), name);
@@ -679,6 +679,7 @@ PYBIND11_MODULE(_pywrap_tfe, m) {
         [](const py::handle& op_type, const py::handle& output_tensors,
            const py::handle& input_tensors, const py::handle& backward_function,
            const py::handle& forwardprop_output_indices) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
           return tensorflow::pyo_or_throw(
               TFE_Py_TapeSetRecordOperationForwardprop(
                   op_type.ptr(), output_tensors.ptr(), input_tensors.ptr(),
@@ -689,6 +690,7 @@ PYBIND11_MODULE(_pywrap_tfe, m) {
            const py::handle& sources, const py::handle& output_gradients,
            const py::handle& sources_raw,
            const py::handle& unconnected_gradients) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
           tensorflow::Safe_TF_StatusPtr status =
               tensorflow::make_safe(TF_NewStatus());
           PyObject* output = TFE_Py_TapeGradient(
@@ -699,51 +701,63 @@ PYBIND11_MODULE(_pywrap_tfe, m) {
         });
 
   m.def("TFE_Py_TapeVariableAccessed", [](const py::handle& variable) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     TFE_Py_TapeVariableAccessed(variable.ptr());
   });
   m.def("TFE_Py_TapeWatch",
         [](const py::handle& tape, const py::handle& tensor) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
           TFE_Py_TapeWatch(tape.ptr(), tensor.ptr());
         });
   m.def("TFE_Py_TapeWatchVariable",
         [](const py::handle& tape, const py::handle& variable) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
           TFE_Py_TapeWatchVariable(tape.ptr(), variable.ptr());
         });
   m.def("TFE_Py_TapeWatchedVariables", [](const py::handle& tape) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     return tensorflow::pyo_or_throw(TFE_Py_TapeWatchedVariables(tape.ptr()));
   });
 
   m.def("TFE_Py_ForwardAccumulatorNew", []() {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     return tensorflow::pyo_or_throw(TFE_Py_ForwardAccumulatorNew());
   });
 
   m.def("TFE_Py_ForwardAccumulatorSetAdd", [](const py::handle& accumulator) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     return tensorflow::pyo_or_throw(
         TFE_Py_ForwardAccumulatorSetAdd(accumulator.ptr()));
   });
   m.def("TFE_Py_ForwardAccumulatorSetRemove",
         [](const py::handle& accumulator) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
           TFE_Py_ForwardAccumulatorSetRemove(accumulator.ptr());
         });
 
   m.def("TFE_Py_ForwardAccumulatorWatch",
         [](const py::handle& accumulator, const py::handle& tensor,
            const py::handle& tangent) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
           TFE_Py_ForwardAccumulatorWatch(accumulator.ptr(), tensor.ptr(),
                                          tangent.ptr());
         });
   m.def("TFE_Py_ForwardAccumulatorJVP",
         [](const py::handle& accumulator, const py::handle& tensor) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
           return tensorflow::pyo_or_throw(
               TFE_Py_ForwardAccumulatorJVP(accumulator.ptr(), tensor.ptr()));
         });
   m.def("TFE_Py_ForwardAccumulatorPushState", []() {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     return tensorflow::pyo_or_throw(TFE_Py_ForwardAccumulatorPushState());
   });
   m.def("TFE_Py_ForwardAccumulatorPopState", []() {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     return tensorflow::pyo_or_throw(TFE_Py_ForwardAccumulatorPopState());
   });
   m.def("TFE_Py_PackJVPs", [](const py::handle& tensors) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     return tensorflow::pyo_or_throw(TFE_Py_PackJVPs(tensors.ptr()));
   });
 
@@ -752,6 +766,7 @@ PYBIND11_MODULE(_pywrap_tfe, m) {
         py::return_value_policy::reference);
   m.def("TFE_ContextOptionsSetConfig", [](TFE_ContextOptions* options,
                                           py::str proto) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_RegisterFallbackExceptionClass";
     tensorflow::Safe_TF_StatusPtr status =
         tensorflow::make_safe(TF_NewStatus());
     tensorflow::Safe_TF_BufferPtr buf =
