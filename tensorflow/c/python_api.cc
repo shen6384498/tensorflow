@@ -21,6 +21,7 @@ limitations under the License.
 namespace tensorflow {
 
 void AddControlInput(TF_Graph* graph, TF_Operation* op, TF_Operation* input) {
+  LOG(INFO) << "hello boy ********************************** AddControlInput";
   mutex_lock l(graph->mu);
   graph->graph.AddControlEdge(&input->node, &op->node);
   RecordMutation(graph, *op, "adding control input");
