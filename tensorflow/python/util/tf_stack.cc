@@ -160,7 +160,6 @@ PYBIND11_MODULE(_tf_stack, m) {
 
   m.def("extract_stack", [](const py::object& limit, const py::list& mappers,
                             const py::list& filters) {
-    LOG(ERROR) << "hello boy ********************************** extract_stack";
     // In Python 3.X ``traceback.extract_stack`` allows ``limit`` to
     // either be None or -1.
     return ExtractStack(limit.is_none() ? -1 : py::cast<ssize_t>(limit),
