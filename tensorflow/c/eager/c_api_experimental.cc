@@ -170,8 +170,8 @@ void TFE_MonitoringDeleteIntGauge0(TFE_MonitoringIntGauge0* gauge) {
 }
 
 TFE_MonitoringIntGaugeCell* TFE_MonitoringGetCellIntGauge0(
-  LOG(ERROR) << "hello boy ********************************** TFE_MonitoringGetCellIntGauge0";
     TFE_MonitoringIntGauge0* gauge) {
+  LOG(ERROR) << "hello boy ********************************** TFE_MonitoringGetCellIntGauge0";
   return static_cast<TFE_MonitoringIntGaugeCell*>(
       static_cast<void*>(gauge->gauge->GetCell()));
 }
@@ -502,9 +502,9 @@ TFE_MonitoringSamplerCell* TFE_MonitoringGetCellSampler1(
 }
 
 TFE_MonitoringSampler2* TFE_MonitoringNewSampler2(
-  LOG(ERROR) << "hello boy ********************************** TFE_MonitoringNewSampler2";
     const char* name, TFE_MonitoringBuckets* buckets, TF_Status* status,
     const char* description, const char* label1, const char* label2) {
+  LOG(ERROR) << "hello boy ********************************** TFE_MonitoringNewSampler2";
   auto* result = new TFE_MonitoringSampler2(
       {name, buckets->create_buckets(), description, label1, label2});
   Set_TF_Status_from_Status(status, result->sampler->GetStatus());
