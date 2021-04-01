@@ -39,6 +39,7 @@ TFStats* tf_stat = nullptr;
 
 string RunProfile(const string& command, const string& options,
                   TFStats* tf_stats) {
+  LOG(ERROR) << "hello boy ********************************** RunProfile";
   if (command == kCmds[4]) {
     AdvisorOptionsProto option_pb;
     if (!option_pb.ParseFromString(options)) {
@@ -89,6 +90,7 @@ string RunProfile(const string& command, const string& options,
 }  // namespace
 
 bool NewProfiler(const string* graph, const string* op_log) {
+  LOG(ERROR) << "hello boy ********************************** NewProfiler";
   std::unique_ptr<GraphDef> graph_ptr(new GraphDef());
   if (graph && !graph->empty()) {
     if (!graph_ptr->ParseFromString(*graph)) {
@@ -113,12 +115,14 @@ bool NewProfiler(const string* graph, const string* op_log) {
 }
 
 void ProfilerFromFile(const string* filename) {
+  LOG(ERROR) << "hello boy ********************************** ProfilerFromFile";
   CHECK(!tf_stat) << "Currently only 1 living tfprof profiler is allowed";
   CHECK(filename) << "Missing profile filename to init profiler from file";
   tf_stat = new TFStats(*filename, nullptr);
 }
 
 void DeleteProfiler() {
+  LOG(ERROR) << "hello boy ********************************** DeleteProfiler";
   if (tf_stat) {
     delete tf_stat;
     tf_stat = nullptr;
@@ -127,6 +131,7 @@ void DeleteProfiler() {
 
 double AddStep(int64 step, const string* graph, const string* run_meta,
                const string* op_log) {
+  LOG(ERROR) << "hello boy ********************************** AddStep";
   CHECK(tf_stat);
 
   if (graph && !graph->empty()) {
@@ -155,6 +160,7 @@ double AddStep(int64 step, const string* graph, const string* run_meta,
 }
 
 string Profile(const string* command, const string* options) {
+  LOG(ERROR) << "hello boy ********************************** Profile";
   CHECK(tf_stat);
   CHECK(command) << "command mustn't be null";
   CHECK(options) << "options mustn't be null";
@@ -162,6 +168,7 @@ string Profile(const string* command, const string* options) {
 }
 
 string SerializeToString() {
+  LOG(ERROR) << "hello boy ********************************** SerializeToString";
   CHECK(tf_stat);
   string content;
   tf_stat->SerializeToString(&content);
@@ -169,6 +176,7 @@ string SerializeToString() {
 }
 
 void WriteProfile(const string* filename) {
+  LOG(ERROR) << "hello boy ********************************** WriteProfile";
   CHECK(tf_stat);
   CHECK(filename) << "empty file name when asking to write profile.";
   tf_stat->WriteProfile(*filename);
@@ -177,6 +185,7 @@ void WriteProfile(const string* filename) {
 string PrintModelAnalysis(const string* graph, const string* run_meta,
                           const string* op_log, const string* command,
                           const string* options) {
+  LOG(ERROR) << "hello boy ********************************** PrintModelAnalysis";
   CHECK(command) << "command mustn't be null";
   CHECK(options) << "options mustn't be null";
   std::unique_ptr<GraphDef> graph_ptr(new GraphDef());

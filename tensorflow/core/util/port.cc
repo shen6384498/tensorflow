@@ -19,6 +19,7 @@ limitations under the License.
 namespace tensorflow {
 
 bool IsGoogleCudaEnabled() {
+  LOG(ERROR) << "hello boy ********************************** IsGoogleCudaEnabled";
 #if GOOGLE_CUDA
   return true;
 #else
@@ -27,6 +28,7 @@ bool IsGoogleCudaEnabled() {
 }
 
 bool IsBuiltWithROCm() {
+  LOG(ERROR) << "hello boy ********************************** IsBuiltWithROCm";
 #if TENSORFLOW_USE_ROCM
   return true;
 #else
@@ -35,6 +37,7 @@ bool IsBuiltWithROCm() {
 }
 
 bool IsBuiltWithXLA() {
+  LOG(ERROR) << "hello boy ********************************** IsBuiltWithXLA";
 #if TENSORFLOW_USE_XLA
   return true;
 #else
@@ -43,6 +46,7 @@ bool IsBuiltWithXLA() {
 }
 
 bool IsBuiltWithNvcc() {
+  LOG(ERROR) << "hello boy ********************************** IsBuiltWithNvcc";
 #if TENSORFLOW_USE_NVCC
   return true;
 #else
@@ -51,6 +55,7 @@ bool IsBuiltWithNvcc() {
 }
 
 bool GpuSupportsHalfMatMulAndConv() {
+  LOG(ERROR) << "hello boy ********************************** GpuSupportsHalfMatMulAndConv";
 #if (defined(GOOGLE_CUDA) && GOOGLE_CUDA) || \
     (defined(TENSORFLOW_USE_ROCM) && TENSORFLOW_USE_ROCM)
   return true;
@@ -60,6 +65,7 @@ bool GpuSupportsHalfMatMulAndConv() {
 }
 
 bool IsMklEnabled() {
+  LOG(ERROR) << "hello boy ********************************** IsMklEnabled";
 #if defined(INTEL_MKL) && defined(ENABLE_MKL)
   return true;
 #else
