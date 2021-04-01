@@ -207,10 +207,10 @@ filegroup(
         "//tensorflow:windows": [],
         "//tensorflow:no_aws_support": [],
         "//conditions:default": [
-            "@aws//:LICENSE",
-            "@aws-c-common//:LICENSE",
-            "@aws-c-event-stream//:LICENSE",
-            "@aws-checksums//:LICENSE",
+            #"@aws//:LICENSE",
+            #"@aws-c-common//:LICENSE",
+            #"@aws-c-event-stream//:LICENSE",
+            #"@aws-checksums//:LICENSE",
         ],
     }) + select({
         "//tensorflow:android": [],
