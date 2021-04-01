@@ -27,7 +27,6 @@ PYBIND11_MODULE(_pywrap_utils, m) {
   )pbdoc";
   m.def("RegisterType",
         [](const py::handle& type_name, const py::handle& type) {
-  LOG(ERROR) << "hello boy ********************************** RegisterType";
           return tensorflow::pyo_or_throw(
               tensorflow::swig::RegisterType(type_name.ptr(), type.ptr()));
         });

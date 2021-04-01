@@ -42,6 +42,7 @@ PyObject* GetRegisteredType(const string& key) {
 }
 
 PyObject* RegisterType(PyObject* type_name, PyObject* type) {
+  LOG(ERROR) << "hello boy ********************************** RegisterType";
   if (!PyType_Check(type)) {
     PyErr_SetString(PyExc_TypeError,
                     tensorflow::strings::StrCat("Expecting a type, got ",
