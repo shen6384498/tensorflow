@@ -58,6 +58,7 @@ class PyExceptionRegistry {
   static PyObject* Lookup(TF_Code code);
 
   static inline PyObject* Lookup(error::Code code) {
+  LOG(ERROR) << "hello boy ********************************** PyObject* Lookup";
     return Lookup(static_cast<TF_Code>(code));
   }
 

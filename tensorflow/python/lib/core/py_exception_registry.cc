@@ -25,6 +25,7 @@ namespace tensorflow {
 PyExceptionRegistry* PyExceptionRegistry::singleton_ = nullptr;
 
 void PyExceptionRegistry::Init(PyObject* code_to_exc_type_map) {
+  LOG(ERROR) << "hello boy ********************************** PyExceptionRegistry::Init";
   CHECK(singleton_ == nullptr) << "PyExceptionRegistry::Init() already called";
   singleton_ = new PyExceptionRegistry;
 
