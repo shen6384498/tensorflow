@@ -37,6 +37,7 @@ namespace py = pybind11;
 
 PYBIND11_MODULE(_pywrap_file_io, m) {
   m.def("FileExists", [](const std::string& filename) {
+  LOG(ERROR) << "hello boy ********************************** FileExists";
     tensorflow::Status status;
     {
       py::gil_scoped_release release;

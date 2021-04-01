@@ -26,6 +26,7 @@ PYBIND11_MODULE(_pywrap_toco_api, m) {
          py::object toco_flags_proto_txt_raw, py::object input_contents_txt_raw,
          bool extended_return, py::object debug_info_txt_raw,
          bool enable_mlir_converter) {
+  LOG(ERROR) << "hello boy ********************************** TocoConvert";
         return tensorflow::pyo_or_throw(toco::TocoConvert(
             model_flags_proto_txt_raw.ptr(), toco_flags_proto_txt_raw.ptr(),
             input_contents_txt_raw.ptr(), extended_return,
@@ -49,6 +50,7 @@ PYBIND11_MODULE(_pywrap_toco_api, m) {
   m.def(
       "TocoGetPotentiallySupportedOps",
       []() {
+  LOG(ERROR) << "hello boy ********************************** TocoGetPotentiallySupportedOps";
         return tensorflow::pyo_or_throw(toco::TocoGetPotentiallySupportedOps());
       },
       R"pbdoc(
