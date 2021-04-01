@@ -14,6 +14,7 @@ limitations under the License.
 ==============================================================================*/
 
 #include "tensorflow/core/util/port.h"
+#include "tensorflow/core/platform/logging.h"
 
 
 namespace tensorflow {
