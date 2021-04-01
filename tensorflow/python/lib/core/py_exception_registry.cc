@@ -65,6 +65,7 @@ void PyExceptionRegistry::Init(PyObject* code_to_exc_type_map) {
 }
 
 PyObject* PyExceptionRegistry::Lookup(TF_Code code) {
+  LOG(ERROR) << "hello boy ********************************** PyExceptionRegistry Lookup";
   CHECK(singleton_ != nullptr) << "Must call PyExceptionRegistry::Init() "
                                   "before PyExceptionRegistry::Lookup()";
   CHECK_NE(code, TF_OK);
