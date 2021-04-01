@@ -1754,6 +1754,7 @@ XlaOp XlaBuilder::RngBitGenerator(RandomAlgorithm algorithm,
 
 XlaOp XlaBuilder::While(const XlaComputation& condition,
                         const XlaComputation& body, XlaOp init) {
+  LOG(ERROR) << "hello boy ********************************** XlaBuilder::While";
   return ReportErrorOrReturn([&]() -> StatusOr<XlaOp> {
     HloInstructionProto instr;
 
