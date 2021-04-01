@@ -31,7 +31,6 @@ limitations under the License.
 #include <string>
 
 #include "tensorflow/core/platform/stacktrace.h"
-#include "tensorflow/core/platform/logging.h"
 
 #endif  // defined(TF_GENERATE_STACKTRACE)
 
@@ -99,7 +98,6 @@ static void StacktraceHandler(int sig, siginfo_t *si, void *v) {
 }
 
 void InstallStacktraceHandler() {
-  LOG(ERROR) << "hello boy ********************************** InstallStacktraceHandler";
   int handled_signals[] = {SIGSEGV, SIGABRT, SIGBUS, SIGILL, SIGFPE};
 
   for (int i = 0; i < sizeof(handled_signals) / sizeof(int); i++) {
