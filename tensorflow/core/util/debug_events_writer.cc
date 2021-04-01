@@ -123,6 +123,7 @@ DebugEventsWriter::~DebugEventsWriter() { Close().IgnoreError(); }
 // static
 DebugEventsWriter* DebugEventsWriter::GetDebugEventsWriter(
     const string& dump_root, int64 circular_buffer_size) {
+  LOG(ERROR) << "hello boy ********************************** GetDebugEventsWriter";
   mutex_lock l(DebugEventsWriter::factory_mu_);
   std::unordered_map<string, std::unique_ptr<DebugEventsWriter>>* writer_pool =
       DebugEventsWriter::GetDebugEventsWriterMap();
