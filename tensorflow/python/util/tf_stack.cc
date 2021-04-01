@@ -67,7 +67,6 @@ struct FrameSummary {
 
 std::vector<FrameSummary> ExtractStack(ssize_t limit, const py::list& mappers,
                                        const py::list& filters) {
-  LOG(ERROR) << "hello boy ********************************** ExtractStack";
   const py::dict& source_map =
       mappers.size() == 0
           ? py::dict()
