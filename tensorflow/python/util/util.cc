@@ -30,11 +30,13 @@ namespace tensorflow {
 namespace swig {
 
 std::unordered_map<string, PyObject*>* PythonTypesMap() {
+  LOG(ERROR) << "hello boy ********************************** PythonTypesMap";
   static auto* m = new std::unordered_map<string, PyObject*>();
   return m;
 }
 
 PyObject* GetRegisteredType(const string& key) {
+  LOG(ERROR) << "hello boy ********************************** PythonTypesMap";
   auto* m = PythonTypesMap();
   auto it = m->find(key);
   if (it == m->end()) return nullptr;
@@ -92,6 +94,7 @@ bool IsString(PyObject* o) {
 // A lot of tensorflow code uses __class__ without checks, so it seems like
 // we only support new-style classes.
 StringPiece GetClassName(PyObject* o) {
+  LOG(ERROR) << "hello boy ********************************** PythonTypesMap";
   // __class__ is equivalent to type() for new style classes.
   // type() is equivalent to PyObject_Type()
   // (https://docs.python.org/3.5/c-api/object.html#c.PyObject_Type)
@@ -110,6 +113,7 @@ StringPiece GetClassName(PyObject* o) {
 }
 
 string PyObjectToString(PyObject* o) {
+  LOG(ERROR) << "hello boy ********************************** PythonTypesMap";
   if (o == nullptr) {
     return "<null object>";
   }
@@ -197,6 +201,7 @@ class CachedTypeCheck {
 // Returns 0 otherwise.
 // Returns -1 if an error occurred (e.g., if 'type_name' is not registered.)
 int IsInstanceOfRegisteredType(PyObject* obj, const char* type_name) {
+  LOG(ERROR) << "hello boy ********************************** PythonTypesMap";
   PyObject* type_obj = GetRegisteredType(type_name);
   if (TF_PREDICT_FALSE(type_obj == nullptr)) {
     PyErr_SetString(PyExc_RuntimeError,
@@ -215,6 +220,7 @@ int IsInstanceOfRegisteredType(PyObject* obj, const char* type_name) {
 // Returns 0 otherwise.
 // Returns -1 if an error occurred.
 int IsMappingHelper(PyObject* o) {
+  LOG(ERROR) << "hello boy ********************************** PythonTypesMap";
   static auto* const check_cache = new CachedTypeCheck([](PyObject* to_check) {
     return IsInstanceOfRegisteredType(to_check, "Mapping");
   });
@@ -225,6 +231,7 @@ int IsMappingHelper(PyObject* o) {
 // Returns 1 if `o` is considered a mutable mapping for the purposes of
 // Flatten(). Returns 0 otherwise. Returns -1 if an error occurred.
 int IsMutableMappingHelper(PyObject* o) {
+  LOG(ERROR) << "hello boy ********************************** PythonTypesMap";
   static auto* const check_cache = new CachedTypeCheck([](PyObject* to_check) {
     return IsInstanceOfRegisteredType(to_check, "MutableMapping");
   });
@@ -236,6 +243,7 @@ int IsMutableMappingHelper(PyObject* o) {
 // Returns 0 otherwise.
 // Returns -1 if an error occurred.
 int IsMappingViewHelper(PyObject* o) {
+  LOG(ERROR) << "hello boy ********************************** PythonTypesMap";
   static auto* const check_cache = new CachedTypeCheck([](PyObject* to_check) {
     return IsInstanceOfRegisteredType(to_check, "MappingView");
   });
@@ -246,6 +254,7 @@ int IsMappingViewHelper(PyObject* o) {
 // Returns 0 otherwise.
 // Returns -1 if an error occurred.
 int IsObjectProxy(PyObject* o) {
+  LOG(ERROR) << "hello boy ********************************** PythonTypesMap";
   static auto* const check_cache = new CachedTypeCheck([](PyObject* to_check) {
     return IsInstanceOfRegisteredType(to_check, "ObjectProxy");
   });
@@ -255,6 +264,7 @@ int IsObjectProxy(PyObject* o) {
 // Returns 1 if `o` is an instance of attrs-decorated class.
 // Returns 0 otherwise.
 int IsAttrsHelper(PyObject* o) {
+  LOG(ERROR) << "hello boy ********************************** PythonTypesMap";
   static auto* const check_cache = new CachedTypeCheck([](PyObject* to_check) {
     Safe_PyObjectPtr cls(PyObject_GetAttrString(to_check, "__class__"));
     if (cls) {
@@ -272,6 +282,7 @@ int IsAttrsHelper(PyObject* o) {
 // Returns 0 otherwise.
 // Returns -1 if an error occurred.
 int IsIndexedSlicesHelper(PyObject* o) {
+  LOG(ERROR) << "hello boy ********************************** PythonTypesMap";
   static auto* const check_cache = new CachedTypeCheck([](PyObject* to_check) {
     return IsInstanceOfRegisteredType(to_check, "IndexedSlices");
   });
@@ -282,6 +293,7 @@ int IsIndexedSlicesHelper(PyObject* o) {
 // Returns 0 otherwise.
 // Returns -1 if an error occurred.
 int IsTensorHelper(PyObject* o) {
+  LOG(ERROR) << "hello boy ********************************** PythonTypesMap";
   static auto* const check_cache = new CachedTypeCheck([](PyObject* to_check) {
     return IsInstanceOfRegisteredType(to_check, "Tensor");
   });
@@ -292,6 +304,7 @@ int IsTensorHelper(PyObject* o) {
 // Returns 0 otherwise.
 // Returns -1 if an error occurred.
 int IsEagerTensorHelper(PyObject* o) {
+  LOG(ERROR) << "hello boy ********************************** PythonTypesMap";
   static auto* const check_cache = new CachedTypeCheck([](PyObject* to_check) {
     return IsInstanceOfRegisteredType(to_check, "EagerTensor");
   });
@@ -302,6 +315,7 @@ int IsEagerTensorHelper(PyObject* o) {
 // Returns 0 otherwise.
 // Returns -1 if an error occurred.
 int IsResourceVariableHelper(PyObject* o) {
+  LOG(ERROR) << "hello boy ********************************** PythonTypesMap";
   static auto* const check_cache = new CachedTypeCheck([](PyObject* to_check) {
     return IsInstanceOfRegisteredType(to_check, "ResourceVariable");
   });
@@ -312,6 +326,7 @@ int IsResourceVariableHelper(PyObject* o) {
 // Returns 0 otherwise.
 // Returns -1 if an error occurred.
 int IsVariableHelper(PyObject* o) {
+  LOG(ERROR) << "hello boy ********************************** PythonTypesMap";
   static auto* const check_cache = new CachedTypeCheck([](PyObject* to_check) {
     return IsInstanceOfRegisteredType(to_check, "Variable");
   });
@@ -322,6 +337,7 @@ int IsVariableHelper(PyObject* o) {
 // Returns 0 otherwise.
 // Returns -1 if an error occurred.
 int IsSequenceHelper(PyObject* o) {
+  LOG(ERROR) << "hello boy ********************************** PythonTypesMap";
   // We treat dicts and other mappings as special cases of sequences.
   if (IsMappingHelper(o)) return true;
   if (IsMappingViewHelper(o)) return true;
@@ -369,6 +385,7 @@ class DictValueIterator : public ValueIterator {
  public:
   explicit DictValueIterator(PyObject* dict)
       : dict_(dict), keys_(PyDict_Keys(dict)) {
+  LOG(ERROR) << "hello boy ********************************** PythonTypesMap";
     if (PyList_Sort(keys_.get()) == -1) {
       invalidate();
     } else {
@@ -377,6 +394,7 @@ class DictValueIterator : public ValueIterator {
   }
 
   Safe_PyObjectPtr next() override {
+  LOG(ERROR) << "hello boy ********************************** PythonTypesMap";
     Safe_PyObjectPtr result;
     Safe_PyObjectPtr key(PyIter_Next(iter_.get()));
     if (key) {
@@ -514,6 +532,7 @@ class AttrsValueIterator : public ValueIterator {
 };
 
 bool IsSparseTensorValueType(PyObject* o) {
+  LOG(ERROR) << "hello boy ********************************** PythonTypesMap";
   PyObject* sparse_tensor_value_type = GetRegisteredType("SparseTensorValue");
   if (TF_PREDICT_FALSE(sparse_tensor_value_type == nullptr)) {
     return false;
@@ -527,6 +546,7 @@ bool IsSparseTensorValueType(PyObject* o) {
 // Returns 0 otherwise.
 // Returns -1 if an error occurred.
 bool IsCompositeTensorHelper(PyObject* o) {
+  LOG(ERROR) << "hello boy ********************************** PythonTypesMap";
   static auto* const check_cache = new CachedTypeCheck([](PyObject* to_check) {
     return IsInstanceOfRegisteredType(to_check, "CompositeTensor");
   });
@@ -538,6 +558,7 @@ bool IsCompositeTensorHelper(PyObject* o) {
 // Returns 0 otherwise.
 // Returns -1 if an error occurred.
 bool IsTypeSpecHelper(PyObject* o) {
+  LOG(ERROR) << "hello boy ********************************** PythonTypesMap";
   static auto* const check_cache = new CachedTypeCheck([](PyObject* to_check) {
     int is_type_spec = IsInstanceOfRegisteredType(to_check, "TypeSpec");
     int is_dense_spec = (IsInstanceOfRegisteredType(to_check, "TensorSpec") ||
@@ -553,6 +574,7 @@ bool IsTypeSpecHelper(PyObject* o) {
 // Returns 0 otherwise.
 // Returns -1 if an error occurred.
 int IsSequenceOrCompositeHelper(PyObject* o) {
+  LOG(ERROR) << "hello boy ********************************** PythonTypesMap";
   int is_sequence = IsSequenceHelper(o);
   int is_composite = IsCompositeTensorHelper(o);
   int is_type_spec = IsTypeSpecHelper(o);
@@ -563,11 +585,13 @@ int IsSequenceOrCompositeHelper(PyObject* o) {
 }
 
 int IsSequenceForDataHelper(PyObject* o) {
+  LOG(ERROR) << "hello boy ********************************** PythonTypesMap";
   return IsSequenceHelper(o) == 1 && !PyList_Check(o) &&
          !IsSparseTensorValueType(o);
 }
 
 ValueIteratorPtr GetValueIterator(PyObject* nested) {
+  LOG(ERROR) << "hello boy ********************************** PythonTypesMap";
   if (PyDict_Check(nested)) {
     return absl::make_unique<DictValueIterator>(nested);
   } else if (IsMappingHelper(nested)) {
@@ -581,6 +605,7 @@ ValueIteratorPtr GetValueIterator(PyObject* nested) {
 
 // Similar to above, just specialized for the functions in the data package.
 ValueIteratorPtr GetValueIteratorForData(PyObject* nested) {
+  LOG(ERROR) << "hello boy ********************************** PythonTypesMap";
   if (PyDict_Check(nested)) {
     return absl::make_unique<DictValueIterator>(nested);
   } else if (IsMappingHelper(nested)) {
@@ -596,6 +621,7 @@ ValueIteratorPtr GetValueIteratorForData(PyObject* nested) {
 
 // Similar to GetValueIterator above, but expands CompositeTensor and TypeSpec.
 ValueIteratorPtr GetValueIteratorForComposite(PyObject* nested) {
+  LOG(ERROR) << "hello boy ********************************** PythonTypesMap";
   if (IsCompositeTensor(nested)) {
     Safe_PyObjectPtr spec(PyObject_GetAttrString(nested, "_type_spec"));
     if (PyErr_Occurred() || !spec) {
@@ -627,6 +653,7 @@ bool FlattenHelper(
     PyObject* nested, PyObject* list,
     const std::function<int(PyObject*)>& is_sequence_helper,
     const std::function<ValueIteratorPtr(PyObject*)>& value_iterator_getter) {
+  LOG(ERROR) << "hello boy ********************************** PythonTypesMap";
   // if nested is not a sequence, append itself and exit
   int is_seq = is_sequence_helper(nested);
   if (is_seq == -1) return false;
