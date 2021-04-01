@@ -33,6 +33,7 @@ OutputTensor ToOutputTensor(const Output& output) {
 
 // Utility function for converting to internal C++ datatypes.
 std::vector<OutputTensor> ToOutputTensors(const std::vector<Output>& outputs) {
+  LOG(ERROR) << "hello boy ********************************** ToOutputTensors ";
   std::vector<OutputTensor> result(outputs.size());
   for (int i = 0; i < outputs.size(); ++i) {
     result[i] = ToOutputTensor(outputs[i]);
@@ -42,6 +43,7 @@ std::vector<OutputTensor> ToOutputTensors(const std::vector<Output>& outputs) {
 
 // Utility function for converting to internal C++ datatypes.
 std::vector<Node*> ToNodes(const std::vector<Output>& outputs) {
+  LOG(ERROR) << "hello boy ********************************** ToNodes ";
   std::vector<Node*> result(outputs.size());
   for (int i = 0; i < outputs.size(); ++i) {
     result[i] = outputs[i].node();
@@ -53,6 +55,7 @@ std::vector<Node*> ToNodes(const std::vector<Output>& outputs) {
 // loop being constructed with `scope`. This is used to define the backedge
 // before the NextIteration node is created.
 string NextIterationName(const Scope& scope, int loop_var_idx) {
+  LOG(ERROR) << "hello boy ********************************** NextIterationName ";
   string result;
   const string& prefix = scope.impl()->name();
   if (!prefix.empty()) strings::StrAppend(&result, prefix, "/");
@@ -65,7 +68,7 @@ string NextIterationName(const Scope& scope, int loop_var_idx) {
 // `scope`. `enter_output` is the `loop_var_idx`-th Enter node's output.
 Status CreateMerge(const Scope& scope, int loop_var_idx,
                    const Output& enter_output, Output* merge_output) {
-  LOG(ERROR) << "hello boy ********************************** BuildWhileLoop ";
+  LOG(ERROR) << "hello boy ********************************** CreateMerge ";
   // The merge nodes accept the while loop's back edges as an input (i.e. the
   // not-yet-created next iteration nodes). Use the underlying NodeBuilder API
   // directly to create the back edge.

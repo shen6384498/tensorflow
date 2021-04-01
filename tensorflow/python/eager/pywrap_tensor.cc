@@ -954,6 +954,7 @@ PyObject* TFE_Py_InitEagerTensor(PyObject* base_class) {
 }
 
 PyObject* TFE_Py_SetEagerTensorProfiler(PyObject* profiler) {
+  LOG(ERROR) << "hello boy ********************************** TFE_Py_SetEagerTensorProfiler";
   Py_XDECREF(eager_tensor_profiler);
 
   if (profiler == Py_None) {
