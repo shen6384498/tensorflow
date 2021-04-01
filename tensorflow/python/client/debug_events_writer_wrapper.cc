@@ -113,8 +113,8 @@ PYBIND11_MODULE(_pywrap_debug_events_writer, m) {
     writer->FlushNonExecutionFiles();
   });
   m.def("FlushExecutionFiles", [](const std::string& dump_root) {
-    DebugEventsWriter* writer =
   LOG(ERROR) << "hello boy ********************************** FlushExecutionFiles";
+    DebugEventsWriter* writer =
         DebugEventsWriter::GetDebugEventsWriter(dump_root);
     writer->FlushExecutionFiles();
   });
