@@ -834,7 +834,7 @@ Status DirectSession::Run(const RunOptions& run_options,
                           std::vector<Tensor>* outputs,
                           RunMetadata* run_metadata,
                           const thread::ThreadPoolOptions& threadpool_options) {
-  LOG(ERROR) << "hello boy ********************************** DirectSession Run";
+  LOG(ERROR) << "hello boy ********************************** DirectSession Run start";
   for(const auto& i :inputs){
   LOG(ERROR) << "hello boy ********************************** DirectSession Run inputs:"<< i.first;
   }
@@ -945,6 +945,7 @@ Status DirectSession::Run(const RunOptions& run_options,
     metrics::RecordGraphOutputTensors(output_size);
   }
 
+  LOG(ERROR) << "hello boy ********************************** DirectSession Run end";
   return Status::OK();
 }
 
