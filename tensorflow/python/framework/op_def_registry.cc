@@ -23,6 +23,7 @@ namespace py = pybind11;
 
 PYBIND11_MODULE(_op_def_registry, m) {
   m.def("get", [](const std::string& name) {
+  LOG(ERROR) << "hello boy ********************************** get";
     const tensorflow::OpDef* op_def = nullptr;
     auto status = tensorflow::OpRegistry::Global()->LookUpOpDef(name, &op_def);
     if (!status.ok()) return py::reinterpret_borrow<py::object>(py::none());
