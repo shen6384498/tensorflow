@@ -299,6 +299,7 @@ Status DoCallPyFunc(PyCall* call, bool* out_log_on_error) {
 }  // end namespace
 
 void InitializePyTrampoline(PyObject* trampoline) {
+  LOG(ERROR) << "hello boy ********************************** InitializePyTrampoline";
   mutex_lock l(mu);
   if (py_trampoline == nullptr) {
     py_trampoline = trampoline;
