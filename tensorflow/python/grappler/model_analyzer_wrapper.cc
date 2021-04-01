@@ -28,6 +28,7 @@ PYBIND11_MODULE(_pywrap_model_analyzer, m) {
   m.def("GenerateModelReport",
         [](const py::bytes& serialized_metagraph, bool assume_valid_feeds,
            bool debug) -> py::bytes {
+  LOG(ERROR) << "hello boy ********************************** GenerateModelReport";
           tensorflow::MetaGraphDef metagraph;
           if (!metagraph.ParseFromString(serialized_metagraph)) {
             return "The MetaGraphDef could not be parsed as a valid protocol "

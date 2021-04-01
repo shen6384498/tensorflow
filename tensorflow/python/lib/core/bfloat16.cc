@@ -674,6 +674,7 @@ void RegisterNumpyBfloat16() {
 }
 
 PyObject* Bfloat16PyType() {
+  LOG(ERROR) << "hello boy ********************************** Bfloat16PyType";
   CHECK(PyBfloat16_Type.tp_base != nullptr);
   Py_INCREF(&PyBfloat16_Type);
   return reinterpret_cast<PyObject*>(&PyBfloat16_Type);

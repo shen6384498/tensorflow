@@ -25,8 +25,11 @@ namespace py = pybind11;
 
 PYBIND11_MODULE(_pywrap_py_exception_registry, m) {
   m.def("PyExceptionRegistry_Init", [](py::object& code_to_exc_type_map) {
+  LOG(ERROR) << "hello boy ********************************** PyExceptionRegistry_Init";
     tensorflow::PyExceptionRegistry::Init(code_to_exc_type_map.ptr());
   });
   m.def("PyExceptionRegistry_Lookup",
-        [](TF_Code code) { tensorflow::PyExceptionRegistry::Lookup(code); });
+        [](TF_Code code) { 
+  LOG(ERROR) << "hello boy ********************************** PyExceptionRegistry_Lookup";
+  tensorflow::PyExceptionRegistry::Lookup(code); });
 };
