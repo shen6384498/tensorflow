@@ -31,6 +31,7 @@ limitations under the License.
 #include <string>
 
 #include "tensorflow/core/platform/stacktrace.h"
+#include "tensorflow/core/platform/logging.h"
 
 #endif  // defined(TF_GENERATE_STACKTRACE)
 
