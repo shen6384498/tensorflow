@@ -1442,6 +1442,7 @@ Status DirectSession::CreateExecutors(
         options_.config.graph_options().build_cost_model() > 0) {
       item->graph = std::move(partition_graph);
     }
+    LOG(ERROR) << "hello boy ********************************** handle one graph ojbk ";
   }
 
   // Cache the mapping from input/output names to graph elements to

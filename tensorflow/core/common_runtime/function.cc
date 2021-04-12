@@ -597,12 +597,14 @@ Status FunctionLibraryRuntimeImpl::GetRetTypes(Handle h,
 
 Status FunctionLibraryRuntimeImpl::CreateKernel(
     const std::shared_ptr<const NodeProperties>& props, OpKernel** kernel) {
+    LOG(ERROR) << "hello boy ********************************** CreateKernel 1 ";
   return CreateKernel(props, this, kernel);
 }
 
 Status FunctionLibraryRuntimeImpl::CreateKernel(
     const std::shared_ptr<const NodeProperties>& props,
     FunctionLibraryRuntime* flr, OpKernel** kernel) {
+    LOG(ERROR) << "hello boy ********************************** CreateKernel for["<<props->node_def.op()<<"]";
   // If a custom kernel creator is given, try that.
   Status s;
   if (custom_kernel_creator_ != nullptr &&

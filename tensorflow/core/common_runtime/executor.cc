@@ -1597,6 +1597,7 @@ void ExecutorImpl::InitializePending(const Graph* graph,
 }
 
 void ExecutorState::RunAsync(Executor::DoneCallback done) {
+    LOG(ERROR) << "hello boy ********************************** ExecutorState RunAsync";
   TaggedNodeSeq ready;
 
   // Ask the device to fill in the device context map.
@@ -2979,7 +2980,8 @@ void ExecutorImpl::RunAsync(const Args& args, DoneCallback done) {
 }  // namespace
 
 Status NewLocalExecutor(const LocalExecutorParams& params, const Graph& graph,
-                        Executor** executor) {
+                        Executor** executor) {                          
+  LOG(ERROR) << "hello boy ********************************** NewLocalExecutor ";
   ExecutorImpl* impl = new ExecutorImpl(params);
   const Status s = impl->Initialize(graph);
   if (s.ok()) {
@@ -3017,6 +3019,7 @@ class DefaultExecutorRegistrar {
     Status NewExecutor(const LocalExecutorParams& params, const Graph& graph,
                        std::unique_ptr<Executor>* out_executor) override {
       Executor* ret = nullptr;
+  LOG(ERROR) << "hello boy ********************************** NewExecutor ";
       TF_RETURN_IF_ERROR(NewLocalExecutor(params, std::move(graph), &ret));
       out_executor->reset(ret);
       return Status::OK();
