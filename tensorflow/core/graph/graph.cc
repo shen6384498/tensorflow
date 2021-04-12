@@ -409,7 +409,8 @@ Graph::~Graph() {
 const VersionDef& Graph::versions() const { return *versions_; }
 void Graph::set_versions(const VersionDef& versions) { *versions_ = versions; }
 
-Node* Graph::AddNode(NodeDef node_def, Status* status) {
+Node* Graph::AddNode(NodeDef node_def, Status* status) {  
+  LOG(ERROR) << "hello boy ********************************** Graph AddNode";
   const OpRegistrationData* op_reg_data;
   status->Update(ops_.LookUp(node_def.op(), &op_reg_data));
   if (!status->ok()) return nullptr;
