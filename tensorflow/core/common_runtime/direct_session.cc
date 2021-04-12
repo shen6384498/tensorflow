@@ -1610,7 +1610,7 @@ Status DirectSession::CreateGraphs(
   if (finalized_) {
     return errors::FailedPrecondition("Session has been finalized.");
   }
-
+  LOG(ERROR) << "hello boy ********************************** DirectSession CreateGraphs step1";
   std::unique_ptr<ClientGraph> client_graph;
 
   std::unique_ptr<GraphExecutionState> temp_exec_state_holder;
@@ -1636,6 +1636,8 @@ Status DirectSession::CreateGraphs(
     TF_RETURN_IF_ERROR(
         execution_state->BuildGraph(subgraph_options, &client_graph));
   }
+  
+  LOG(ERROR) << "hello boy ********************************** DirectSession CreateGraphs step2";
   *collective_graph_key = client_graph->collective_graph_key;
 
   if (subgraph_options.callable_options.feed_size() !=
@@ -1646,6 +1648,8 @@ Status DirectSession::CreateGraphs(
         " versus number of pruned feed endpoints = ",
         client_graph->feed_types.size());
   }
+  
+  LOG(ERROR) << "hello boy ********************************** DirectSession CreateGraphs step3";
   if (subgraph_options.callable_options.fetch_size() !=
       client_graph->fetch_types.size()) {
     return errors::Internal(
@@ -1655,6 +1659,7 @@ Status DirectSession::CreateGraphs(
         client_graph->fetch_types.size());
   }
 
+  LOG(ERROR) << "hello boy ********************************** DirectSession CreateGraphs step4";
   auto current_stateful_placements = execution_state->GetStatefulPlacements();
   // Update our current state based on the execution_state's
   // placements.  If there are any mismatches for a node,
@@ -1672,7 +1677,7 @@ Status DirectSession::CreateGraphs(
           node_name, " to ", iter->second, " does not match ", placement);
     }
   }
-
+  LOG(ERROR) << "hello boy ********************************** DirectSession CreateGraphs step5";
   stateful_placements_ = execution_state->GetStatefulPlacements();
 
   // Remember the graph in run state if this is a partial run.
@@ -1681,31 +1686,40 @@ Status DirectSession::CreateGraphs(
     CopyGraph(*execution_state->full_graph(), run_state_args->graph.get());
   }
 
+  LOG(ERROR) << "hello boy ********************************** DirectSession CreateGraphs step6";
   // Partition the graph across devices.
   PartitionOptions popts;
   popts.node_to_loc = [](const Node* node) {
     return node->assigned_device_name();
   };
+  
+  LOG(ERROR) << "hello boy ********************************** DirectSession CreateGraphs step7";
   popts.new_name = [this](const string& prefix) {
     return strings::StrCat(prefix, "/_", edge_name_counter_.fetch_add(1));
   };
+  
+  LOG(ERROR) << "hello boy ********************************** DirectSession CreateGraphs step8";
   popts.get_incarnation = [](const string& name) {
     // The direct session does not have changing incarnation numbers.
     // Just return '1'.
     return 1;
   };
+
+  LOG(ERROR) << "hello boy ********************************** DirectSession CreateGraphs step9";
   popts.flib_def = &client_graph->graph.flib_def();
   popts.control_flow_added = false;
 
   std::unordered_map<string, GraphDef> partitions;
   TF_RETURN_IF_ERROR(Partition(popts, &client_graph->graph, &partitions));
 
+  LOG(ERROR) << "hello boy ********************************** DirectSession CreateGraphs step10";
   std::vector<string> device_names;
   for (auto device : devices_) {
     // Extract the LocalName from the device.
     device_names.push_back(DeviceNameUtils::LocalName(device->name()));
   }
 
+  LOG(ERROR) << "hello boy ********************************** DirectSession CreateGraphs step11";
   // Check for valid partitions.
   for (const auto& partition : partitions) {
     const string local_partition_name =
@@ -1720,6 +1734,7 @@ Status DirectSession::CreateGraphs(
     }
   }
 
+  LOG(ERROR) << "hello boy ********************************** DirectSession CreateGraphs step12";
   for (auto& partition : partitions) {
     std::unique_ptr<Graph> device_graph(
         new Graph(client_graph->flib_def.get()));
@@ -1732,6 +1747,7 @@ Status DirectSession::CreateGraphs(
     outputs->emplace(partition.first, std::move(device_graph));
   }
 
+  LOG(ERROR) << "hello boy ********************************** DirectSession CreateGraphs step13";
   GraphOptimizationPassOptions optimization_options;
   optimization_options.session_options = &options_;
   optimization_options.flib_def = client_graph->flib_def.get();
@@ -1739,6 +1755,7 @@ Status DirectSession::CreateGraphs(
   TF_RETURN_IF_ERROR(OptimizationPassRegistry::Global()->RunGrouping(
       OptimizationPassRegistry::POST_PARTITIONING, optimization_options));
 
+  LOG(ERROR) << "hello boy ********************************** DirectSession CreateGraphs step14";
   Status s;
   for (auto& partition : *outputs) {
     const string& partition_name = partition.first;
@@ -1756,6 +1773,7 @@ Status DirectSession::CreateGraphs(
       break;
     }
   }
+  LOG(ERROR) << "hello boy ********************************** DirectSession CreateGraphs step15";
   *flib_def = std::move(client_graph->flib_def);
   std::swap(*input_types, client_graph->feed_types);
   std::swap(*output_types, client_graph->fetch_types);
