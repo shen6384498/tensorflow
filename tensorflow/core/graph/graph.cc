@@ -357,6 +357,7 @@ Graph::Graph(const OpRegistryInterface* ops)
     : ops_(ops, FunctionDefLibrary()),
       versions_(new VersionDef),
       arena_(8 << 10 /* 8kB */) {
+  LOG(ERROR) << "hello boy ********************************** Graph Graph";
   versions_->set_producer(TF_GRAPH_DEF_VERSION);
   versions_->set_min_consumer(TF_GRAPH_DEF_VERSION_MIN_CONSUMER);
 
@@ -383,6 +384,7 @@ Graph::Graph(const OpRegistryInterface* ops)
 
 Graph::Graph(const FunctionLibraryDefinition& flib_def)
     : Graph(flib_def.default_registry()) {
+  LOG(ERROR) << "hello boy ********************************** Graph Graph2";
   // Need a new-enough consumer to support the functions we add to the graph.
   if (flib_def.num_functions() > 0 && versions_->min_consumer() < 12) {
     versions_->set_min_consumer(12);
@@ -394,6 +396,7 @@ Graph::Graph(const FunctionLibraryDefinition& flib_def)
 Graph::~Graph() {
   // Manually call the destructors for all the Nodes we constructed using
   // placement new.
+  LOG(ERROR) << "hello boy ********************************** Graph ~Graph";
   for (Node* node : nodes_) {
     if (node != nullptr) {
       node->~Node();
@@ -406,8 +409,12 @@ Graph::~Graph() {
   // destroy them.
 }
 
-const VersionDef& Graph::versions() const { return *versions_; }
-void Graph::set_versions(const VersionDef& versions) { *versions_ = versions; }
+const VersionDef& Graph::versions() const {   
+  LOG(ERROR) << "hello boy ********************************** Graph versions";
+  return *versions_; }
+void Graph::set_versions(const VersionDef& versions) { 
+  LOG(ERROR) << "hello boy ********************************** Graph set_versions";
+  *versions_ = versions; }
 
 Node* Graph::AddNode(NodeDef node_def, Status* status) {  
   LOG(ERROR) << "hello boy ********************************** Graph AddNode";
