@@ -1616,6 +1616,7 @@ Status DirectSession::CreateGraphs(
   std::unique_ptr<GraphExecutionState> temp_exec_state_holder;
   GraphExecutionState* execution_state = nullptr;
   if (options_.config.graph_options().place_pruned_graph()) {
+  LOG(ERROR) << "hello boy ********************************** DirectSession CreateGraphs place_pruned_graph true";    
     // Because we are placing pruned graphs, we need to create a
     // new GraphExecutionState for every new unseen graph,
     // and then place it.
@@ -1628,7 +1629,9 @@ Status DirectSession::CreateGraphs(
         *execution_state_, prune_options, subgraph_options,
         &temp_exec_state_holder, &client_graph));
     execution_state = temp_exec_state_holder.get();
-  } else {
+  } else { 
+    LOG(ERROR) << "hello boy ********************************** DirectSession CreateGraphs place_pruned_graph false";    
+  
     execution_state = execution_state_.get();
     TF_RETURN_IF_ERROR(
         execution_state->BuildGraph(subgraph_options, &client_graph));
