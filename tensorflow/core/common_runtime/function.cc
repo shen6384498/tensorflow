@@ -619,7 +619,7 @@ Status FunctionLibraryRuntimeImpl::CreateKernel(
     } else {
       VLOG(2) << "Custom creator error: " << s;
     }
-    return s;vi 
+    return s; 
 
   }
 
