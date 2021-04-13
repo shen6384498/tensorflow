@@ -1397,9 +1397,11 @@ Status DirectSession::CreateExecutors(
           // is tied to a particular subgraph. Even if the function itself
           // is stateful, the `CallOp` that invokes it is not.
           if (!OpSegment::ShouldOwnKernel(lib, props->node_def.op())) {
+    LOG(ERROR) << "hello boy ********************************** Call CreateKernel 2 ";
             return lib->CreateKernel(props, kernel);
           }
           auto create_fn = [lib, &props](OpKernel** kernel) {
+    LOG(ERROR) << "hello boy ********************************** Call CreateKernel 3 ";
             return lib->CreateKernel(props, kernel);
           };
           // Kernels created for subgraph nodes need to be cached.  On
