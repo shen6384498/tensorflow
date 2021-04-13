@@ -330,11 +330,13 @@ tensorflow::Status ExecuteFlexOp(TfLiteContext* context, BufferMap* buffer_map,
 
   node_data->mutable_outputs()->ResetTensorHandles();
   int num_retvals = node_data->NumOutputs();
+    LOG(ERROR) << "hello boy ********************************** EagerExecute start 3";
   TF_RETURN_WITH_CONTEXT_IF_ERROR(
       EagerExecute(node_data->op(),
                    node_data->mutable_outputs()->GetTensorHandles()->data(),
                    &num_retvals),
       " (while executing '", node_data->name(), "' via Eager)");
+    LOG(ERROR) << "hello boy ********************************** EagerExecute end 3";
 
   if (num_retvals != node_data->NumOutputs()) {
     return tensorflow::errors::Internal(

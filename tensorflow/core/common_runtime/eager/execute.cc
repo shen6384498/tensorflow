@@ -614,7 +614,7 @@ Status EagerLocalExecute(EagerOperation* op, TensorHandle** retvals,
                      {retvals, static_cast<size_t>(num_outputs)});
     LOG(ERROR) << "hello boy ********************************** SyncExecute start";
     s = executor.SyncExecute(&node);
-    LOG(ERROR) << "hello boy ********************************** EagerLocalExecute end";
+    LOG(ERROR) << "hello boy ********************************** SyncExecute end";
   }
   // Since the operation failed, we need to Unref any outputs if they were
   // allocated.
@@ -941,6 +941,7 @@ Status MaybeUpdateOpDevice(EagerOperation* op) {
 
 Status EagerExecute(EagerOperation* op, TensorHandle** retvals,
                     int* num_retvals) {
+    LOG(ERROR) << "hello boy ********************************** EagerExecute";
   profiler::TraceMe activity(
       [&] { return absl::StrCat("EagerExecute: ", op->Name()); },
       profiler::TraceMeLevel::kInfo);
