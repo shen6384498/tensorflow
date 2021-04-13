@@ -101,6 +101,7 @@ Status KernelAndDeviceOp::Init(const NodeDef& ndef,
   std::shared_ptr<const NodeProperties> props;
   TF_RETURN_IF_ERROR(NodeProperties::CreateFromNodeDef(
       ndef, flr_->GetFunctionLibraryDefinition(), &props));
+    LOG(ERROR) << "hello boy ********************************** Call CreateKernel 17";
   TF_RETURN_IF_ERROR(flr_->CreateKernel(props, &k));
   kernel_.reset(k);
 

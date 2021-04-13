@@ -61,20 +61,28 @@ std::unique_ptr<const DynamicKernel> Create(
     functor::SamplingKernelType kernel_type) {
   switch (kernel_type) {
     case functor::Lanczos1Kernel:
+    LOG(ERROR) << "hello boy ********************************** Call CreateKernel 21";
       return CreateKernel(functor::CreateLanczos1Kernel());
     case functor::Lanczos3Kernel:
+    LOG(ERROR) << "hello boy ********************************** Call CreateKernel 22";
       return CreateKernel(functor::CreateLanczos3Kernel());
     case functor::Lanczos5Kernel:
+    LOG(ERROR) << "hello boy ********************************** Call CreateKernel 23";
       return CreateKernel(functor::CreateLanczos5Kernel());
     case functor::GaussianKernel:
+    LOG(ERROR) << "hello boy ********************************** Call CreateKernel 24";
       return CreateKernel(functor::CreateGaussianKernel());
     case functor::BoxKernel:
+    LOG(ERROR) << "hello boy ********************************** Call CreateKernel 25";
       return CreateKernel(functor::CreateBoxKernel());
     case functor::TriangleKernel:
+    LOG(ERROR) << "hello boy ********************************** Call CreateKernel 26";
       return CreateKernel(functor::CreateTriangleKernel());
     case functor::KeysCubicKernel:
+    LOG(ERROR) << "hello boy ********************************** Call CreateKernel 27";
       return CreateKernel(functor::CreateKeysCubicKernel());
     case functor::MitchellCubicKernel:
+    LOG(ERROR) << "hello boy ********************************** Call CreateKernel 28";
       return CreateKernel(functor::CreateMitchellCubicKernel());
     default:
       LOG(FATAL) << "Unknown kernel type.";

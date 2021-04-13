@@ -245,6 +245,7 @@ Status GraphMgr::InitItem(
             return lib->CreateKernel(props, kernel);
           }
           auto create_fn = [lib, &props](OpKernel** kernel) {
+    LOG(ERROR) << "hello boy ********************************** Call CreateKernel 18";
             return lib->CreateKernel(props, kernel);
           };
           // Kernels created for subgraph nodes need to be cached.  On
