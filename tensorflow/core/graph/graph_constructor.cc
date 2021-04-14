@@ -1116,6 +1116,7 @@ void GraphConstructor::PrintCycles() {
 }
 
 Status GraphConstructor::Convert() {
+  LOG(ERROR) << "hello boy ********************************** GraphConstructor Convert";
   // Import functions before adding nodes, since imported nodes may refer to
   // functions
   if (library()) {

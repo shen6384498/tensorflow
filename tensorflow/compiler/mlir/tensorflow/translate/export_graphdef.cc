@@ -553,6 +553,7 @@ StatusOr<std::unique_ptr<Graph>> Exporter::Convert(
 
   // We have to add the function library here, so a custom operation, which is
   // defined in the function library can be added to the graph.
+  LOG(ERROR) << "hello boy ********************************** Exporter::Convert 1";
   TF_RETURN_IF_ERROR(graph->AddFunctionLibrary(*flib));
   Exporter exporter(graph.get(), tf_dialect);
 
@@ -641,6 +642,7 @@ StatusOr<std::unique_ptr<Graph>> Exporter::Convert(
             name);
     if (func != nullptr) {
       TF_RETURN_IF_ERROR(ConvertLibFunction(configs, tf_dialect, func, flib));
+  LOG(ERROR) << "hello boy ********************************** Exporter::Convert 2";
       TF_RETURN_IF_ERROR(graph->AddFunctionLibrary(*flib));
     }
     return Status::OK();

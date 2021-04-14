@@ -25,6 +25,7 @@ namespace tensorflow {
 Status PartitionFunctionGraph(
     const DeviceSet& device_set, std::unique_ptr<Graph> graph,
     std::unordered_map<string, std::unique_ptr<Graph>>* subgraphs) {
+  LOG(ERROR) << "hello boy ********************************** PartitionFunctionGraph";
   PartitionOptions partition_options;
   partition_options.node_to_loc = [](const Node* node) {
     // TODO(iga): To support the distributed case, first split the graph by

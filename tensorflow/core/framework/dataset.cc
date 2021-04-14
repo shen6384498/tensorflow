@@ -271,6 +271,7 @@ Status GraphDefBuilderWrapper::AddDataset(
 Status GraphDefBuilderWrapper::AddFunction(
     SerializationContext* ctx, const string& function_name,
     const FunctionLibraryDefinition& lib_def) {
+  LOG(ERROR) << "hello boy ********************************** GraphDefBuilderWrapper AddFunction";
   if (b_->HasFunction(function_name)) {
     VLOG(1) << "Function with name " << function_name << "already exists in"
             << " the graph. It will not be added again.";

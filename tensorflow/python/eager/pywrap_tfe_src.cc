@@ -841,6 +841,7 @@ void TFE_Py_ExecuteCancelable(TFE_Context* ctx, const char* device_name,
                               TFE_CancellationManager* cancellation_manager,
                               TFE_OutputTensorHandles* outputs,
                               TF_Status* out_status) {
+    LOG(ERROR) << "hello boy ********************************** api TFE_Py_ExecuteCancelable";
   TFE_Op* op = GetOp(ctx, op_name, device_name, out_status);
   auto cleaner = tensorflow::gtl::MakeCleanup([ctx, op] { ReturnOp(ctx, op); });
   if (!out_status->status.ok()) return;
@@ -3088,6 +3089,7 @@ void MaybeNotifyVariableAccessed(PyObject* input) {
 bool ReadVariableOp(const FastPathOpExecInfo& parent_op_exec_info,
                     PyObject* input, tensorflow::Safe_PyObjectPtr* output,
                     TF_Status* status) {
+    LOG(ERROR) << "hello boy ********************************** api ReadVariableOp";
   MaybeNotifyVariableAccessed(input);
 
   TFE_Op* op = TFE_NewOp(parent_op_exec_info.ctx, "ReadVariableOp", status);
@@ -3336,6 +3338,7 @@ bool RunCallbacks(
 }  // namespace
 
 PyObject* TFE_Py_FastPathExecute_C(PyObject* args) {
+    LOG(ERROR) << "hello boy ********************************** api TFE_Py_FastPathExecute_C";
   tensorflow::profiler::TraceMe activity(
       "TFE_Py_FastPathExecute_C", tensorflow::profiler::TraceMeLevel::kInfo);
   Py_ssize_t args_size = PyTuple_GET_SIZE(args);
