@@ -347,6 +347,7 @@ Status RewriteSubgraph(const std::vector<OutputTensor>& arg_source_tensors,
     }
 
     Status status;
+  LOG(ERROR) << "hello boy ********************************** call AddNode 7";
     Node* xla_launch = graph->AddNode(def, &status);
     if (!status.ok()) {
       return status;

@@ -1051,6 +1051,7 @@ static TF_Operation* TF_FinishOperationLocked(TF_OperationDescription* desc,
 
     if (status->status.ok()) {
       // Run shape inference function for newly added node.
+  LOG(ERROR) << "hello boy ********************************** TF_FinishOperationLocked";
       status->status = desc->graph->refiner.AddNode(ret);
     }
     if (status->status.ok()) {

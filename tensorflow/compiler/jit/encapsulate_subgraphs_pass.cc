@@ -486,6 +486,7 @@ Status Encapsulator::Subgraph::RecordArg(
     Status s = builder.Finalize(&arg_def);
     if (!s.ok()) return s;
 
+  LOG(ERROR) << "hello boy ********************************** call AddNode 1";
     Node* arg = graph_->AddNode(arg_def, &s);
     if (!s.ok()) return s;
 
@@ -531,6 +532,7 @@ Status Encapsulator::Subgraph::RecordResult(
     builder.Input(src_image->name(), src_slot, dtype);
     Status s = builder.Finalize(&ret_def);
     if (!s.ok()) return s;
+  LOG(ERROR) << "hello boy ********************************** call AddNode 2";
     Node* ret = graph_->AddNode(ret_def, &s);
     if (!s.ok()) return s;
 
@@ -550,6 +552,7 @@ Status Encapsulator::Subgraph::MakeSequencingNode(const string& subgraph_name,
     Status s = builder.Finalize(&seq_def);
     if (!s.ok()) return s;
 
+  LOG(ERROR) << "hello boy ********************************** call AddNode 3";
     sequencer_ = graph_out->AddNode(seq_def, &s);
     if (!s.ok()) return s;
   }
@@ -664,6 +667,7 @@ Status Encapsulator::Subgraph::AddFunctionCallNode(
     const std::unordered_map<const Node*, Node*>& node_images,
     Graph* graph_out) {
   Status s;
+  LOG(ERROR) << "hello boy ********************************** call AddNode 4";
   call_node_ = graph_out->AddNode(call_node_def_, &s);
   if (!s.ok()) return s;
 
