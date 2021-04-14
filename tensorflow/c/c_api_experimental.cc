@@ -552,7 +552,6 @@ void TF_MakeInternalErrorStatus(TF_Status* status, const char* errMsg) {
 }
 
 struct TF_CheckpointReader : public tensorflow::checkpoint::CheckpointReader {
-    LOG(ERROR) << "hello boy ********************************** api CheckpointReader";
   using tensorflow::checkpoint::CheckpointReader::CheckpointReader;
   std::vector<std::string> variable_list;
 };
