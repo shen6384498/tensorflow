@@ -51,10 +51,12 @@ typedef std::unique_ptr<TF_Function, decltype(&TF_DeleteFunction)>
 
 // struct TF_Operation { tensorflow::Node node; };
 static TF_Operation* ToTF_Operation(Node* node) {
+    LOG(ERROR) << "hello boy ********************************** api ToTF_Operation";
   return static_cast<TF_Operation*>(static_cast<void*>(node));
 }
 
 void TF_EnableXLACompilation(TF_SessionOptions* options, unsigned char enable) {
+    LOG(ERROR) << "hello boy ********************************** api TF_EnableXLACompilation";
   tensorflow::ConfigProto& config = options->options.config;
   auto* optimizer_options =
       config.mutable_graph_options()->mutable_optimizer_options();
@@ -198,6 +200,7 @@ char* TF_FunctionDebugString(TF_Function* func, size_t* len) {
 static std::vector<UniqueFuncPtr> CreateFunctionsFromTextProto(
     const char* text_proto,
     std::function<void(FunctionDef*)>* mutate_proto_func, TF_Status* status) {
+    LOG(ERROR) << "hello boy ********************************** api CreateFunctionsFromTextProto";
   tensorflow::GraphDef gdef;
   if (!tensorflow::protobuf::TextFormat::ParseFromString(text_proto, &gdef)) {
     status->status = tensorflow::errors::Internal(
@@ -232,6 +235,7 @@ static std::vector<UniqueFuncPtr> CreateFunctionsFromTextProto(
 
 TF_Tensor* TF_DequeueNamedTensor(TF_Session* session, int tensor_id,
                                  TF_Status* status) {
+    LOG(ERROR) << "hello boy ********************************** api TF_DequeueNamedTensor";
   assert(session);
   {
     tensorflow::mutex_lock c(session->graph->mu);
@@ -271,6 +275,7 @@ TF_Tensor* TF_DequeueNamedTensor(TF_Session* session, int tensor_id,
 
 void TF_EnqueueNamedTensor(TF_Session* session, int tensor_id,
                            TF_Tensor* tensor, TF_Status* status) {
+    LOG(ERROR) << "hello boy ********************************** api TF_EnqueueNamedTensor";
   assert(session);
   {
     tensorflow::mutex_lock c(session->graph->mu);
@@ -318,6 +323,7 @@ void TF_EnqueueNamedTensor(TF_Session* session, int tensor_id,
 }
 
 TF_Buffer* TFE_GetServerDef(const char* text_proto, TF_Status* status) {
+    LOG(ERROR) << "hello boy ********************************** api TFE_GetServerDef";
   tensorflow::ServerDef server_def;
   if (!tensorflow::protobuf::TextFormat::ParseFromString(text_proto,
                                                          &server_def)) {
@@ -333,6 +339,7 @@ TF_Buffer* TFE_GetServerDef(const char* text_proto, TF_Status* status) {
 
 TFE_Context* TFE_CreateContextFromSession(TF_Session* session,
                                           TF_Status* status) {
+    LOG(ERROR) << "hello boy ********************************** api TFE_CreateContextFromSession";
   auto* opts = TFE_NewContextOptions();
 
   // Reduce GPU memory allocation, and set appropriate config options for TFE
@@ -359,6 +366,7 @@ static const char DEFAULT_CPU_DEVICE[] =
 
 static TFE_TensorHandle* createTFEQueue(TFE_Context* ctx, TF_DataType inputType,
                                         int tensor_id, TF_Status* status) {
+    LOG(ERROR) << "hello boy ********************************** api createTFEQueue";
   std::unique_ptr<TFE_Op, decltype(&TFE_DeleteOp)> queueOp(
       TFE_NewOp(ctx, "FIFOQueueV2", status), TFE_DeleteOp);
   TFE_OpSetDevice(queueOp.get(), DEFAULT_CPU_DEVICE, status);
@@ -390,6 +398,7 @@ static TFE_TensorHandle* createTFEQueue(TFE_Context* ctx, TF_DataType inputType,
 static void createTFEEnqueue(TFE_Context* ctx, TF_DataType inputType,
                              TFE_TensorHandle* queue, TFE_TensorHandle* tensor,
                              TF_Status* status) {
+    LOG(ERROR) << "hello boy ********************************** api createTFEEnqueue";
   TFE_Op* op = TFE_NewOp(ctx, "QueueEnqueueV2", status);
   if (!status->status.ok()) return;
   std::unique_ptr<TFE_Op, decltype(&TFE_DeleteOp)> op_deleter(op, TFE_DeleteOp);
@@ -412,6 +421,7 @@ static TFE_TensorHandle* createTFEDequeue(TFE_Context* ctx,
                                           TF_DataType inputType,
                                           TFE_TensorHandle* queue,
                                           TF_Status* status) {
+    LOG(ERROR) << "hello boy ********************************** api createTFEDequeue";
   TFE_Op* op = TFE_NewOp(ctx, "QueueDequeueV2", status);
   if (!status->status.ok()) return nullptr;
   std::unique_ptr<TFE_Op, decltype(&TFE_DeleteOp)> op_deleter(op, TFE_DeleteOp);
@@ -433,6 +443,7 @@ static TFE_TensorHandle* createTFEDequeue(TFE_Context* ctx,
 TFE_TensorHandle* TFE_DequeueNamedTensor(TF_Session* session, int tensor_id,
                                          TF_DataType inputType,
                                          TF_Status* status) {
+    LOG(ERROR) << "hello boy ********************************** api TFE_DequeueNamedTensor";
   assert(session);
   VLOG(1) << "Dequeuing data tensor with id " << tensor_id;
 
@@ -453,6 +464,7 @@ TFE_TensorHandle* TFE_DequeueNamedTensor(TF_Session* session, int tensor_id,
 TFE_TensorHandle* TFE_DequeueNamedTensorFromCtx(TFE_Context* ctx, int tensor_id,
                                                 TF_DataType inputType,
                                                 TF_Status* status) {
+    LOG(ERROR) << "hello boy ********************************** api TFE_DequeueNamedTensorFromCtx";
   TFE_TensorHandle* queue = createTFEQueue(ctx, inputType, tensor_id, status);
   if (!status->status.ok()) return nullptr;
   std::unique_ptr<TFE_TensorHandle, decltype(&TFE_DeleteTensorHandle)>
@@ -465,6 +477,7 @@ TFE_TensorHandle* TFE_DequeueNamedTensorFromCtx(TFE_Context* ctx, int tensor_id,
 
 void TFE_EnqueueNamedTensor(TF_Session* session, int tensor_id,
                             TFE_TensorHandle* tensor, TF_Status* status) {
+    LOG(ERROR) << "hello boy ********************************** api TFE_EnqueueNamedTensor";
   assert(session);
   VLOG(1) << "Enqueuing data tensor with id " << tensor_id;
 
@@ -485,6 +498,7 @@ void TFE_EnqueueNamedTensor(TF_Session* session, int tensor_id,
 void TFE_EnqueueNamedTensorFromCtx(TFE_Context* ctx, int tensor_id,
                                    TFE_TensorHandle* tensor,
                                    TF_Status* status) {
+    LOG(ERROR) << "hello boy ********************************** api TFE_EnqueueNamedTensorFromCtx";
   VLOG(1) << "Enqueuing data tensor with id " << tensor_id;
 
   TF_DataType inputType = TFE_TensorHandleDataType(tensor);
@@ -498,6 +512,7 @@ void TFE_EnqueueNamedTensorFromCtx(TFE_Context* ctx, int tensor_id,
 
 void TFE_EnqueueVariantTensor(TF_Session* session, int tensor_id,
                               TFE_TensorHandle* tensor, TF_Status* status) {
+    LOG(ERROR) << "hello boy ********************************** api TFE_EnqueueVariantTensor";
   VLOG(1) << "Enqueuing variant tensor with id " << tensor_id;
 
   auto ctx = TFE_CreateContextFromSession(session, status);
@@ -515,6 +530,7 @@ void TFE_EnqueueVariantTensor(TF_Session* session, int tensor_id,
 
 TFE_TensorHandle* TFE_DequeueVariantTensor(TF_Session* session, int tensor_id,
                                            TF_Status* status) {
+    LOG(ERROR) << "hello boy ********************************** api TFE_DequeueVariantTensor";
   VLOG(1) << "Dequeuing variant tensor with id " << tensor_id;
 
   auto ctx = TFE_CreateContextFromSession(session, status);
@@ -531,16 +547,19 @@ TFE_TensorHandle* TFE_DequeueVariantTensor(TF_Session* session, int tensor_id,
 }
 
 void TF_MakeInternalErrorStatus(TF_Status* status, const char* errMsg) {
+    LOG(ERROR) << "hello boy ********************************** api TF_MakeInternalErrorStatus";
   status->status = tensorflow::errors::Internal(errMsg);
 }
 
 struct TF_CheckpointReader : public tensorflow::checkpoint::CheckpointReader {
+    LOG(ERROR) << "hello boy ********************************** api CheckpointReader";
   using tensorflow::checkpoint::CheckpointReader::CheckpointReader;
   std::vector<std::string> variable_list;
 };
 
 TF_CheckpointReader* TF_NewCheckpointReader(const char* filename,
                                             TF_Status* status) {
+    LOG(ERROR) << "hello boy ********************************** api TF_NewCheckpointReader";
   TF_CheckpointReader* reader = new TF_CheckpointReader(filename, status);
   if (!status->status.ok()) {
     TF_DeleteCheckpointReader(reader);
@@ -553,30 +572,37 @@ TF_CheckpointReader* TF_NewCheckpointReader(const char* filename,
   return reader;
 }
 
-void TF_DeleteCheckpointReader(TF_CheckpointReader* reader) { delete reader; }
+void TF_DeleteCheckpointReader(TF_CheckpointReader* reader) { 
+    LOG(ERROR) << "hello boy ********************************** api TF_DeleteCheckpointReader";
+    delete reader; }
 
 int TF_CheckpointReaderHasTensor(TF_CheckpointReader* reader,
                                  const char* name) {
+    LOG(ERROR) << "hello boy ********************************** api TF_CheckpointReaderHasTensor";
   return reader->HasTensor(name);
 }
 
 const char* TF_CheckpointReaderGetVariable(TF_CheckpointReader* reader,
                                            int index) {
+    LOG(ERROR) << "hello boy ********************************** api TF_CheckpointReaderGetVariable";
   return reader->variable_list[index].c_str();
 }
 
 int TF_CheckpointReaderSize(TF_CheckpointReader* reader) {
+    LOG(ERROR) << "hello boy ********************************** api TF_CheckpointReaderSize";
   return reader->variable_list.size();
 }
 
 TF_DataType TF_CheckpointReaderGetVariableDataType(TF_CheckpointReader* reader,
                                                    const char* name) {
+    LOG(ERROR) << "hello boy ********************************** api TF_CheckpointReaderGetVariableDataType";
   const auto& m = reader->GetVariableToDataTypeMap();
   return static_cast<TF_DataType>(m.at(name));
 }
 
 TF_Tensor* TF_CheckpointReaderGetTensor(TF_CheckpointReader* reader,
                                         const char* name, TF_Status* status) {
+    LOG(ERROR) << "hello boy ********************************** api TF_CheckpointReaderGetTensor";
   std::unique_ptr<tensorflow::Tensor> tensor;
   reader->GetTensor(name, &tensor, status);
   if (!status->status.ok()) return nullptr;
@@ -586,6 +612,7 @@ TF_Tensor* TF_CheckpointReaderGetTensor(TF_CheckpointReader* reader,
 void TF_CheckpointReaderGetVariableShape(TF_CheckpointReader* reader,
                                          const char* name, int64_t* dims,
                                          int num_dims, TF_Status* status) {
+    LOG(ERROR) << "hello boy ********************************** api TF_CheckpointReaderGetVariableShape";
   const auto& shape = reader->GetVariableToShapeMap().at(name);
   int rank = shape.dims();
   if (num_dims != rank) {
@@ -600,6 +627,7 @@ void TF_CheckpointReaderGetVariableShape(TF_CheckpointReader* reader,
 
 int TF_CheckpointReaderGetVariableNumDims(TF_CheckpointReader* reader,
                                           const char* name) {
+    LOG(ERROR) << "hello boy ********************************** api TF_CheckpointReaderGetVariableNumDims";
   const auto& m = reader->GetVariableToShapeMap();
   return m.at(name).dims();
 }
@@ -614,19 +642,24 @@ struct TF_AttrBuilder : public tensorflow::AttrBuilder {
 };
 
 TF_AttrBuilder* TF_NewAttrBuilder(const char* op_name) {
+    LOG(ERROR) << "hello boy ********************************** api TF_NewAttrBuilder";
   return new TF_AttrBuilder(op_name);
 }
 
-void TF_DeleteAttrBuilder(TF_AttrBuilder* builder) { delete builder; }
+void TF_DeleteAttrBuilder(TF_AttrBuilder* builder) { 
+    LOG(ERROR) << "hello boy ********************************** api TF_DeleteAttrBuilder";
+    delete builder; }
 
 void TF_AttrBuilderSetType(TF_AttrBuilder* builder, const char* attr_name,
                            TF_DataType value) {
+    LOG(ERROR) << "hello boy ********************************** api TF_AttrBuilderSetType";
   auto iter = builder->attr_names.insert(attr_name).first;
   builder->Set(*iter, static_cast<tensorflow::DataType>(value));
 }
 
 void TF_AttrBuilderSetTypeList(TF_AttrBuilder* builder, const char* attr_name,
                                const TF_DataType* values, int num_values) {
+    LOG(ERROR) << "hello boy ********************************** api TF_AttrBuilderSetTypeList";
   auto iter = builder->attr_names.insert(attr_name).first;
   builder->Set(
       (*iter).c_str(),
@@ -637,6 +670,7 @@ void TF_AttrBuilderSetTypeList(TF_AttrBuilder* builder, const char* attr_name,
 void TF_AttrBuilderCheckCanRunOnDevice(TF_AttrBuilder* builder,
                                        const char* device_type,
                                        TF_Status* status) {
+    LOG(ERROR) << "hello boy ********************************** api TF_AttrBuilderCheckCanRunOnDevice";
   status->status = tensorflow::FindKernelDef(
       tensorflow::DeviceType(device_type), builder->BuildNodeDef(),
       /* def = */ nullptr, /* kernel_class_name = */ nullptr);
@@ -644,6 +678,7 @@ void TF_AttrBuilderCheckCanRunOnDevice(TF_AttrBuilder* builder,
 
 const char* TF_GetNumberAttrForOpListInput(const char* op_name, int input_index,
                                            TF_Status* status) {
+    LOG(ERROR) << "hello boy ********************************** api TF_GetNumberAttrForOpListInput";
   const tensorflow::OpDef* op_def = nullptr;
   status->status =
       tensorflow::OpRegistry::Global()->LookUpOpDef(op_name, &op_def);
@@ -668,6 +703,7 @@ const char* TF_GetNumberAttrForOpListInput(const char* op_name, int input_index,
 }
 
 int TF_OpIsStateful(const char* op_type, TF_Status* status) {
+    LOG(ERROR) << "hello boy ********************************** api TF_OpIsStateful";
   const tensorflow::OpRegistrationData* op_reg_data;
   status->status =
       tensorflow::OpRegistry::Global()->LookUp(op_type, &op_reg_data);
@@ -678,16 +714,19 @@ int TF_OpIsStateful(const char* op_type, TF_Status* status) {
 }
 
 void TF_InitMain(const char* usage, int* argc, char*** argv) {
+    LOG(ERROR) << "hello boy ********************************** api TF_InitMain";
   tensorflow::port::InitMain(usage, argc, argv);
 }
 
 int TF_PickUnusedPortOrDie() {
+    LOG(ERROR) << "hello boy ********************************** api TF_PickUnusedPortOrDie";
   return tensorflow::internal::PickUnusedPortOrDie();
 }
 
 TFE_TensorHandle* TFE_NewTensorHandleFromScalar(TF_DataType data_type,
                                                 void* data, size_t len,
                                                 TF_Status* status) {
+    LOG(ERROR) << "hello boy ********************************** api TFE_NewTensorHandleFromScalar";
   auto dtype = static_cast<tensorflow::DataType>(data_type);
   DCHECK(tensorflow::DataTypeCanUseMemcpy(dtype));
 
@@ -699,6 +738,7 @@ TFE_TensorHandle* TFE_NewTensorHandleFromScalar(TF_DataType data_type,
 namespace {
 tensorflow::Status EnableCollectiveOps(const tensorflow::ServerDef& server_def,
                                        TFE_Context* ctx) {
+    LOG(ERROR) << "hello boy ********************************** api EnableCollectiveOps";
   // We don't use the TF_RETURN_IF_ERROR macro directly since that destroys the
   // server object (which currently CHECK-fails) and we miss the error, instead,
   // we log the error, and then return to allow the user to see the error
@@ -745,6 +785,7 @@ TF_CAPI_EXPORT extern void TFE_EnableCollectiveOps(TFE_Context* ctx,
                                                    const void* proto,
                                                    size_t proto_len,
                                                    TF_Status* status) {
+    LOG(ERROR) << "hello boy ********************************** api TFE_EnableCollectiveOps";
   tensorflow::ServerDef server_def;
   if (!server_def.ParseFromArray(proto, proto_len)) {
     status->status = tensorflow::errors::InvalidArgument(
@@ -755,6 +796,7 @@ TF_CAPI_EXPORT extern void TFE_EnableCollectiveOps(TFE_Context* ctx,
 }
 
 TF_ShapeAndTypeList* TF_NewShapeAndTypeList(int num_items) {
+    LOG(ERROR) << "hello boy ********************************** api TF_NewShapeAndTypeList";
   TF_ShapeAndTypeList* result = new TF_ShapeAndTypeList;
   result->num_items = num_items;
   result->items = (num_items == 0) ? nullptr : new TF_ShapeAndType[num_items]();
@@ -763,6 +805,7 @@ TF_ShapeAndTypeList* TF_NewShapeAndTypeList(int num_items) {
 
 void TF_ShapeAndTypeListSetShape(TF_ShapeAndTypeList* shape_list, int index,
                                  const int64_t* dims, int num_dims) {
+    LOG(ERROR) << "hello boy ********************************** api TF_ShapeAndTypeListSetShape";
   DCHECK(index >= 0 && index < shape_list->num_items);
   TF_ShapeAndType& shape = shape_list->items[index];
   DCHECK(shape.dims == nullptr) << "Shape at " << index << " is already set!";
@@ -774,6 +817,7 @@ void TF_ShapeAndTypeListSetShape(TF_ShapeAndTypeList* shape_list, int index,
 
 void TF_ShapeAndTypeListSetUnknownShape(TF_ShapeAndTypeList* shape_list,
                                         int index) {
+    LOG(ERROR) << "hello boy ********************************** api TF_ShapeAndTypeListSetUnknownShape";
   DCHECK(index >= 0 && index < shape_list->num_items);
   TF_ShapeAndType& shape = shape_list->items[index];
   DCHECK(shape.dims == nullptr) << "Shape at " << index << " is already set!";
@@ -783,12 +827,14 @@ void TF_ShapeAndTypeListSetUnknownShape(TF_ShapeAndTypeList* shape_list,
 
 void TF_ShapeAndTypeListSetDtype(TF_ShapeAndTypeList* shape_list, int index,
                                  TF_DataType dtype) {
+    LOG(ERROR) << "hello boy ********************************** api TF_ShapeAndTypeListSetDtype";
   DCHECK(index >= 0 && index < shape_list->num_items);
   TF_ShapeAndType& shape_and_type = shape_list->items[index];
   shape_and_type.dtype = dtype;
 }
 
 void TF_DeleteShapeAndTypeList(TF_ShapeAndTypeList* shape_list) {
+    LOG(ERROR) << "hello boy ********************************** api TF_DeleteShapeAndTypeList";
   if (shape_list == nullptr) return;
   for (size_t i = 0; i < shape_list->num_items; ++i) {
     delete[] shape_list->items[i].dims;
@@ -799,6 +845,7 @@ void TF_DeleteShapeAndTypeList(TF_ShapeAndTypeList* shape_list) {
 
 void TF_DeleteShapeAndTypeListArray(TF_ShapeAndTypeList** shape_list_array,
                                     int num_items) {
+    LOG(ERROR) << "hello boy ********************************** api TF_DeleteShapeAndTypeListArray";
   if (shape_list_array == nullptr) return;
   for (int i = 0; i < num_items; ++i) {
     TF_DeleteShapeAndTypeList(shape_list_array[i]);
@@ -817,6 +864,7 @@ void TFE_InferShapes(TFE_Op* tfe_op, TF_ShapeAndTypeList* input_shapes,
                      TF_ShapeAndTypeList** output_shapes,
                      TF_ShapeAndTypeList*** output_resource_shapes_and_types,
                      TF_Status* status) {
+    LOG(ERROR) << "hello boy ********************************** api TFE_InferShapes";
   using tensorflow::NodeDef;
   using tensorflow::OpRegistrationData;
   using tensorflow::Tensor;
