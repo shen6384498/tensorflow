@@ -1644,6 +1644,7 @@ void TFE_OpAddAttrs(TFE_Op* op, const TFE_OpAttrs* attrs) {
 
 void TFE_OpAttrsSerialize(const TFE_OpAttrs* attrs, TF_Buffer* buf,
                           TF_Status* status) {
+    LOG(ERROR) << "hello boy ********************************** api ";
   tensorflow::NameAttrList name_and_attrs;
   attrs->attributes->FillAttrValueMap(name_and_attrs.mutable_attr());
   name_and_attrs.set_name(attrs->name);
@@ -1654,6 +1655,7 @@ namespace tensorflow {
 void SetOpAttrValueScalar(TFE_Context* ctx, TFE_Op* op,
                           const tensorflow::AttrValue& default_value,
                           const char* attr_name, TF_Status* status) {
+    LOG(ERROR) << "hello boy ********************************** api ";
   switch (default_value.value_case()) {
     case tensorflow::AttrValue::kS: {
       const string& v = default_value.s();
@@ -1714,15 +1716,23 @@ namespace {
 class CustomDeviceAPI : public tensorflow::CustomDevice {
  public:
   CustomDeviceAPI(TFE_CustomDevice device, void* info, string name)
-      : device_(device), info_(info), name_(name) {}
+      : device_(device), info_(info), name_(name) {
 
-  ~CustomDeviceAPI() override { device_.delete_device(info_); }
+    LOG(ERROR) << "hello boy ********************************** api ";
+
+      }
+
+  ~CustomDeviceAPI() override { 
+    
+    LOG(ERROR) << "hello boy ********************************** api ";
+    device_.delete_device(info_); }
 
   const string& name() override { return name_; }
 
   tensorflow::Status CopyTensorToDevice(
       tensorflow::TensorHandle* tensor,
       tensorflow::TensorHandle** result) override {
+    LOG(ERROR) << "hello boy ********************************** api ";
     tensor->Ref();
     TFE_TensorHandle tensor_handle{
         std::make_unique<tensorflow::TensorHandleInterface>(tensor)};
@@ -1742,6 +1752,7 @@ class CustomDeviceAPI : public tensorflow::CustomDevice {
       tensorflow::TensorHandle* tensor,
       const tensorflow::string& target_device_name,
       tensorflow::TensorHandle** result) override {
+    LOG(ERROR) << "hello boy ********************************** api ";
     TF_Status status;
     tensor->Ref();
     TFE_TensorHandle tensor_handle{
@@ -1760,6 +1771,7 @@ class CustomDeviceAPI : public tensorflow::CustomDevice {
   tensorflow::Status Execute(tensorflow::EagerOperation* op,
                              tensorflow::TensorHandle** retvals,
                              int* num_retvals) override {
+    LOG(ERROR) << "hello boy ********************************** api ";
     std::vector<TFE_TensorHandle*> inputs;
     inputs.reserve(op->Inputs().size());
     for (int i = 0; i < op->Inputs().size(); ++i) {
@@ -1798,6 +1810,7 @@ class CustomDeviceAPI : public tensorflow::CustomDevice {
 
 void TFE_RegisterCustomDevice(TFE_Context* ctx, TFE_CustomDevice device,
                               const char* device_name, void* device_info) {
+    LOG(ERROR) << "hello boy ********************************** api ";
   auto custom_device =
       std::make_unique<CustomDeviceAPI>(device, device_info, device_name);
   ctx->context->RegisterCustomDevice(device_name, std::move(custom_device));
