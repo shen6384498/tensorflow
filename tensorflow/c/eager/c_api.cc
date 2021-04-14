@@ -944,7 +944,7 @@ void TFE_DeleteTensorHandle(TFE_TensorHandle* h) {
 }
 
 tensorflow::TensorHandleInterface::~TensorHandleInterface() {
-    LOG(ERROR) << "hello boy ********************************** api ";
+    LOG(ERROR) << "hello boy ********************************** api ~TensorHandleInterface";
   VLOG(1) << "Deleting tensor handle " << this << " with internal handle ~TensorHandleInterface"
           << handle_;
   if (handle_) {
