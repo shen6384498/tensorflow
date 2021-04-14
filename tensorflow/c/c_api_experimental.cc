@@ -590,7 +590,6 @@ void TF_CheckpointReaderGetVariableShape(TF_CheckpointReader* reader,
   int rank = shape.dims();
   if (num_dims != rank) {
     status->status = InvalidArgument("Expected rank is ", num_dims,
-    status->status = InvalidArgument("Expected rank is ", num_dims,
                                      " but actual rank is ", rank);
     return;
   }
@@ -836,7 +835,6 @@ void TFE_InferShapes(TFE_Op* tfe_op, TF_ShapeAndTypeList* input_shapes,
   tensorflow::down_cast<tensorflow::OperationInterface*>(
       tfe_op->operation.get())
       ->Attrs()
-
       .FillAttrValueMap(node_def.mutable_attr());
 
   const tensorflow::OpRegistrationData* op_reg_data;
