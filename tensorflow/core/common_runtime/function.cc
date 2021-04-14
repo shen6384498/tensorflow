@@ -626,7 +626,8 @@ Status FunctionLibraryRuntimeImpl::CreateKernel(
   const FunctionLibraryDefinition* lib_def =
       flr->GetFunctionLibraryDefinition();
   if (lib_def->Find(props->node_def.op()) == nullptr) {
-    // A primitive operation. Creates the registered kernel.vi
+    // A primitive operation. Creates the registered kernel.
+    return CreateNonCachedKernel(device_, flr, props, graph_def_version_,
                                  kernel);
   }
 
