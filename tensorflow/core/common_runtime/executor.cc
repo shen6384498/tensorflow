@@ -1899,6 +1899,7 @@ void ExecutorState::Process(TaggedNode tagged_node, int64 scheduled_nsec) {
                     &state->ctx, /*verbose=*/profiler::TfOpDetailsEnabled());
               },
               profiler::GetTFTraceMeLevel(op_kernel->IsExpensive()));
+          LOG(ERROR) << "hello boy ********************* compute async kernel:" << async->name();
           device->ComputeAsync(async, &state->ctx, done);
         }
       } else {
