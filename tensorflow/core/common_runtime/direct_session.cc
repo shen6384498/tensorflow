@@ -618,12 +618,16 @@ Status DirectSession::RunInternal(
   Executor::Args::Runner default_runner = nullptr;
 
   if (pool == nullptr) {
-    default_runner = [](const Executor::Args::Closure& c) { c(); };
+    default_runner = [](const Executor::Args::Closure& c) { 
+      MS_LOG(WARNING) << "hello boy *************************** direct call";
+      c(); };
   } else if (handler_ptr != nullptr) {
+    MS_LOG(WARNING) << "hello boy *************************** handler_ptr call";
     default_runner = [handler_ptr](Executor::Args::Closure c) {
       handler_ptr->ScheduleInterOpClosure(std::move(c));
     };
   } else {
+    MS_LOG(WARNING) << "hello boy *************************** pool call";
     default_runner = [pool](Executor::Args::Closure c) {
       pool->Schedule(std::move(c));
     };
