@@ -1620,6 +1620,8 @@ void ExecutorState::RunAsync(Executor::DoneCallback done) {
     delete this;
     done(Status::OK());
   } else {
+    LOG(ERROR) << "hello boy ********************************** ExecutorState "
+                  "RunAsync ready list is not null, continue do it";
     num_outstanding_ops_ = ready.size();
     {
       mutex_lock l(root_frame_->mu);
@@ -1695,6 +1697,8 @@ bool MightTrace(const NodeItem& item,
 }
 
 void ExecutorState::Process(TaggedNode tagged_node, int64 scheduled_nsec) {
+  LOG(ERROR)
+      << "hello boy ******************************** ExecutorState Process";
   profiler::TraceMe activity(
       [&] {
         int64 id = step_id_;
@@ -1827,6 +1831,8 @@ void ExecutorState::Process(TaggedNode tagged_node, int64 scheduled_nsec) {
         }
         MaybeMarkCompleted(input_frame, input_iter, item);
         // Continue to process the nodes in 'inline_ready'.
+        LOG(ERROR)
+            << "hello boy **************************** process node done 1";
         completed = NodeDone(s, &ready, stats, &inline_ready);
         continue;
       }
@@ -1887,6 +1893,8 @@ void ExecutorState::Process(TaggedNode tagged_node, int64 scheduled_nsec) {
             device->ConsumeListOfAccessedTensors(state->ctx.op_device_context(),
                                                  accessed);
           }
+          LOG(ERROR)
+              << "hello boy **************************** process node done 2";
           const bool completed = NodeDone(s, &ready, stats, nullptr);
           delete state;
           if (completed) ScheduleFinish();
@@ -1977,6 +1985,8 @@ void ExecutorState::Process(TaggedNode tagged_node, int64 scheduled_nsec) {
       if (stats) {
         scheduled_nsec = nodestats::NowInNsec();
       }
+      LOG(ERROR)
+          << "hello boy **************************** process node done 3";
       // Postprocess.
       completed = NodeDone(s, &ready, stats, &inline_ready);
     }
@@ -2285,6 +2295,8 @@ void ExecutorState::PropagateOutputs(const TaggedNode& tagged_node,
 bool ExecutorState::NodeDone(const Status& s, TaggedNodeSeq* ready,
                              NodeExecStatsInterface* stats,
                              TaggedNodeReadyQueue* inline_ready) {
+  LOG(ERROR)
+      << "hello boy ******************************* ExecutorState::NodeDone";
   nodestats::SetAllEnd(stats);
   if (stats) {
     if (stats_collector_) {
