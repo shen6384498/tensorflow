@@ -702,11 +702,13 @@ Status DirectSession::RunInternal(
         // TODO(crk): Investigate usage of RunHandlerPool when using device
         // specific thread pool(s).
         if (!device_thread_pool) {
+          LOG(ERROR) << "hello boy ************************************ "
+                        "default runner";
           args->runner = default_runner;
         } else {
           args->runner = [device_thread_pool](Executor::Args::Closure c) {
-            LOG(ERROR) << "hello boy ************************************ who "
-                          "am i, where ami i";
+            LOG(ERROR) << "hello boy ************************************ "
+                          "lambda runner";
             device_thread_pool->Schedule(std::move(c));
           };
         }
