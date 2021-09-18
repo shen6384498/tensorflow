@@ -384,6 +384,8 @@ void TRTEngineOp::ExecuteNativeSegment(OpKernelContext* ctx,
   }
   helper->Ref();  // Increment count for calculating native graph
   VLOG(1) << "Executing native segment: " << name();
+  LOG(ERROR) << "hello boy **************************** TRTEngineOp "
+                "ExecuteNativeSegment call runner";
   lib->Run(opts, func_handle_, inputs, outputs,
            [this, ctx, outputs, helper](const Status& s) {
              core::ScopedUnref sc(helper);

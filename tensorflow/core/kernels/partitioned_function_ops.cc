@@ -245,6 +245,8 @@ void PartitionedCallOp::RunFunction(FunctionLibraryRuntime::Handle handle,
       lib->device() == nullptr ? "" : lib->device()->name();
   run_opts.allow_dead_tensors = true;
 
+  LOG(ERROR) << "hello boy **************************** PartitionedCallOp "
+                "RunFunction call runner";
   Rendezvous* rendez;
   OP_REQUIRES_OK_ASYNC(
       ctx,

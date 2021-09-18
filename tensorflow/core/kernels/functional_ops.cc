@@ -101,6 +101,7 @@ Status SetOutputs(const OpKernel* kernel, OpKernelContext* ctx,
 
 void SetRunOptions(OpKernelContext* ctx, FunctionLibraryRuntime::Options* opts,
                    bool always_collect_stats) {
+  LOG(ERROR) << "hello boy **************************** SetRunOptions call runner";
   opts->rendezvous = ctx->rendezvous();
   opts->cancellation_manager = ctx->cancellation_manager();
   if (always_collect_stats) {

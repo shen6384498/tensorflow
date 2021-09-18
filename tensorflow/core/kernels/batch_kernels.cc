@@ -528,6 +528,8 @@ class BatchResource : public ResourceBase {
     // Releases the cleanup method here, because the callback of the function
     // library runtime will handle it now.
     finally.release();
+    LOG(ERROR) << "hello boy **************************** ProcessFuncBatch "
+                  "ComputeAsync call runner";
     flib->Run(
         opts, fhandle_, args, &combined_outputs, [&](const Status& run_status) {
           Status final_status;

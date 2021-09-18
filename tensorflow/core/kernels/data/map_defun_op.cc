@@ -68,6 +68,8 @@ struct MapDefunOp::ComputeOptions {
         batch_size(batch_size),
         output_shapes(output_shapes_attr) {
     if (max_parallelism >= 1) {
+      LOG(ERROR) << "hello boy **************************** RunnerWithMaxParallelism "
+                    "call runner";
       runner = RunnerWithMaxParallelism(*ctx->runner(), max_parallelism);
     }
   }
@@ -230,6 +232,9 @@ void MapDefunOp::SetRunOptions(OpKernelContext* ctx,
                                FunctionLibraryRuntime::Options* opts,
                                ComputeOptions* compute_opts,
                                bool always_collect_stats) {
+  LOG(ERROR)
+      << "hello boy **************************** MapDefunOp SetRunOptions "
+         "call runner";
   opts->rendezvous = ctx->rendezvous();
   if (always_collect_stats) {
     opts->stats_collector = ctx->stats_collector();

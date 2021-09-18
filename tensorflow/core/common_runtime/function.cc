@@ -547,6 +547,10 @@ class CallOp : public AsyncOpKernel {
                               ",function_step_id=", opts.step_id, "#");
         },
         /*level=*/2);
+
+    LOG(ERROR)
+        << "hello boy **************************** CallOp ComputeAsync "
+           "call runner";
     lib->Run(opts, handle_, args, rets,
              [ctx, done, rets](const Status& status) {
                if (!status.ok()) {

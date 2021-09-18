@@ -839,6 +839,8 @@ class OneShotIteratorOp : public AsyncOpKernel {
     Notification n;
     Status factory_status;
     std::vector<Tensor> return_values;
+    LOG(ERROR) << "hello boy **************************** TryInit "
+                  "call runner";
     ctx->function_library()->Run(opts, f_handle, {}, &return_values,
                                  [&n, &factory_status](Status s) {
                                    factory_status.Update(s);

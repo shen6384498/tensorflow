@@ -269,6 +269,9 @@ class SymbolicGradientOp : public AsyncOpKernel {
               ",function_step_id=", opts.step_id, "#");
         },
         profiler::TraceMeLevel::kInfo);
+
+    LOG(ERROR)
+        << "hello boy **************************** SymbolicGradientOp ComputeAsync call runner";
     lib->Run(opts, handle, args, rets, [ctx, done, rets](const Status& status) {
       if (!status.ok()) {
         ctx->SetStatus(status);
@@ -394,6 +397,8 @@ void RemoteCallOp::ComputeAsync(OpKernelContext* ctx, DoneCallback done) {
                             ",device=", target_device, "#");
       },
       profiler::TraceMeLevel::kInfo);
+  LOG(ERROR)
+      << "hello boy **************************** RemoteCallOp ComputeAsync call runner";
   lib->Run(
       opts, handle, args, rets,
       [rets, done = std::move(done), func_name, ctx,
