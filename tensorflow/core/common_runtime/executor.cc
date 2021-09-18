@@ -1698,7 +1698,8 @@ bool MightTrace(const NodeItem& item,
 
 void ExecutorState::Process(TaggedNode tagged_node, int64 scheduled_nsec) {
   LOG(ERROR)
-      << "hello boy ******************************** ExecutorState Process";
+      << "hello boy ******************************** ExecutorState Process"
+      << " tid:" << pthread_self();
   profiler::TraceMe activity(
       [&] {
         int64 id = step_id_;
@@ -2408,7 +2409,8 @@ void ExecutorState::ScheduleReady(TaggedNodeSeq* ready,
         LOG(ERROR) << "hello boy ************************************** "
                       " node run_all_kernels_inline_ with inline ready empty, push to "
                       "inline ready"
-                   << " node:" << tagged_node.node_item->kernel->name();
+            << " node:" << tagged_node.node_item->kernel->name()
+            << " tid:" << pthread_self();
         runner_([=]() { Process(tagged_node, scheduled_nsec); });
       }
     } else {
