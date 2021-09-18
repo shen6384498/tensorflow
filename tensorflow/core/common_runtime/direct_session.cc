@@ -705,6 +705,8 @@ Status DirectSession::RunInternal(
           args->runner = default_runner;
         } else {
           args->runner = [device_thread_pool](Executor::Args::Closure c) {
+            LOG(ERROR) << "hello boy ************************************ who "
+                          "am i, where ami i";
             device_thread_pool->Schedule(std::move(c));
           };
         }
