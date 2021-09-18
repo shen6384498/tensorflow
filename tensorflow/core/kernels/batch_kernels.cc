@@ -529,7 +529,7 @@ class BatchResource : public ResourceBase {
     // library runtime will handle it now.
     finally.release();
     LOG(ERROR) << "hello boy **************************** ProcessFuncBatch "
-                  "ComputeAsync call runner";
+                  "call runner";
     flib->Run(
         opts, fhandle_, args, &combined_outputs, [&](const Status& run_status) {
           Status final_status;
