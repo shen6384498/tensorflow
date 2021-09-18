@@ -2365,6 +2365,9 @@ void ExecutorState::ScheduleReady(TaggedNodeSeq* ready,
       // executor mutex contention will be minimized.
       runner_([this, ready = std::move(*ready), scheduled_nsec]() {
         for (auto& tagged_node : ready) {
+          LOG(ERROR) << "hello boy ************************************** "
+                        "run_all_kernels_inline_ without inline ready,"
+                     << " node:" << tagged_node.node_item.kernel->name();
           Process(tagged_node, scheduled_nsec);
         }
       });
