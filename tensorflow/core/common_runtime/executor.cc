@@ -2358,7 +2358,12 @@ void ExecutorState::ScheduleReady(TaggedNodeSeq* ready,
   }
 
   if (run_all_kernels_inline_) {
+    LOG(ERROR) << "hello boy ************************************** "
+                  " node run_all_kernels_inline_ without inline ready";
     if (inline_ready == nullptr) {
+      LOG(ERROR) << "hello boy ************************************** "
+                    "run_all_kernels_inline_ without inline ready, set runner "
+                    "function";
       // Schedule all ready kernels from a single closure. This ensure that,
       // regardless of the `runner_` implementation, all kernels will run
       // sequentially on the same thread, and thread wakeup overhead and
@@ -2373,26 +2378,51 @@ void ExecutorState::ScheduleReady(TaggedNodeSeq* ready,
       });
     } else {
       for (auto& tagged_node : *ready) {
+        LOG(ERROR) << "hello boy ************************************** "
+                      "run_all_kernels_inline_ with inline ready, push inline ready"
+                   << " node:" << tagged_node.node_item->kernel->name();
         inline_ready->push_back(tagged_node);
       }
     }
   } else {
+    LOG(ERROR) << "hello boy ************************************** "
+                  " node run_all_kernels_inline_ with inline ready";
     const TaggedNode* curr_expensive_node = nullptr;
     if (inline_ready == nullptr) {
       // Schedule to run all the ready ops in thread pool.
+      LOG(ERROR) << "hello boy ************************************** "
+                    " node run_all_kernels_inline_ with inline ready empty ";
       for (auto& tagged_node : *ready) {
+        LOG(ERROR) << "hello boy ************************************** "
+                      " node run_all_kernels_inline_ with inline ready empty, push to "
+                      "inline ready"
+                   << " node:" << tagged_node.node_item->kernel->name();
         runner_([=]() { Process(tagged_node, scheduled_nsec); });
       }
     } else {
+      LOG(ERROR) << "hello boy ************************************** "
+                    " node run_all_kernels_inline_ with inline ready not empty ";
       for (auto& tagged_node : *ready) {
         const NodeItem& item = *tagged_node.node_item;
         if (tagged_node.is_dead || !item.kernel->IsExpensive()) {
+          LOG(ERROR) << "hello boy ************************************** "
+                        " node run_all_kernels_inline_ with inline ready not "
+                        "empty, tagged_node is dead or expensive"
+                     << " node:" << tagged_node.node_item->kernel->name();
+          ;
           // Inline this inexpensive node.
           inline_ready->push_back(tagged_node);
         } else {
+          LOG(ERROR) << "hello boy ************************************** "
+                        " node run_all_kernels_inline_ with inline ready not "
+                        "empty, tagged_node is not dead or expensive"
+                     << " node:" << tagged_node.node_item->kernel->name();
           if (curr_expensive_node) {
             // Dispatch to another thread since there is plenty of work to
             // do for this thread.
+            LOG(ERROR) << "hello boy ************************************** "
+                          " node run_all_kernels_inline_ with inline ready not "
+                          "empty, set runner";
             runner_(std::bind(&ExecutorState::Process, this,
                               *curr_expensive_node, scheduled_nsec));
           }
@@ -2402,8 +2432,16 @@ void ExecutorState::ScheduleReady(TaggedNodeSeq* ready,
     }
     if (curr_expensive_node) {
       if (inline_ready->empty()) {
+        LOG(ERROR)
+            << "hello boy ************************************** "
+               " node curr_expensive_node with inline ready empty, push node:"
+            << (*curr_expensive_node).node_item->kernel->name();
         inline_ready->push_back(*curr_expensive_node);
       } else {
+        LOG(ERROR)
+            << "hello boy ************************************** "
+               " node curr_expensive_node with inline ready not empty, set runner for node:"
+            << (*curr_expensive_node).node_item->kernel->name();
         // There are inline nodes to run already. We dispatch this expensive
         // node to other thread.
         runner_(std::bind(&ExecutorState::Process, this, *curr_expensive_node,
