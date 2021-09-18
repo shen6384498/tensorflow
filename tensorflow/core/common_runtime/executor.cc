@@ -2367,7 +2367,7 @@ void ExecutorState::ScheduleReady(TaggedNodeSeq* ready,
         for (auto& tagged_node : ready) {
           LOG(ERROR) << "hello boy ************************************** "
                         "run_all_kernels_inline_ without inline ready,"
-                     << " node:" << tagged_node.node_item.kernel->name();
+                     << " node:" << tagged_node.node_item->kernel->name();
           Process(tagged_node, scheduled_nsec);
         }
       });
