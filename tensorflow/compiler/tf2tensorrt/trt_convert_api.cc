@@ -73,6 +73,7 @@ Status ImportGraphDefToSession(Session* session, const GraphDef& graph_def,
                                const string& prefix) {
   ImportGraphDefOptions opts;
   opts.prefix = prefix;
+  LOG(ERROR) << "hello boy ****************************** call build graph";
   Graph graph(OpRegistry::Global());
   TF_RETURN_IF_ERROR(ImportGraphDef(opts, graph_def, &graph, nullptr));
   GraphDef new_graph_def;

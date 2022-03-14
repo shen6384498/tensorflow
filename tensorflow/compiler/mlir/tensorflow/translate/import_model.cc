@@ -51,19 +51,19 @@ limitations under the License.
 #include "llvm/Support/SourceMgr.h"
 #include "llvm/Support/raw_ostream.h"
 #include "mlir/Dialect/StandardOps/IR/Ops.h"  // from @llvm-project
-#include "mlir/IR/Attributes.h"  // from @llvm-project
-#include "mlir/IR/Builders.h"  // from @llvm-project
-#include "mlir/IR/BuiltinAttributes.h"  // from @llvm-project
-#include "mlir/IR/BuiltinOps.h"  // from @llvm-project
-#include "mlir/IR/BuiltinTypes.h"  // from @llvm-project
-#include "mlir/IR/Diagnostics.h"  // from @llvm-project
-#include "mlir/IR/Identifier.h"  // from @llvm-project
-#include "mlir/IR/Location.h"  // from @llvm-project
-#include "mlir/IR/MLIRContext.h"  // from @llvm-project
-#include "mlir/IR/OpDefinition.h"  // from @llvm-project
-#include "mlir/IR/Types.h"  // from @llvm-project
-#include "mlir/IR/Verifier.h"  // from @llvm-project
-#include "mlir/Pass/PassManager.h"  // from @llvm-project
+#include "mlir/IR/Attributes.h"               // from @llvm-project
+#include "mlir/IR/Builders.h"                 // from @llvm-project
+#include "mlir/IR/BuiltinAttributes.h"        // from @llvm-project
+#include "mlir/IR/BuiltinOps.h"               // from @llvm-project
+#include "mlir/IR/BuiltinTypes.h"             // from @llvm-project
+#include "mlir/IR/Diagnostics.h"              // from @llvm-project
+#include "mlir/IR/Identifier.h"               // from @llvm-project
+#include "mlir/IR/Location.h"                 // from @llvm-project
+#include "mlir/IR/MLIRContext.h"              // from @llvm-project
+#include "mlir/IR/OpDefinition.h"             // from @llvm-project
+#include "mlir/IR/Types.h"                    // from @llvm-project
+#include "mlir/IR/Verifier.h"                 // from @llvm-project
+#include "mlir/Pass/PassManager.h"            // from @llvm-project
 #include "tensorflow/cc/saved_model/constants.h"
 #include "tensorflow/cc/saved_model/loader_util.h"
 #include "tensorflow/compiler/jit/shape_inference_helpers.h"
@@ -3497,6 +3497,7 @@ StatusOr<mlir::OwningModuleRef> SavedModelObjectGraphImporter::Convert(
   GraphConstructorOptions options;
   options.allow_internal_ops = true;
   options.add_default_attributes = add_default_attributes;
+  LOG(ERROR) << "hello boy ****************************** call build graph";
   Graph graph(OpRegistry::Global());
 
   GraphDef preprocessed_graphdef(graphdef);
@@ -4153,6 +4154,7 @@ StatusOr<mlir::OwningModuleRef> ConvertGraphdefToMlir(
   GraphConstructorOptions options;
   options.allow_internal_ops = true;
   options.add_default_attributes = add_default_attributes;
+  LOG(ERROR) << "hello boy ****************************** call build graph";
   Graph graph(OpRegistry::Global());
 
   GraphDef preprocessed_graphdef(graphdef);

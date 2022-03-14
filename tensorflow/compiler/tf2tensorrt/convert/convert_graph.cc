@@ -49,9 +49,9 @@ limitations under the License.
 #include "tensorflow/core/lib/gtl/cleanup.h"
 #include "tensorflow/core/lib/strings/numbers.h"
 #include "tensorflow/core/platform/logging.h"
-#include "tensorflow/core/protobuf/config.pb.h"  // NOLINT
+#include "tensorflow/core/protobuf/config.pb.h"             // NOLINT
 #include "tensorflow/core/protobuf/device_properties.pb.h"  // NOLINT
-#include "tensorflow/core/protobuf/rewriter_config.pb.h"  // NOLINT
+#include "tensorflow/core/protobuf/rewriter_config.pb.h"    // NOLINT
 #include "tensorflow/core/util/device_name_utils.h"
 #include "tensorflow/tools/graph_transforms/transform_utils.h"
 
@@ -618,6 +618,7 @@ Status MaybeRewriteCastToFp32(GraphDef* graph_def, NodeDef* node_def) {
 
 Status RegisterGraphToFunctionLibrary(const GraphDef& segment_graph_def,
                                       Graph* graph, const string& engine_name) {
+  LOG(ERROR) << "hello boy ****************************** call build graph";
   Graph segment_graph(graph->flib_def());
   TF_RETURN_IF_ERROR(ConvertGraphDefToGraph(GraphConstructorOptions(),
                                             segment_graph_def, &segment_graph));
@@ -767,6 +768,7 @@ Status ConvertAfterShapes(const ConversionParams& params) {
 
   // Convert graphdef to graph.
   FunctionLibraryDefinition flib(OpRegistry::Global(), graph_def.library());
+  LOG(ERROR) << "hello boy ****************************** call build graph";
   Graph graph(flib);
   TF_RETURN_IF_ERROR(
       ConvertGraphDefToGraph(GraphConstructorOptions(), graph_def, &graph));

@@ -662,6 +662,7 @@ Status DoQuantizeTrainingOnGraphDef(const GraphDef& input_graphdef,
                                     int32_t num_bits,
                                     const string& quant_op_type,
                                     GraphDef* result_graphdef) {
+  LOG(ERROR) << "hello boy ****************************** call build graph";
   Graph graph(OpRegistry::Global());
   GraphConstructorOptions opts;
   TF_RETURN_IF_ERROR(ConvertGraphDefToGraph(opts, input_graphdef, &graph));

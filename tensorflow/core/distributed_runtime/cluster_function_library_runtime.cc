@@ -52,6 +52,7 @@ Status ClusterFunctionLibraryRuntime::ConstructFunctionGraph(
       flib_def.ReachableDefinitions(*func_def);
   TF_RETURN_IF_ERROR(pruned_flib_def.CopyFunctionDefFrom(func_name, flib_def));
 
+  LOG(ERROR) << "hello boy ****************************** call build graph";
   Graph g(pruned_flib_def);
 
   std::vector<Node*> input_nodes;

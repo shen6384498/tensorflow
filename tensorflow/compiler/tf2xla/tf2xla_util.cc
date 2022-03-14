@@ -558,6 +558,7 @@ Status AddPlaceholdersForFeeds(
           AddDefaultAttrsToGraphDef(&gd, *op_registry, 0 /*node_offset*/));
 
       // Now build the node from the copied node def.
+      LOG(ERROR) << "hello boy ****************************** call build graph";
       Graph g(op_registry);
       g.set_versions(graph_def->versions());
       TF_ASSIGN_OR_RETURN(Node * feed_node, g.AddNode(gd.node(0)));

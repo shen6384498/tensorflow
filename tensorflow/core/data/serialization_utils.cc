@@ -62,6 +62,7 @@ Status FromGraphDef(FunctionLibraryRuntime* flr, const GraphDef& graph_def,
   std::unique_ptr<FunctionLibraryDefinition> lib_def = nullptr;
   TF_RETURN_IF_ERROR(flr->Clone(&lib_def, &pflr, &cloned_flr, true));
   TF_RETURN_IF_ERROR(AddToFunctionLibrary(lib_def.get(), graph_def.library()));
+  LOG(ERROR) << "hello boy ****************************** call build graph";
   Graph graph(OpRegistry::Global());
   TF_RETURN_IF_ERROR(ImportGraphDef({}, graph_def, &graph, nullptr));
   std::vector<Tensor> outputs;

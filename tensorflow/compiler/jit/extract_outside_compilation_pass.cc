@@ -1399,6 +1399,7 @@ TF_ATTRIBUTE_NOINLINE Status BuildHostGraphForIfNode(
     const string& host_graph_func_name, FunctionLibraryDefinition* fld,
     const string& then_branch_host_func_name,
     const string& else_branch_host_func_name) {
+  LOG(ERROR) << "hello boy ****************************** call build graph";
   Graph host_graph(fld);
   string outside_compilation_name = absl::StrCat("oc_if_", if_node_name);
   AttrValue device_ordinal_value;
@@ -1685,6 +1686,7 @@ TF_ATTRIBUTE_NOINLINE Status BuildHostGraphForWhileNode(
     const string& while_node_name, const string& host_transfer_key,
     const string& host_graph_func_name, FunctionLibraryDefinition* fld,
     const string& cond_host_func_name, const string& body_host_func_name) {
+  LOG(ERROR) << "hello boy ****************************** call build graph";
   Graph host_graph(fld);
   string outside_compilation_name = absl::StrCat("oc_while_", while_node_name);
 
@@ -1751,6 +1753,7 @@ Status BuildHostGraphForFuncCallNode(
     const string& outside_compilation_attr_name,
     const string& func_call_node_name, const string& func_call_host_func_name,
     const string& host_graph_func_name, FunctionLibraryDefinition* fld) {
+  LOG(ERROR) << "hello boy ****************************** call build graph";
   Graph host_graph(fld);
   AttrValue device_ordinal_value;
   device_ordinal_value.set_placeholder("_device_ordinal");

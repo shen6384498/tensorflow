@@ -1451,6 +1451,7 @@ void MarkForCompilationPassImpl::DumpPostClusteringGraphs() {
   // We also dump out an annotated version of the TF graph where the nodes
   // names are prefixed with the cluster names.  This can help visualizing the
   // clustering decisions on TensorBoard.
+  LOG(ERROR) << "hello boy ****************************** call build graph";
   Graph new_graph(graph_->op_registry());
   CopyGraph(*graph_, &new_graph);
 

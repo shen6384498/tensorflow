@@ -548,6 +548,7 @@ Status EvaluateConstantTensor(OutputTensor tensor, const ShapeRefiner& refiner,
   }
 
   bool is_constant_graph = false;
+  LOG(ERROR) << "hello boy ****************************** call build graph";
   Graph subgraph(&ops);
   auto versions = subgraph.versions();
   versions.set_producer(graph_def_version);

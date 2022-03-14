@@ -65,6 +65,7 @@ Iterator::Iterator(IteratorBase* iterator, IteratorContext* ctx)
 
 Status Dataset::FromGraph(Params params, const GraphDef& graph_def,
                           std::unique_ptr<Dataset>* result) {
+  LOG(ERROR) << "hello boy ****************************** call build graph";
   Graph graph(OpRegistry::Global());
   TF_RETURN_IF_ERROR(ImportGraphDef({}, graph_def, &graph, nullptr));
 

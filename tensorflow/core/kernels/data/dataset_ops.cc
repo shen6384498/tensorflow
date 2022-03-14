@@ -151,6 +151,7 @@ void DatasetFromGraphOp::Compute(OpKernelContext* ctx) {
       output_node = node.input(0);
     }
   }
+  LOG(ERROR) << "hello boy ****************************** call build graph";
   Graph graph(OpRegistry::Global());
   OP_REQUIRES_OK(ctx, ImportGraphDef({}, graph_def, &graph, nullptr));
 

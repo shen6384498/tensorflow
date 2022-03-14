@@ -156,6 +156,7 @@ Status GraphMgr::InitItem(const string& handle, const GraphDef& gdef,
             return Status::OK();
           }}));
 
+  LOG(ERROR) << "hello boy ****************************** call build graph";
   // Constructs the graph out of "gdef".
   Graph graph(OpRegistry::Global());
   GraphConstructorOptions opts;

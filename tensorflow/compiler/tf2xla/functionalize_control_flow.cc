@@ -313,6 +313,7 @@ Status FunctionalizeControlFlowForGraphDef(GraphDef* graph_def,
                                            const NodeFilter& node_filter,
                                            bool include_functions) {
   FunctionDefLibrary function_lib = graph_def->library();
+  LOG(ERROR) << "hello boy ****************************** call build graph";
   Graph graph(OpRegistry::Global());
 
   TF_RETURN_IF_ERROR(ConvertGraphDefToGraph({}, *graph_def, &graph));

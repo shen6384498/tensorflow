@@ -19,14 +19,14 @@ limitations under the License.
 #include <utility>
 #include <vector>
 
-#include "google/protobuf/map.h"
-#include "google/protobuf/text_format.h"
 #include "absl/memory/memory.h"
 #include "absl/strings/match.h"
 #include "absl/strings/numbers.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_split.h"
 #include "absl/strings/strip.h"
+#include "google/protobuf/map.h"
+#include "google/protobuf/text_format.h"
 #include "tensorflow/core/common_runtime/device_factory.h"
 #include "tensorflow/core/common_runtime/function.h"
 #include "tensorflow/core/common_runtime/graph_constructor.h"
@@ -2296,6 +2296,7 @@ bool InlineAllFunctions(GraphDef* graphdef) {
   tensorflow::FunctionLibraryRuntime* flr;
   flr = pflr.GetFLR("/job:localhost/replica:0/task:0/cpu:0");
 
+  LOG(ERROR) << "hello boy ****************************** call build graph";
   tensorflow::Graph graph(fld);
   tensorflow::ImportGraphDefOptions gc_opts;
   gc_opts.validate_shape = false;

@@ -191,6 +191,7 @@ Status RewriteDataset(OpKernelContext* ctx, const DatasetBase* input,
   // (for example, nested dataset graphs from FlatMap or Interleave).
   TF_RETURN_IF_ERROR(AddToFunctionLibrary(lib_def.get(), graph_def.library()));
 
+  LOG(ERROR) << "hello boy ****************************** call build graph";
   Graph graph(OpRegistry::Global());
   TF_RETURN_IF_ERROR(ImportGraphDef({}, graph_def, &graph, nullptr));
   std::vector<Tensor> outputs;
