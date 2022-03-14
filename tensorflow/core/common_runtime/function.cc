@@ -529,6 +529,8 @@ class CallOp : public AsyncOpKernel {
   }
 
   void ComputeAsync(OpKernelContext* ctx, DoneCallback done) override {
+    LOG(ERROR) << "hello boy **************************** CallOp ComputeAsync "
+                  "call runner";
     FunctionLibraryRuntime* lib = ctx->function_library();
     OP_REQUIRES_ASYNC(ctx, lib != nullptr,
                       errors::Internal("No function library is provided."),
@@ -553,20 +555,23 @@ class CallOp : public AsyncOpKernel {
                               ",function_step_id=", opts.step_id, "#");
         },
         /*level=*/2);
-    lib->Run(opts, handle_, args, rets,
-             [ctx, done, rets](const Status& status) {
-               if (!status.ok()) {
-                 ctx->SetStatus(status);
-               } else {
-                 const int ret_size = static_cast<int>(rets->size());
-                 CHECK_EQ(ret_size, ctx->num_outputs());
-                 for (int i = 0; i < ret_size; ++i) {
-                   ctx->set_output(i, (*rets)[i]);
-                 }
-               }
-               delete rets;
-               done();
-             });
+    lib->Run(
+        opts, handle_, args, rets, [ctx, done, rets](const Status& status) {
+          LOG(ERROR)
+              << "hello boy **************************** CallOp ComputeAsync "
+                 "call runner";
+          if (!status.ok()) {
+            ctx->SetStatus(status);
+          } else {
+            const int ret_size = static_cast<int>(rets->size());
+            CHECK_EQ(ret_size, ctx->num_outputs());
+            for (int i = 0; i < ret_size; ++i) {
+              ctx->set_output(i, (*rets)[i]);
+            }
+          }
+          delete rets;
+          done();
+        });
   }
 
  private:

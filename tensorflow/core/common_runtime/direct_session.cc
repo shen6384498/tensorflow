@@ -468,6 +468,8 @@ Status DirectSession::Run(const NamedTensorList& inputs,
                           const std::vector<string>& output_names,
                           const std::vector<string>& target_nodes,
                           std::vector<Tensor>* outputs) {
+  LOG(ERROR)
+      << "hello boy ********************************** DirectSession Run";
   RunMetadata run_metadata;
   return Run(RunOptions(), inputs, output_names, target_nodes, outputs,
              &run_metadata);
@@ -750,6 +752,8 @@ Status DirectSession::RunInternal(
 
     for (const auto& item : executors_and_keys->items) {
       set_threadpool_args_for_item(item, &args);
+      LOG(ERROR)
+          << "hello boy ************************************** ExecutorState ";
       item.executor->RunAsync(args, barrier->Get());
     }
 
@@ -833,6 +837,8 @@ Status DirectSession::Run(const RunOptions& run_options,
                           const std::vector<string>& target_nodes,
                           std::vector<Tensor>* outputs,
                           RunMetadata* run_metadata) {
+  LOG(ERROR)
+      << "hello boy ********************************** DirectSession Run";
   return Run(run_options, inputs, output_names, target_nodes, outputs,
              run_metadata, thread::ThreadPoolOptions());
 }
@@ -844,6 +850,8 @@ Status DirectSession::Run(const RunOptions& run_options,
                           std::vector<Tensor>* outputs,
                           RunMetadata* run_metadata,
                           const thread::ThreadPoolOptions& threadpool_options) {
+  LOG(ERROR)
+      << "hello boy ********************************** DirectSession Run";
   TF_RETURN_IF_ERROR(CheckNotClosed());
   TF_RETURN_IF_ERROR(CheckGraphCreated("Run()"));
   direct_session_runs->GetCell()->IncrementBy(1);
