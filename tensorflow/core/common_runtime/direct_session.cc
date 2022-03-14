@@ -323,6 +323,8 @@ DirectSession::DirectSession(const SessionOptions& options,
       factory_(factory),
       cancellation_manager_(new CancellationManager()),
       operation_timeout_in_ms_(options_.config.operation_timeout_in_ms()) {
+  LOG(ERROR) << "hello boy ******************************** create a direction "
+                "session";
   const int thread_pool_size =
       options_.config.session_inter_op_thread_pool_size();
   if (thread_pool_size > 0) {
@@ -1312,6 +1314,7 @@ Status DirectSession::CreateExecutors(
     std::unique_ptr<ExecutorsAndKeys>* out_executors_and_keys,
     std::unique_ptr<FunctionInfo>* out_func_info,
     RunStateArgs* run_state_args) {
+  LOG(ERROR) << "hello boy ******************************** create executors";
   BuildGraphOptions options;
   options.callable_options = callable_options;
   options.use_function_convention = !run_state_args->is_partial_run;
@@ -1601,6 +1604,7 @@ Status DirectSession::CreateGraphs(
     RunStateArgs* run_state_args, DataTypeVector* input_types,
     DataTypeVector* output_types, int64_t* collective_graph_key) {
   mutex_lock l(graph_state_lock_);
+  LOG(ERROR) << "hello boy ******************************** create graphs";
   if (finalized_) {
     return errors::FailedPrecondition("Session has been finalized.");
   }

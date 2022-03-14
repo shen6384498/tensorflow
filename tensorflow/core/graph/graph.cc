@@ -456,6 +456,7 @@ Graph::Graph(const OpRegistryInterface* ops)
     : ops_(ops, FunctionDefLibrary()),
       versions_(new VersionDef),
       arena_(8 << 10 /* 8kB */) {
+  LOG(ERROR) << "hello boy ********************* build graph";
   versions_->set_producer(TF_GRAPH_DEF_VERSION);
   versions_->set_min_consumer(TF_GRAPH_DEF_VERSION_MIN_CONSUMER);
 
@@ -482,6 +483,7 @@ Graph::Graph(const OpRegistryInterface* ops)
 
 Graph::Graph(const FunctionLibraryDefinition& flib_def)
     : Graph(flib_def.default_registry()) {
+  LOG(ERROR) << "hello boy ********************* build graph";
   // Need a new-enough consumer to support the functions we add to the graph.
   if (flib_def.num_functions() > 0 && versions_->min_consumer() < 12) {
     versions_->set_min_consumer(12);
@@ -546,6 +548,8 @@ void Graph::Copy(const Graph& src) {
 }
 
 StatusOr<Node*> Graph::AddNode(NodeDef node_def) {
+  LOG(ERROR) << "hello boy ****************************** add node:"
+             << node_def.node->name();
   Status s;
   Node* out = AddNode(std::move(node_def), &s);
   TF_RETURN_IF_ERROR(s);
@@ -553,6 +557,8 @@ StatusOr<Node*> Graph::AddNode(NodeDef node_def) {
 }
 
 Node* Graph::AddNode(NodeDef node_def, Status* status) {
+  LOG(ERROR) << "hello boy ****************************** add node:"
+             << node_def.node->name();
   const OpRegistrationData* op_reg_data;
   status->Update(ops_.LookUp(node_def.op(), &op_reg_data));
   if (!status->ok()) return nullptr;
@@ -616,7 +622,8 @@ void Graph::RemoveNode(Node* node) {
   TF_DCHECK_OK(IsValidNode(node)) << node->DebugString();
   DCHECK(!node->IsSource());
   DCHECK(!node->IsSink());
-
+  LOG(ERROR) << "hello boy ****************************** remove node:"
+             << node->name();
   // Remove any edges involving this node.
   for (const Edge* e : node->in_edges_) {
     CHECK_EQ(e->src_->out_edges_.erase(e), size_t{1});
@@ -646,6 +653,9 @@ const Edge* Graph::AddEdge(Node* source, int x, Node* dest, int y) {
     DCHECK_EQ(x, kControlSlot) << source->DebugString();
     DCHECK_EQ(y, kControlSlot) << dest->DebugString();
   }
+
+  LOG(ERROR) << "hello boy ********************* Add edge to graph, from:"
+             << source->name() << " to:" << dest->name();
 
   Edge* e = nullptr;
   if (free_edges_.empty()) {
@@ -705,6 +715,7 @@ void Graph::RecycleEdge(const Edge* e) {
 
 const Edge* Graph::AddControlEdge(Node* source, Node* dest,
                                   bool allow_duplicates) {
+  LOG(ERROR) << "hello boy ****************************** add control edge";
   if (!allow_duplicates) {
     for (const Edge* edge : dest->in_edges()) {
       if (edge->IsControlEdge() && edge->src() == source) {
@@ -774,6 +785,7 @@ Status Graph::UpdateEdge(Node* new_src, int new_src_index, Node* dst,
 }
 
 Status Graph::AddWhileInputHack(Node* new_src, int new_src_index, Node* dst) {
+  LOG(ERROR) << "hello boy ****************************** add while input hack";
   if (!dst->IsWhileNode()) {
     return errors::Internal(
         "dst argument to AddWhileEdgeHack should be a While op, got: ",
@@ -796,6 +808,7 @@ Status Graph::AddWhileInputHack(Node* new_src, int new_src_index, Node* dst) {
 }
 
 Status Graph::AddFunctionLibrary(const FunctionDefLibrary& fdef_lib) {
+  LOG(ERROR) << "hello boy ****************************** add function library";
   // Need a new-enough consumer to support the functions we add to the graph.
   if (fdef_lib.function_size() > 0 && versions_->min_consumer() < 12) {
     versions_->set_min_consumer(12);
@@ -995,6 +1008,7 @@ Status Graph::AddWhileContext(StringPiece frame_name,
                               std::vector<OutputTensor> body_inputs,
                               std::vector<OutputTensor> body_outputs,
                               WhileContext** result) {
+  LOG(ERROR) << "hello boy ****************************** add while context";
   auto pair = while_ctxs_.insert(std::pair<std::string, WhileContext>(
       std::string(frame_name),
       WhileContext(frame_name, std::move(enter_nodes), std::move(exit_nodes),
