@@ -548,8 +548,7 @@ void Graph::Copy(const Graph& src) {
 }
 
 StatusOr<Node*> Graph::AddNode(NodeDef node_def) {
-  LOG(ERROR) << "hello boy ****************************** add node:"
-             << node_def.node->name();
+  LOG(ERROR) << "hello boy ****************************** add node";
   Status s;
   Node* out = AddNode(std::move(node_def), &s);
   TF_RETURN_IF_ERROR(s);
@@ -557,8 +556,7 @@ StatusOr<Node*> Graph::AddNode(NodeDef node_def) {
 }
 
 Node* Graph::AddNode(NodeDef node_def, Status* status) {
-  LOG(ERROR) << "hello boy ****************************** add node:"
-             << node_def.node->name();
+  LOG(ERROR) << "hello boy ****************************** add node";
   const OpRegistrationData* op_reg_data;
   status->Update(ops_.LookUp(node_def.op(), &op_reg_data));
   if (!status->ok()) return nullptr;
