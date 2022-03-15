@@ -1241,6 +1241,7 @@ MasterSession::MasterSession(
   UpdateLastAccessTime();
   CHECK(devices_) << "device_set was null!";
 
+  LOG(ERROR) << "hello boy **************************** create master session";
   VLOG(1) << "Session " << handle_ << " #local " << env->local_devices.size()
           << " #remote " << remote_devs_->size();
   VLOG(1) << "Start master session " << handle_

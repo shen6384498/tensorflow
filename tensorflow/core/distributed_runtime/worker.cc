@@ -35,6 +35,7 @@ Worker::Worker(WorkerEnv* env) : env_(env), recent_request_ids_(100000) {
   // Enable log history collection in StatusGroup so that recent warning and
   // error log messages will be attached to the root error status to be
   // forwarded to the master.
+  LOG(ERROR) << "hello boy ************************* create worker";
   StatusGroup::ConfigureLogHistory();
 }
 

@@ -45,12 +45,17 @@ class ClientSession::Impl {
 };
 
 ClientSession::ClientSession(const Scope& scope, const string& target)
-    : ClientSession(scope, Impl::MakeDefaultSessionOptions(target)) {}
+    : ClientSession(scope, Impl::MakeDefaultSessionOptions(target)) {
+  LOG(ERROR) << "hello boy **************************** create client session";
+}
 
-ClientSession::ClientSession(const Scope& scope) : ClientSession(scope, "") {}
+ClientSession::ClientSession(const Scope& scope) : ClientSession(scope, "") {
+  LOG(ERROR) << "hello boy **************************** create client session";
+}
 
 ClientSession::ClientSession(const Scope& scope,
                              const SessionOptions& session_options) {
+  LOG(ERROR) << "hello boy **************************** create client session";
   Session* new_session;
   Status status = NewSession(session_options, &new_session);
   TF_CHECK_OK(status) << status;

@@ -61,6 +61,7 @@ std::string SessionMgr::WorkerNameFromServerDef(const ServerDef& server_def) {
 Status SessionMgr::CreateSession(const std::string& session,
                                  const ServerDef& server_def,
                                  bool isolate_session_state) {
+  LOG(ERROR) << "hello boy **************************** create session";
   return CreateSession(session, server_def, {}, isolate_session_state);
 }
 
@@ -69,6 +70,7 @@ Status SessionMgr::CreateSession(
     const protobuf::RepeatedPtrField<DeviceAttributes>&
         cluster_device_attributes,
     bool isolate_session_state) {
+  LOG(ERROR) << "hello boy **************************** create session";
   return CreateSession(
       session, server_def, cluster_device_attributes, isolate_session_state,
       /*master_task=*/"",
@@ -82,6 +84,7 @@ Status SessionMgr::CreateSession(
     bool isolate_session_state, std::string master_task,
     int64_t master_incarnation,
     const CoordinationServiceConfig& coordination_service_config) {
+  LOG(ERROR) << "hello boy **************************** create session";
   mutex_lock l(mu_);
   if (session.empty()) {
     return errors::InvalidArgument("Session must be non-empty.");
@@ -286,6 +289,7 @@ Status SessionMgr::UpdateSession(
 }
 
 Status SessionMgr::DeleteSession(const std::string& session) {
+  LOG(ERROR) << "hello boy **************************** delete session";
   mutex_lock l(mu_);
   auto it = sessions_.find(session);
   if (it != sessions_.end()) {
