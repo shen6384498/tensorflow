@@ -828,6 +828,8 @@ Status GraphExecutionState::OptimizeGraph(
         TF_RETURN_IF_ERROR((*optimized_flib)->AddFunctionDef(fdef));
       }
     }
+    LOG(ERROR)
+        << "hello boy ******************** create graph by OptimizeGraph";
     optimized_graph->reset(new Graph(OpRegistry::Global()));
 
     // Convert the optimized GraphDef back to a Graph.
@@ -871,6 +873,8 @@ Status GraphExecutionState::BuildGraph(const BuildGraphOptions& options,
     VLOG(2) << "Grappler optimization failed. Error: " << s.error_message();
     // Simply copy the original graph and the function library if we couldn't
     // optimize it.
+    LOG(ERROR)
+        << "hello boy ******************** create graph by GraphExecutionState";
     optimized_graph.reset(new Graph(flib_def_.get()));
     CopyGraph(*graph_, optimized_graph.get());
     optimized_flib.reset(new FunctionLibraryDefinition(*flib_def_));

@@ -267,6 +267,7 @@ Status InitGraph(const GraphDef& graph_def, const tf2xla::Config& config,
   TF_RETURN_IF_ERROR(ValidateConfig(config));
 
   FunctionLibraryDefinition flib_def(OpRegistry::Global(), graph_def.library());
+  LOG(ERROR) << "hello boy ******************** create graph by InitGraph";
   std::unique_ptr<Graph> g(new Graph(flib_def));
 
   // Replace references to fed tensors with references to newly added

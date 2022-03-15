@@ -1539,6 +1539,8 @@ Status ImportGraphDef(const ImportGraphDefOptions& opts, const GraphDef& gdef,
   }
 }
 
-void CopyGraph(const Graph& src, Graph* dest) { dest->Copy(src); }
+void CopyGraph(const Graph& src, Graph* dest) { 
+  LOG(ERROR) << "hello boy ************************** copy graph";
+  dest->Copy(src); }
 
 }  // namespace tensorflow

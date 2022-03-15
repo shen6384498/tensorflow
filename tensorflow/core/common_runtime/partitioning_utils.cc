@@ -59,6 +59,7 @@ Status PartitionFunctionGraph(
     const string& device = partition.first;
     GraphDef& graph_def = partition.second;
     // Each partition gets a new graph.
+    LOG(ERROR) << "hello boy ******************** create graph by partition";
     std::unique_ptr<Graph> subgraph(
         new Graph(graph->flib_def().default_registry()));
     GraphConstructorOptions opts;

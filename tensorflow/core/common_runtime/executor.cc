@@ -1373,13 +1373,17 @@ void ExecutorState<PropagatorStateType>::Finish() {
 void ExecutorImpl::RunAsync(const Args& args, DoneCallback done) {
   LOG(ERROR) << "hello boy *********************** ExecutorImpl RunAsync";
   if (OpOrderDeterminismRequired()) {
+    LOG(ERROR) << "hello boy *********************** ExecutorImpl OpOrderDeterminismRequired";
     (new ExecutorState<OrderedPropagatorState>(args, immutable_state_,
                                                &kernel_stats_))
         ->RunAsync(std::move(done));
   } else if (immutable_state_.requires_control_flow_support()) {
+    LOG(ERROR) << "hello boy *********************** ExecutorImpl "
+                  "requires_control_flow_support";
     (new ExecutorState<PropagatorState>(args, immutable_state_, &kernel_stats_))
         ->RunAsync(std::move(done));
   } else {
+    LOG(ERROR) << "hello boy *********************** ExecutorImpl else";
     (new ExecutorState<SimplePropagatorState>(args, immutable_state_,
                                               &kernel_stats_))
         ->RunAsync(std::move(done));

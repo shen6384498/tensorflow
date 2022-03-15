@@ -989,6 +989,7 @@ Status ConstructHostGraph(
     const string& xla_cluster_name, const string& outside_compilation_attr_name,
     const std::vector<string>& outside_compilation_host_graphs,
     FunctionLibraryDefinition* fld, std::unique_ptr<Graph>* host_graph) {
+  LOG(ERROR) << "hello boy ******************** create graph";
   host_graph->reset(new Graph(fld));
 
   // Create sequencer node in host graph.
@@ -1959,6 +1960,7 @@ Status ExtractOutsideCompilationForIfNode(
   // graph for the branch. But here we need a host graph for both branches, so
   // we need to create a no-op host graph.
   if (!then_branch_has_outside_compilation) {
+    LOG(ERROR) << "hello boy ******************** create graph";
     std::unique_ptr<Graph> then_branch_host_graph(new Graph(fld));
     std::vector<string> then_branch_host_graphs;
     TF_RETURN_IF_ERROR(ConstructHostGraph(
@@ -1976,6 +1978,7 @@ Status ExtractOutsideCompilationForIfNode(
     }
   }
   if (!else_branch_has_outside_compilation) {
+    LOG(ERROR) << "hello boy ******************** create graph";
     std::unique_ptr<Graph> else_branch_host_graph(new Graph(fld));
     std::vector<string> else_branch_host_graphs;
     TF_RETURN_IF_ERROR(ConstructHostGraph(
@@ -2062,7 +2065,8 @@ Status ExtractOutsideCompilationForWhileNode(
 
   // Build host side graph for the "While" node.
   if (!cond_has_outside_compilation) {
-    std::unique_ptr<Graph> cond_host_graph(new Graph(fld));
+    LOG(ERROR) << "hello boy ******************** create graph";
+    std::unique_ptr<Graph> cond_host_graph((fld));
     std::vector<string> host_graphs;
     TF_RETURN_IF_ERROR(ConstructHostGraph(xla_cluster_name,
                                           outside_compilation_attr_name,
@@ -2078,6 +2082,7 @@ Status ExtractOutsideCompilationForWhileNode(
     }
   }
   if (!body_has_outside_compilation) {
+    LOG(ERROR) << "hello boy ******************** create graph";
     std::unique_ptr<Graph> body_host_graph(new Graph(fld));
     std::vector<string> host_graphs;
     TF_RETURN_IF_ERROR(ConstructHostGraph(xla_cluster_name,

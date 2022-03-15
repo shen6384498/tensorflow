@@ -192,6 +192,7 @@ Status GraphMgr::InitItem(const string& handle, const GraphDef& gdef,
 
   std::unordered_map<string, std::unique_ptr<Graph>> partition_graphs;
   for (auto& partition : partitions) {
+    LOG(ERROR) << "hello boy ******************** create graph by partition";
     std::unique_ptr<Graph> device_graph(new Graph(OpRegistry::Global()));
     GraphConstructorOptions device_opts;
     // There are internal operations (e.g., send/recv) that we now allow.

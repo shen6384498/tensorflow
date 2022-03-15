@@ -450,6 +450,8 @@ Graph* GetConstantGraph(
         shape_replacement_map,
     std::map<NodeAndOutput, NodeAndOutput>* tensors_to_fetch,
     const ConstantFoldNameGenerator& generate_new_name) {
+  LOG(ERROR)
+      << "hello boy ******************** create graph by GetConstantGraph";
   Graph* constant_graph = new Graph(orig_graph->op_registry());
   std::unordered_map<Node*, std::vector<Node*>> node_map;
   node_map[orig_graph->source_node()] = {constant_graph->source_node()};

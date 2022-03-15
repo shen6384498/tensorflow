@@ -20,9 +20,9 @@ limitations under the License.
 #include <utility>
 #include <vector>
 
-#include "mlir/Dialect/Shape/IR/Shape.h"  // from @llvm-project
+#include "mlir/Dialect/Shape/IR/Shape.h"      // from @llvm-project
 #include "mlir/Dialect/StandardOps/IR/Ops.h"  // from @llvm-project
-#include "mlir/IR/Dialect.h"  // from @llvm-project
+#include "mlir/IR/Dialect.h"                  // from @llvm-project
 #include "tensorflow/compiler/mlir/hlo/include/mlir-hlo/Dialect/mhlo/IR/hlo_ops.h"
 #include "tensorflow/compiler/mlir/tensorflow/ir/tf_executor.h"
 #include "tensorflow/compiler/mlir/tensorflow/ir/tf_ops.h"
@@ -106,6 +106,8 @@ Status ConvertGraphDefToXlaViaMlir(
   // is also a workaround for b/149029125. It replaces a feed representation
   // with a placeholder node that contains a single output.
   FunctionLibraryDefinition flib_def(OpRegistry::Global(), graph_def.library());
+  LOG(ERROR) << "hello boy ******************** create graph by "
+                "ConvertGraphDefToXlaViaMlir";
   std::unique_ptr<Graph> graph(new Graph(flib_def));
   std::unordered_map<string, string> feed_name_remap;
   TF_RETURN_IF_ERROR(AddPlaceholdersForFeeds(config, graph->op_registry(),

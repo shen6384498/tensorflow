@@ -17,7 +17,6 @@ limitations under the License.
 
 #include <numeric>
 
-#include "tensorflow/compiler/mlir/mlir_bridge_rollout_policy.h"
 #include "absl/base/call_once.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_join.h"
@@ -25,6 +24,7 @@ limitations under the License.
 #include "tensorflow/compiler/jit/flags.h"
 #include "tensorflow/compiler/jit/xla_activity.pb.h"
 #include "tensorflow/compiler/jit/xla_activity_listener.h"
+#include "tensorflow/compiler/mlir/mlir_bridge_rollout_policy.h"
 #include "tensorflow/compiler/mlir/tensorflow/utils/compile_mlir_util.h"
 #include "tensorflow/compiler/mlir/utils/array_container_utils.h"
 #include "tensorflow/compiler/tf2xla/shape_util.h"
@@ -273,6 +273,7 @@ StatusOr<std::unique_ptr<Graph>> CreateGraph(
     absl::Span<const DataType> result_types) {
   // TODO(b/74182462): We implement this by creating a new dummy Graph including
   // _Arg nodes, and let CompileGraph walk it. This could be optimized.
+  LOG(ERROR) << "hello boy ******************** create graph by CreateGraph";
   std::unique_ptr<Graph> graph(new Graph(OpRegistry::Global()));
 
   // First create the actual node we care about computing.
@@ -582,7 +583,6 @@ Status XlaCompilationCache::CompileImpl(
     }
   }
   TF_ASSIGN_OR_RETURN(Signature signature, BuildSignature(function, args));
-
 
   // The outer lock protects the existence of the cache entry. It does not
   // protect the contents of the cache entry.

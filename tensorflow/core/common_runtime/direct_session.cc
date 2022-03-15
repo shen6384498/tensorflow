@@ -1672,6 +1672,8 @@ Status DirectSession::CreateGraphs(
 
   // Remember the graph in run state if this is a partial run.
   if (run_state_args->is_partial_run) {
+    LOG(ERROR)
+        << "hello boy ******************** create graph when partial run";
     run_state_args->graph.reset(new Graph(flib_def_.get()));
     CopyGraph(*execution_state->full_graph(), run_state_args->graph.get());
   }
@@ -1716,6 +1718,7 @@ Status DirectSession::CreateGraphs(
   }
 
   for (auto& partition : partitions) {
+    LOG(ERROR) << "hello boy ******************** create graph by partition";
     std::unique_ptr<Graph> device_graph(
         new Graph(client_graph->flib_def.get()));
     device_graph->SetConstructionContext(ConstructionContext::kDirectSession);

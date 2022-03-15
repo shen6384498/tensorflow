@@ -296,6 +296,8 @@ static Status FunctionDefToGraphDef(FunctionLibraryRuntime::Handle handle,
     return errors::Internal(
         "Function body is null when converting from FuncDef to GraphDef.");
   }
+  LOG(ERROR)
+      << "hello boy ******************** create graph by FunctionDefToGraphDef";
   std::unique_ptr<Graph> graph(new Graph(flib_def));
   CopyGraph(*fbody->graph, graph.get());
 

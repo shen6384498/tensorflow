@@ -170,6 +170,8 @@ Status ShapeRefiner::InferShapesForFunction(
         },
         &result));
 
+    LOG(ERROR)
+        << "hello boy ******************** create graph by shape refiner";
     Graph* new_graph = new Graph(function_library_);
     GraphConstructorOptions options;
     options.allow_internal_ops = true;

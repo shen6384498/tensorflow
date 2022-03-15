@@ -64,6 +64,8 @@ Scope::Impl::Impl(const std::shared_ptr<Graph>& graph,
       disable_shape_inference_(refiner_ == nullptr) {}
 
 Scope Scope::NewRootScope() {
+  LOG(ERROR) << "hello boy ******************** create graph in "
+                "NewRootScope";
   Graph* graph = new Graph(OpRegistry::Global());
   ShapeRefiner* refiner =
       new ShapeRefiner(graph->versions(), graph->op_registry());
@@ -72,6 +74,8 @@ Scope Scope::NewRootScope() {
 }
 
 Scope Scope::DisabledShapeInferenceScope() {
+  LOG(ERROR) << "hello boy ******************** create graph in "
+                "DisabledShapeInferenceScope";
   Graph* graph = new Graph(OpRegistry::Global());
   ShapeRefiner* refiner =
       new ShapeRefiner(graph->versions(), graph->op_registry());

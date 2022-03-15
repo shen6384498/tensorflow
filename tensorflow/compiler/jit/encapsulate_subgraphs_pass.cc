@@ -328,8 +328,7 @@ class Encapsulator {
   // subgraph boundary it is a slot on the output of a call node, otherwise it
   // is a slot on a node in the output graph.
   int FindOutputSlotOfEdgeSrc(const string& src_func_id,
-                              const string& dst_func_id,
-                              const Edge* edge);
+                              const string& dst_func_id, const Edge* edge);
 
   // Finds the image of an edge destination in the output graph. If the edge
   // crosses a subgraph boundary it is the input of a call node, otherwise it is
@@ -343,8 +342,7 @@ class Encapsulator {
   // subgraph boundary it is a slot on the input of a call node, otherwise it is
   // a slot on a node in the output graph.
   int FindOutputSlotOfEdgeDst(const string& src_func_id,
-                              const string& dst_func_id,
-                              const Edge* edge);
+                              const string& dst_func_id, const Edge* edge);
 
   // Copies a single edge to the output graph. The edge is either entirely
   // within the output graph, or crosses into or out of a compiled subgraph.
@@ -441,6 +439,8 @@ int Encapsulator::Subgraph::GetResultIndexForEdge(const Edge* edge) const {
 
 Node* Encapsulator::Subgraph::MakeNodeImage(const Graph* graph_in, Node* node) {
   if (!graph_) {
+    LOG(ERROR) << "hello boy ******************** create graph in "
+                  "MakeNodeImage";
     graph_.reset(new Graph(graph_in->op_registry()));
     graph_->set_versions(graph_in->versions());
   }
@@ -888,9 +888,9 @@ int Encapsulator::FindOutputSlotOfEdgeDst(const string& src_func_id,
                                           const Edge* edge) {
   if (IsInSubgraph(dst_func_id)) {
     const Subgraph& dst_subgraph = subgraphs_.at(dst_func_id);
-      // 'dst' is in a subgraph and 'src' is a regular node in the output
-      // graph. Use the corresponding call input instead.
-      return dst_subgraph.GetArgIndexForEdge(edge);
+    // 'dst' is in a subgraph and 'src' is a regular node in the output
+    // graph. Use the corresponding call input instead.
+    return dst_subgraph.GetArgIndexForEdge(edge);
   } else {
     // The destination of the edge is in the output graph so use the regular
     // edge slot.
@@ -1029,6 +1029,8 @@ Status Encapsulator::MakePrunedGraphCopyAndInline(
     std::unordered_map<const Node*, Node*>* node_images,
     FunctionLibraryDefinition* library) {
   // First copy all ancestor nodes of sink_nodes into a new graph.
+  LOG(ERROR) << "hello boy ******************** create graph in "
+                "MakePrunedGraphCopyAndInline";
   pruned_graph->reset(new Graph(library));
   (*pruned_graph)->set_versions(graph.versions());
   ReverseDFSFrom(graph, sink_nodes,
@@ -1101,13 +1103,14 @@ Status EncapsulateSubgraphsInFunctions(
     string group_attribute, const Graph& graph_in,
     const RewriteSubgraphFn& rewrite_subgraph_fn, bool reuse_existing_functions,
     std::unique_ptr<Graph>* graph_out, FunctionLibraryDefinition* library) {
-  Encapsulator encapsulator(std::move(group_attribute),
-                            &graph_in);
+  Encapsulator encapsulator(std::move(group_attribute), &graph_in);
   TF_RETURN_IF_ERROR(encapsulator.SplitIntoSubgraphs(library));
 
   TF_RETURN_IF_ERROR(encapsulator.BuildFunctionDefs(
       rewrite_subgraph_fn, reuse_existing_functions, library));
 
+  LOG(ERROR) << "hello boy ******************** create graph in "
+                "EncapsulateSubgraphsInFunctions";
   std::unique_ptr<Graph> out(new Graph(library));
   out->set_versions(graph_in.versions());
   TF_RETURN_IF_ERROR(encapsulator.BuildOutputGraph(out.get(), library));

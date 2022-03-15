@@ -1443,6 +1443,8 @@ class SymbolicGradientHelper {
 
 void SymbolicGradientHelper::Copy(FunctionBody* gbody) {
   const Graph& src = *(fbody_->graph);
+  LOG(ERROR) << "hello boy ******************** create graph by "
+                "SymbolicGradientHelper copy";
   gbody->graph = new Graph(src.op_registry());
   Graph* dst = gbody->graph;
 

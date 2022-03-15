@@ -107,7 +107,7 @@ Status GraphRunner::Run(Graph* graph, FunctionLibraryRuntime* function_library,
   if (device_ == nullptr) {
     return errors::NotFound("Cannot find a device for GraphRunner.");
   }
-
+  LOG(ERROR) << "hello boy ******************************** run graph";
   if (function_library && function_library->device() &&
       function_library->device()->device_type() != device_->device_type()) {
     // Mismatch between function_library's device_type and device_'s
@@ -123,6 +123,7 @@ Status GraphRunner::Run(Graph* graph, FunctionLibraryRuntime* function_library,
   // TODO(vrv): Instead of copying the entire graph, consider modifying
   // the existing graph, and then removing those removed edges.
   // prior to returning.
+  LOG(ERROR) << "hello boy ******************************** will new a graph";
   std::unique_ptr<Graph> graph_to_run(new Graph(graph->op_registry()));
   CopyGraph(*graph, graph_to_run.get());
 
