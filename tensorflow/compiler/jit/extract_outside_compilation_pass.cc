@@ -2066,7 +2066,7 @@ Status ExtractOutsideCompilationForWhileNode(
   // Build host side graph for the "While" node.
   if (!cond_has_outside_compilation) {
     LOG(ERROR) << "hello boy ******************** create graph";
-    std::unique_ptr<Graph> cond_host_graph((fld));
+    std::unique_ptr<Graph> cond_host_graph(new Graph(fld));
     std::vector<string> host_graphs;
     TF_RETURN_IF_ERROR(ConstructHostGraph(xla_cluster_name,
                                           outside_compilation_attr_name,
