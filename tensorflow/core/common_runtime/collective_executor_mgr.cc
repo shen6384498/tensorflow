@@ -63,6 +63,7 @@ CollectiveExecutor* CollectiveExecutorMgr::FindOrCreate(int64_t step_id) {
 }
 
 CollectiveExecutor* CollectiveExecutorMgr::Create(int64_t step_id) {
+  LOG(ERROR) << "hello boy ************************** create CollectiveExecutor";
   CollectiveRemoteAccessLocal* rma =
       new CollectiveRemoteAccessLocal(dev_mgr_, dev_resolver_.get(), step_id);
   return new BaseCollectiveExecutor(this, rma, step_id, dev_mgr_, work_queue_);

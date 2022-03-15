@@ -121,8 +121,9 @@ Status CopyInputToExpectedDevice(EagerContext* ctx, EagerOperation* op,
                                  int i, Device* handle_device,
                                  Device* expected_input_device,
                                  TensorHandle** result) {
-  VLOG(6) << "Expected input device: " << expected_input_device->name()
-          << "; handle_device: " << handle_device->name();
+  LOG(ERROR) << "hello boy ************************ Expected input device: "
+             << expected_input_device->name()
+             << "; handle_device: " << handle_device->name();
   // Should only be called when these don't match
   DCHECK(expected_input_device != handle_device);
   *result = nullptr;
@@ -204,6 +205,8 @@ Status CopyInputToExpectedDevice(EagerContext* ctx, EagerOperation* op,
 Status ValidateInputTypeAndPlacement(
     EagerContext* ctx, EagerOperation* op,
     const core::RefCountPtr<KernelAndDevice>& kernel) {
+  LOG(ERROR)
+      << "hello boy ************************** ValidateInputTypeAndPlacement";
   profiler::TraceMe activity("ValidateInputTypeAndPlacement",
                              profiler::TraceMeLevel::kInfo);
   const int n_inputs = op->Inputs().size();
@@ -291,6 +294,7 @@ inline tensorflow::Fprint128 FingerprintCat128(const tensorflow::Fprint128& a,
 
 Status GetDeviceForInput(const EagerContext& ctx, TensorHandle* tensor_handle,
                          Device** result) {
+  LOG(ERROR) << "hello boy ************************** GetDeviceForInput";
   Device* cpu_device = ctx.HostCPU();
   string device_name;
   if (tensor_handle->Type() != TensorHandle::LOCAL) {
@@ -405,6 +409,7 @@ Status MustCompileWithXLA(const EagerOperation* op, const EagerContext& ctx,
 }
 
 Status VerifyWrappableInCallOp(const OpDef& opdef, EagerOperation* op) {
+  LOG(ERROR) << "hello boy ************************** VerifyWrappableInCallOp";
   absl::flat_hash_set<string> opdef_attrs;
   for (const auto& attr : opdef.attr()) {
     opdef_attrs.insert(attr.name());
@@ -443,6 +448,7 @@ string GetFlatName(const string orig_name, int index) {
 // Concat[N:2, T:DT_FLOAT] -> __wrapped__Concat_N_2
 Status BuildWrappedOpName(EagerOperation* op, const OpDef& opdef,
                           const AbstractOpAttrs* op_attrs, string* name) {
+  LOG(ERROR) << "hello boy ************************** BuildWrappedOpName";
   string fname = absl::StrCat("__wrapped__", EscapeOrigName(op->Name()));
   // For every variadic arg in `args`, populates `attr_to_len` with
   // (attr_name, len(arg)).
@@ -488,6 +494,7 @@ Status BuildWrappedOpName(EagerOperation* op, const OpDef& opdef,
 // or the eager execution's validation (which is reached via the CreateOpKernel
 // call).
 Status ValidateOp(EagerOperation* op) {
+  LOG(ERROR) << "hello boy ************************** ValidateOp";
   const NodeDef& node_def = op->MutableAttrs()->BuildNodeDef();
   const OpDef* op_def;
   TF_RETURN_IF_ERROR(OpRegistry::Global()->LookUpOpDef(node_def.op(), &op_def));
@@ -616,6 +623,7 @@ Status ValidateOp(EagerOperation* op) {
 // inner op via a placeholder. This allows additional verification.
 Status BuildWrappedOpSignature(EagerOperation* op, const OpDef& opdef,
                                const string& fname, OpDef& signature) {
+  LOG(ERROR) << "hello boy ************************** BuildWrappedOpSignature";
   signature = opdef;
   signature.clear_input_arg();
   signature.clear_output_arg();
@@ -683,6 +691,7 @@ Status BuildWrappedOpSignature(EagerOperation* op, const OpDef& opdef,
 Status AddMixedTypeListAttrs(EagerOperation* wrapped_op,
                              const AbstractOpAttrs* op_attrs,
                              const OpDef& opdef) {
+  LOG(ERROR) << "hello boy ************************** AddMixedTypeListAttrs";
   auto FillAttrsToAdd =
       [op_attrs](const ProtoArgListType& opdef_args,
                  absl::flat_hash_map<string, DataType>* attrs_to_add) {
@@ -715,6 +724,7 @@ Status AddMixedTypeListAttrs(EagerOperation* wrapped_op,
 Status PopulateRetMap(FunctionDef* fdef, const AbstractOpAttrs* op_attrs,
                       const EagerOperation* op, const OpDef& opdef,
                       const OpDef& signature, const string& node_name) {
+  LOG(ERROR) << "hello boy ************************** PopulateRetMap";
   int next_sig_output = 0;
   for (size_t i = 0; i < opdef.output_arg_size(); i++) {
     const auto& output_arg = opdef.output_arg(i);
@@ -756,6 +766,7 @@ inline void GetMKLNodeDef(NodeDef* ndef) {
 #endif  // INTEL_MKL
 
 Status WrapInCallOp(EagerOperation* op, EagerOperation** wrapped_op) {
+  LOG(ERROR) << "hello boy ************************** WrapInCallOp";
   DCHECK(!op->is_function());
   const OpDef& opdef = OpRegistry::Global()->LookUp(op->Name())->op_def;
   // Raise an error for ops which don't support wrapping yet. This includes
@@ -832,6 +843,7 @@ Status WrapInCallOp(EagerOperation* op, EagerOperation** wrapped_op) {
 }
 
 bool IntArgsAndRetvalsOnDevice(EagerOperation* op) {
+  LOG(ERROR) << "hello boy ************************** IntArgsAndRetvalsOnDevice";
   // Most TF ops expect and generate int32 tensors on the host (or a TPU/XLA
   // device). This is not the case with IteratorGetNext since it is possible to
   // build int32 datasets that produce outputs on device when using
@@ -847,6 +859,8 @@ bool IntArgsAndRetvalsOnDevice(EagerOperation* op) {
 Status GetOrCreateKernelAndDevice(
     EagerOperation* op, TensorHandle** retvals, int* num_retvals,
     core::RefCountPtr<KernelAndDevice>* out_kernel) {
+  LOG(ERROR)
+      << "hello boy ************************** GetOrCreateKernelAndDevice";
   EagerContext& ctx = op->EagerContext();
   Device* device = absl::get<Device*>(op->Device());
 
@@ -1124,6 +1138,7 @@ Status CreateUnshapedOutput(
     const DataType& output_dtype,
     const absl::optional<EagerFunctionParams>& eager_func_params,
     EagerContext* ctx, TensorHandle** output) {
+  LOG(ERROR) << "hello boy ************************** CreateUnshapedOutput";
 #if defined(IS_MOBILE_PLATFORM)
   return errors::Unimplemented(
       "Remote outputs are not available on mobile devices.");
@@ -1156,6 +1171,7 @@ Status CreateUnshapedOutput(
 
 Status AddOrExecuteNode(core::RefCountPtr<KernelAndDevice> kernel,
                         EagerOperation* op, TensorHandle** retvals) {
+  LOG(ERROR) << "hello boy ************************** AddOrExecuteNode";
   EagerExecutor& executor = op->Executor();
   EagerContext& ctx = op->EagerContext();
   GraphCollector* graph_collector = nullptr;
@@ -1240,6 +1256,7 @@ Status AddOrExecuteNode(core::RefCountPtr<KernelAndDevice> kernel,
 //    running without an explicitly requested device.
 Status EagerLocalExecute(EagerOperation* op, TensorHandle** retvals,
                          int* num_retvals) {
+  LOG(ERROR) << "hello boy ************************** EagerLocalExecute";
   profiler::ScopedMemoryDebugAnnotation op_annotation(
       op->op_name(), op->eager_func_params().has_value()
                          ? op->eager_func_params().value().step_id.value_or(0)
@@ -1308,6 +1325,7 @@ Status EagerLocalExecute(EagerOperation* op, TensorHandle** retvals,
 // Run a Pack op to pack the tensors pointed by a packed input TensorHandle if
 // the op is a primitive op.
 Status MaybePackInputTensor(EagerOperation* op) {
+  LOG(ERROR) << "hello boy ************************** MaybePackInputTensor";
   if (op->is_function()) {
     // Functions could take packed TensorHandles as inputs.
     return Status::OK();
@@ -1342,6 +1360,7 @@ Status MaybePackInputTensor(EagerOperation* op) {
 
 #if !defined(IS_MOBILE_PLATFORM)
 void PrepareRemoteOp(eager::Operation* remote_op, EagerOperation* op) {
+  LOG(ERROR) << "hello boy ************************** PrepareRemoteOp";
   EagerContext& ctx = op->EagerContext();
 
   remote_op->set_id(ctx.RemoteMgr()->NextOpId());
@@ -1355,6 +1374,7 @@ void PrepareRemoteOp(eager::Operation* remote_op, EagerOperation* op) {
 Status StoreResourceDtypesAndShapes(const eager::Operation& remote_op,
                                     const DataTypeVector& output_dtypes,
                                     TensorHandle** retvals) {
+  LOG(ERROR) << "hello boy ************************** StoreResourceDtypesAndShapes";
   if (remote_op.name() == "VarHandleOp") {
     if (output_dtypes.size() != 1) {
       return errors::Internal("VarHandleOp should only have one output.");
@@ -1376,6 +1396,7 @@ Status StoreResourceDtypesAndShapes(const eager::Operation& remote_op,
 
 Status EagerRemoteExecute(EagerOperation* op, TensorHandle** retvals,
                           int* num_retvals) {
+  LOG(ERROR) << "hello boy ************************** EagerRemoteExecute";
   EagerContext& ctx = op->EagerContext();
 
   // TODO(fishx): Remove following code when lazy tensor copy is ready.
@@ -1547,6 +1568,7 @@ Status GetKernelOutputs(
     std::vector<EagerKernelRet>* outputs, int num_outputs,
     TensorHandle** retvals, EagerContext* ctx, KernelAndDevice* kernel,
     const absl::optional<EagerFunctionParams>& eager_func_params) {
+  LOG(ERROR) << "hello boy ************************** GetKernelOutputs";
   for (int i = 0, end = num_outputs; i < end; ++i) {
     if (retvals[i] == nullptr) {
       EagerKernelRet& ret = (*outputs)[i];
@@ -1603,6 +1625,7 @@ Status GetKernelOutputs(
 }
 
 void CollectGraphs(EagerContext* ctx) {
+  LOG(ERROR) << "hello boy ************************** CollectGraphs";
   mutex_lock ml(*ctx->MetadataMu());
 
   GraphCollector* collector = ctx->GetGraphCollector();
@@ -1629,6 +1652,7 @@ void CollectGraphs(EagerContext* ctx) {
 
 Status EagerExecute(EagerOperation* op, TensorHandle** retvals,
                     int* num_retvals) {
+  LOG(ERROR) << "hello boy ************************** EagerExecute";
   profiler::TraceMe activity(
       [&] { return absl::StrCat("EagerExecute: ", op->Name()); },
       profiler::TraceMeLevel::kInfo);
@@ -1677,6 +1701,7 @@ Status EagerKernelExecute(
     GraphCollector* graph_collector, CancellationManager* cancellation_manager,
     absl::Span<TensorHandle*> retvals,
     const absl::optional<ManagedStackTrace>& stack_trace) {
+  LOG(ERROR) << "hello boy ************************** EagerKernelExecute";
   profiler::TraceMe activity("EagerKernelExecute",
                              profiler::TraceMeLevel::kInfo);
   std::vector<EagerKernelRet> outputs(1);
@@ -1718,6 +1743,7 @@ namespace {
 Status LocalEagerCopyToDevice(TensorHandle* h, EagerContext* ctx,
                               EagerExecutor* executor, Device* dstd,
                               bool mirror, TensorHandle** result) {
+  LOG(ERROR) << "hello boy ************************** LocalEagerCopyToDevice";
   TF_RETURN_IF_ERROR(executor->status());
   Device* d = ctx->CanonicalDevice(dstd);
   if (mirror && h->HasLocalMirror(d)) {
@@ -1787,6 +1813,7 @@ Status LocalEagerCopyToDevice(TensorHandle* h, EagerContext* ctx,
 Status EagerCopyToDevice(TensorHandle* h, EagerContext* ctx,
                          EagerExecutor* executor, Device* device, bool mirror,
                          TensorHandle** result) {
+  LOG(ERROR) << "hello boy ************************** EagerCopyToDevice";
   TF_RETURN_IF_ERROR(h->WaitUnknownDevice());
   auto send_device = h->DeviceOrHostCPU(*ctx);
   bool sender_is_local = send_device->IsLocal();
@@ -1890,6 +1917,7 @@ void EagerKernelExecuteAsync(
     const core::RefCountPtr<KernelAndDevice> kernel,
     GraphCollector* graph_collector, CancellationManager* cancellation_manager,
     TensorHandle** retvals, int num_outputs, StatusCallback done) {
+  LOG(ERROR) << "hello boy ************************** EagerKernelExecuteAsync";
   auto inputs = std::make_shared<ExecuteNodeArgs>(op_inputs.size());
   auto outputs = std::make_shared<std::vector<EagerKernelRet>>(1);
 
@@ -1936,6 +1964,7 @@ void EagerKernelExecuteAsync(
 // triggered after execution with its status.
 void EagerLocalExecuteAsync(EagerOperation* op, TensorHandle** retvals,
                             int* num_retvals, StatusCallback done) {
+  LOG(ERROR) << "hello boy ************************** EagerLocalExecuteAsync";
   if (!op->IsLocal()) {
     done(errors::InvalidArgument(
         "Remote execution is not supported in async EagerLocalExecuteAsync"));

@@ -445,6 +445,7 @@ ExecutorState<PropagatorStateType>::~ExecutorState() {
 template <class PropagatorStateType>
 template <typename Closure>
 void ExecutorState<PropagatorStateType>::RunTask(Closure&& c) {
+  LOG(ERROR) << "hello boy *********************** RunTask for Closure";
   // Align the atomic variables at 64 bytes to avoid false-sharing, assuming the
   // cacheline size is 64 bytes or smaller.
   alignas(64) static std::atomic<int64_t> num_enqueue_ops{0};
@@ -468,6 +469,7 @@ void ExecutorState<PropagatorStateType>::RunTask(Closure&& c) {
 
 template <class PropagatorStateType>
 void ExecutorState<PropagatorStateType>::RunAsync(Executor::DoneCallback done) {
+  LOG(ERROR) << "hello boy *********************** RunAsync for DoneCallback";
   TaggedNodeSeq ready;
 
   // Ask the device to fill in the device context map.
@@ -561,6 +563,7 @@ template <class PropagatorStateType>
 Status ExecutorState<PropagatorStateType>::ProcessSync(
     const NodeItem& item, OpKernelContext::Params* params, EntryVector* outputs,
     NodeExecStatsInterface* stats) {
+  LOG(ERROR) << "hello boy *********************** ProcessSync for NodeItem";
   Status s;
   OpKernelContext ctx(params, item.num_outputs);
   nodestats::SetOpStart(stats);
@@ -605,6 +608,7 @@ void ExecutorState<PropagatorStateType>::ProcessAsync(
     const NodeItem& item, const OpKernelContext::Params& params,
     const TaggedNode& tagged_node, Entry* first_input,
     NodeExecStatsInterface* stats) {
+  LOG(ERROR) << "hello boy *********************** ProcessAsync for NodeItem";
   AsyncOpKernel* async_kernel = item.kernel->AsAsync();
   DCHECK(async_kernel != nullptr);
   AsyncState* state =
@@ -664,6 +668,7 @@ void ExecutorState<PropagatorStateType>::ProcessNoop(
 template <class PropagatorStateType>
 void ExecutorState<PropagatorStateType>::ProcessConstTensor(
     const NodeItem& item, EntryVector* outputs, NodeExecStatsInterface* stats) {
+  LOG(ERROR) << "hello boy *********************** ProcessConstTensor for NodeItem";
   nodestats::SetOpStart(stats);
   nodestats::SetOpEnd(stats);
   Entry& output = (*outputs)[0];
@@ -675,6 +680,7 @@ void ExecutorState<PropagatorStateType>::ProcessConstTensor(
 template <class PropagatorStateType>
 void ExecutorState<PropagatorStateType>::Process(TaggedNode tagged_node,
                                                  int64_t scheduled_nsec) {
+  LOG(ERROR) << "hello boy *********************** Process for TaggedNode";
   profiler::TraceMeConsumer activity(
       // From TraceMeProducer in DirectSession::RunInternal,
       // GraphMgr::ExecuteAsync, or FunctionLibraryRuntime::Run.
@@ -868,6 +874,7 @@ template <class PropagatorStateType>
 Status ExecutorState<PropagatorStateType>::PrepareInputs(
     const NodeItem& item, Entry* first_input, TensorValueVec* inputs,
     AllocatorAttributeVec* input_alloc_attrs, bool* is_input_dead) {
+  LOG(ERROR) << "hello boy *********************** PrepareInputs for NodeItem";
   inputs->resize(item.num_inputs);
   input_alloc_attrs->resize(item.num_inputs);
 
@@ -983,6 +990,7 @@ template <class PropagatorStateType>
 Status ExecutorState<PropagatorStateType>::ProcessOutputs(
     const NodeItem& item, OpKernelContext* ctx, Entry* outputs,
     NodeExecStatsInterface* stats) {
+  LOG(ERROR) << "hello boy *********************** ProcessOutputs for NodeItem";
   Status s = ctx->status();
   if (!s.ok()) {
     s = AttachDef(s, item.kernel->def());
@@ -1083,6 +1091,7 @@ template <class PropagatorStateType>
 bool ExecutorState<PropagatorStateType>::NodeDone(
     const Status& s, TaggedNodeSeq* ready, NodeExecStatsInterface* stats,
     TaggedNodeReadyQueue* inline_ready) {
+  LOG(ERROR) << "hello boy *********************** NodeDone";
   if (stats) {
     nodestats::SetAllEnd(stats);
     DCHECK_NE(stats_collector_, nullptr);
@@ -1162,6 +1171,7 @@ bool ExecutorState<PropagatorStateType>::NodeDone(
 template <class PropagatorStateType>
 void ExecutorState<PropagatorStateType>::ScheduleReady(
     TaggedNodeSeq* ready, TaggedNodeReadyQueue* inline_ready) {
+  LOG(ERROR) << "hello boy *********************** ScheduleReady";
   DCHECK(!ready->empty());
 
   int64_t scheduled_nsec = 0;
@@ -1225,6 +1235,7 @@ void ExecutorState<PropagatorStateType>::ScheduleReady(
 
 template <class PropagatorStateType>
 void ExecutorState<PropagatorStateType>::ScheduleFinish() {
+  LOG(ERROR) << "hello boy *********************** ScheduleFinish";
   // Checks condition to decide if needs to invoke Finish(). If there are
   // in-flight deffered ops, wait for `num_deferred_ops_` reaches 0 to invoke
   // Finish(). Otherwise, invoke Finish() directly.
@@ -1245,6 +1256,7 @@ void ExecutorState<PropagatorStateType>::ScheduleFinish() {
 
 template <class PropagatorStateType>
 void ExecutorState<PropagatorStateType>::Finish() {
+  LOG(ERROR) << "hello boy *********************** Finish";
   mu_.lock();
   auto status = status_;
   auto done_cb = std::move(done_cb_);
@@ -1359,6 +1371,7 @@ void ExecutorState<PropagatorStateType>::Finish() {
 }
 
 void ExecutorImpl::RunAsync(const Args& args, DoneCallback done) {
+  LOG(ERROR) << "hello boy *********************** ExecutorImpl RunAsync";
   if (OpOrderDeterminismRequired()) {
     (new ExecutorState<OrderedPropagatorState>(args, immutable_state_,
                                                &kernel_stats_))
@@ -1377,6 +1390,7 @@ void ExecutorImpl::RunAsync(const Args& args, DoneCallback done) {
 
 Status NewLocalExecutor(const LocalExecutorParams& params, const Graph& graph,
                         Executor** executor) {
+  LOG(ERROR) << "hello boy *********************** NewLocalExecutor";
   ExecutorImpl* impl = new ExecutorImpl(params);
   const Status s = impl->Initialize(graph);
   if (s.ok()) {

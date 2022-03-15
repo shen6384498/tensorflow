@@ -144,6 +144,7 @@ int DynamicDeviceMgr::NumDeviceType(const string& type) const {
 
 Status DynamicDeviceMgr::AddDevices(
     std::vector<std::unique_ptr<Device>> devices) {
+  LOG(ERROR) << "hello boy *********************** add device";
   mutex_lock l(devices_mu_);
   for (auto& d : devices) {
     if (device_map_.find(d->name()) != device_map_.end()) {
