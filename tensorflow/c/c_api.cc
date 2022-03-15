@@ -1619,9 +1619,9 @@ TF_Graph::TF_Graph()
   refiner.set_function_library_for_shape_inference(&graph.flib_def());
 }
 
-TF_Graph* TF_NewGraph() { 
+TF_Graph* TF_NewGraph() {
   LOG(ERROR) << "hello boy ********************* interface TF_NewGraph";
-  return new TF_Graph; 
+  return new TF_Graph;
 }
 
 void TF_DeleteGraph(TF_Graph* g) {
@@ -2015,6 +2015,7 @@ TF_WhileParams EmptyWhileParams() {
 
 TF_WhileParams TF_NewWhile(TF_Graph* g, TF_Output* inputs, int ninputs,
                            TF_Status* status) {
+  LOG(ERROR) << "hello boy ************************** interface TF_NewWhile";
 #if defined(IS_MOBILE_PLATFORM) || defined(IS_SLIM_BUILD)
   status->status = tensorflow::errors::Unimplemented(
       "Creating while loops is not supported on mobile. File a bug at "
