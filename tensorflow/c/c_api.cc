@@ -1619,7 +1619,10 @@ TF_Graph::TF_Graph()
   refiner.set_function_library_for_shape_inference(&graph.flib_def());
 }
 
-TF_Graph* TF_NewGraph() { return new TF_Graph; }
+TF_Graph* TF_NewGraph() { 
+  LOG(ERROR) << "hello boy ********************* interface TF_NewGraph";
+  return new TF_Graph; 
+}
 
 void TF_DeleteGraph(TF_Graph* g) {
   if (g == nullptr) return;
