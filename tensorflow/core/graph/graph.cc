@@ -456,7 +456,7 @@ Graph::Graph(const OpRegistryInterface* ops)
     : ops_(ops, FunctionDefLibrary()),
       versions_(new VersionDef),
       arena_(8 << 10 /* 8kB */) {
-  LOG(ERROR) << "hello boy ********************* build graph";
+  LOG(ERROR) << "hello boy ********************* build graph:" << this;
   versions_->set_producer(TF_GRAPH_DEF_VERSION);
   versions_->set_min_consumer(TF_GRAPH_DEF_VERSION_MIN_CONSUMER);
 
@@ -483,7 +483,7 @@ Graph::Graph(const OpRegistryInterface* ops)
 
 Graph::Graph(const FunctionLibraryDefinition& flib_def)
     : Graph(flib_def.default_registry()) {
-  LOG(ERROR) << "hello boy ********************* build graph";
+  LOG(ERROR) << "hello boy ********************* build graph:" << this;
   // Need a new-enough consumer to support the functions we add to the graph.
   if (flib_def.num_functions() > 0 && versions_->min_consumer() < 12) {
     versions_->set_min_consumer(12);

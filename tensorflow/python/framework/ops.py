@@ -3102,6 +3102,7 @@ class Graph(object):
         #
         # NOTE(mrry): This does not protect the various stacks. A warning will
         # be reported if these are used from multiple threads
+        print("hello boy **************************** python create a graph start")
         self._lock = threading.RLock()
         # The group lock synchronizes Session.run calls with methods that create
         # and mutate ops (e.g. Graph.create_op()). This synchronization is
@@ -3206,7 +3207,6 @@ class Graph(object):
 
         # TODO(skyewm): fold as much of the above as possible into the C
         # implementation
-        print("ops.py create a graph")
         self._scoped_c_graph = c_api_util.ScopedTFGraph()
         # The C API requires all ops to have shape functions. Disable this
         # requirement (many custom ops do not have shape functions, and we don't
@@ -3214,6 +3214,7 @@ class Graph(object):
         pywrap_tf_session.SetRequireShapeInferenceFns(self._c_graph, False)
         if tf2.enabled():
             self.switch_to_thread_local()
+        print("hello boy **************************** python create a graph end")
 
     # Note: this method is private because the API of tf.Graph() is public and
     # frozen, and this functionality is still not ready for public visibility.
