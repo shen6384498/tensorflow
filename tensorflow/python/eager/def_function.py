@@ -581,7 +581,8 @@ class Function(core.GenericFunction, trackable.Trackable):
           ValueError: if `input_signature` is not None and the `python_function`'s
             argspec has keyword arguments.
         """
-        print("hello boy ************************** python new function")
+        print("hello boy ************************** python new function name:", name)
+        "first call. Make sure the tf.Variable is only created once or "
         self._lock = threading.RLock()
         self._python_function = python_function
         self._function_spec = function_lib.FunctionSpec.from_function_and_signature(
@@ -796,7 +797,6 @@ class Function(core.GenericFunction, trackable.Trackable):
             """Disables variable creation."""
             raise ValueError(
                 "tf.function only supports singleton tf.Variables created on the "
-                "first call. Make sure the tf.Variable is only created once or "
                 "created outside tf.function. See "
                 "https://www.tensorflow.org/guide/function#creating_tfvariables "
                 "for more information.")
