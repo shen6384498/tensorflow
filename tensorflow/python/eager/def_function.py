@@ -753,7 +753,7 @@ class Function(core.GenericFunction, trackable.Trackable):
           kwds: Keyword arguments to the python callable.
           add_initializers_to: Where to collect variable initializers, if not None.
         """
-
+        print("hello boy ************************** python function initialize:", self.name)
         if self._input_signature is not None:
             arglen = len(self._input_signature)
             arg_names_len = len(self.function_spec.arg_names)
@@ -806,6 +806,7 @@ class Function(core.GenericFunction, trackable.Trackable):
 
     def _clone(self, python_function):
         """Clone the function with different python function."""
+        print("hello boy ************************** python function clone:", self.name)
         f = Function(
             python_function=(self._python_function
                              if python_function is None else python_function),
@@ -841,6 +842,7 @@ class Function(core.GenericFunction, trackable.Trackable):
         Raises:
           ValueError: If the function has been called a ValueError is raised.
         """
+        print("hello boy ************************** python function _decorate:", self.name)
         if self._stateful_fn is not None or self._stateless_fn is not None:
             raise ValueError(
                 "Functions cannot be decorated after they have been traced.")
@@ -894,6 +896,7 @@ class Function(core.GenericFunction, trackable.Trackable):
     @traceback_utils.filter_traceback
     def __call__(self, *args, **kwds):
         # Implements GenericFunction.__call__.
+        print("hello boy ************************** python function __call__:", self.name)
         if self._run_functions_eagerly:
             with trace.Trace(self._name, tf_function_call="eager"):
                 return self._python_function(*args, **kwds)
@@ -941,6 +944,7 @@ class Function(core.GenericFunction, trackable.Trackable):
 
     def _call(self, *args, **kwds):
         """Calls the graph function."""
+        print("hello boy ************************** python function _call:", self.name)
         self._lock.acquire()
         if ALLOW_DYNAMIC_VARIABLE_CREATION:
             condition = self._created_variables and self._stateful_fn is None
@@ -1057,6 +1061,7 @@ class Function(core.GenericFunction, trackable.Trackable):
 
     def experimental_get_compiler_ir(self, *args, **kwargs):
         # Implements GenericFunction.experimental_get_compiler_ir
+        print("hello boy ************************** python function experimental_get_compiler_ir:", self.name)
         context.ensure_initialized()
         if not self._jit_compile:
             raise ValueError("Compiler IR can only be returned for functions marked "
@@ -1091,17 +1096,24 @@ class Function(core.GenericFunction, trackable.Trackable):
     @property
     def python_function(self):
         """The python function wrapped in this tf.function."""
+        print(
+            "hello boy ************************ python function python_function:", self.name)
         return self._python_function
 
     @property
     def input_signature(self):
+        print(
+            "hello boy ************************ python function input_signature:", self.name)
         return self._function_spec.input_signature
 
     @property
     def function_spec(self):
+        print(
+            "hello boy ************************ python function function_spec:", self.name)
         return self._function_spec
 
     def pretty_printed_concrete_signatures(self, verbose=True):
+        print("hello boy ************************ python function pretty_printed_concrete_signatures:", self.name)
         joiner = "\n\n" if verbose else "\n"
         return joiner.join([
             c.pretty_printed_signature(verbose=verbose)
@@ -1111,6 +1123,7 @@ class Function(core.GenericFunction, trackable.Trackable):
     def _initialize_uninitialized_variables(self, initializers):
         """Make and call a `ConcreteFunction` which initializes variables."""
 
+        print("hello boy ************************ python function _initialize_uninitialized_variables:", self.name)
         if not initializers:
             return
 
@@ -1122,6 +1135,8 @@ class Function(core.GenericFunction, trackable.Trackable):
         # autograph is not necessary.
         @function_lib.defun(autograph=False)
         def initialize_variables():
+            print(
+                "hello boy ************************ python function initialize_variables:", self.name)
             op_map = object_identity.ObjectIdentityDictionary()
 
             inits = []
@@ -1165,6 +1180,7 @@ class Function(core.GenericFunction, trackable.Trackable):
         Raises:
           RuntimeError: if called after the variables have been initialized.
         """
+        print("hello boy ************************ python function get_initialization_function:", self.name)
         with self._lock:
             if self._stateful_fn is not None:
                 raise RuntimeError(
@@ -1178,6 +1194,8 @@ class Function(core.GenericFunction, trackable.Trackable):
         # Note: using defun here avoids an infinite recursion.
         @function_lib.defun
         def initialize_variables():
+            print(
+                "hello boy ************************ python function initialize_variables:", self.name)
             for v, init in initializers:
                 v.assign(
                     lift_to_graph.lift_to_graph(
@@ -1188,6 +1206,7 @@ class Function(core.GenericFunction, trackable.Trackable):
 
     def _list_all_concrete_functions(self):
         """Returns all concrete functions."""
+        print("hello boy ************************ python function _list_all_concrete_functions:", self.name)
         if self.input_signature is not None:
             self.get_concrete_function()
         concrete_functions = []
@@ -1207,6 +1226,7 @@ class Function(core.GenericFunction, trackable.Trackable):
         Returns:
           A list of instances of `ConcreteFunction`.
         """
+        print("hello boy ************************ python function _list_all_concrete_functions_for_serialization:", self.name)
         concrete_functions = self._list_all_concrete_functions()
         seen_signatures = []
         for concrete_function in concrete_functions:
@@ -1249,6 +1269,7 @@ class Function(core.GenericFunction, trackable.Trackable):
         Raises:
           ValueError: if this object has not yet been called on concrete values.
         """
+        print("hello boy ************************ python function _get_concrete_function_garbage_collected:", self.name)
         with self._lock:
             if self._stateful_fn is None:
                 initializers = []
@@ -1273,6 +1294,7 @@ class Function(core.GenericFunction, trackable.Trackable):
 
     def get_concrete_function(self, *args, **kwargs):
         # Implements GenericFunction.get_concrete_function.
+        print("hello boy ************************ python function get_concrete_function:", self.name)
         concrete = self._get_concrete_function_garbage_collected(
             *args, **kwargs)
         concrete._garbage_collector.release()  # pylint: disable=protected-access
@@ -1306,6 +1328,7 @@ class Function(core.GenericFunction, trackable.Trackable):
         # CompositeTensor but do not actually implement the required APIs.
         # TODO(b/199278478): Fix those classes, then remove the check for
         # `instance._type_spec is not None`.
+        print("hello boy ************************ python function __get__:", self.name)
         if (isinstance(instance, composite_tensor.CompositeTensor) and
                 instance._type_spec is not None):  # pylint: disable=protected-access
             return types_lib.MethodType(self, instance)
