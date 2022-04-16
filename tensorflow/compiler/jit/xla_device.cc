@@ -218,6 +218,7 @@ XlaDevice::XlaDevice(const SessionOptions& session_options,
       shape_determination_fns_(options.shape_determination_fns),
       allowed_devices_(options.allowed_devices),
       use_global_compute_stream_(options.use_global_compute_stream) {
+  LOG(ERROR) << "hello boy **************************** create XlaDevice";
   if (options.shape_determination_fns.empty()) {
     LOG(ERROR) << "shape_representation_fns must be non-empty.";
   }

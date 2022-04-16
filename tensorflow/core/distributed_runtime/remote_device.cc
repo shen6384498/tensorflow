@@ -37,7 +37,9 @@ class RemoteDevice : public Device {
  public:
   RemoteDevice(Env* env, const DeviceAttributes& da)
       : Device(env, da),
-        local_dev_name_(DeviceNameUtils::LocalName(da.name())) {}
+        local_dev_name_(DeviceNameUtils::LocalName(da.name())) {
+    LOG(ERROR) << "hello boy **************************** create RemoteDevice";
+  }
 
   Status Sync() override { return Status::OK(); }
   Allocator* GetAllocator(AllocatorAttributes attr) override { return nullptr; }

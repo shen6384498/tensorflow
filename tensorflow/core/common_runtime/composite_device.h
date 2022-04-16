@@ -59,7 +59,9 @@ class CompositeDevice : public Device {
   CompositeDevice(const DeviceAttributes& device_attributes,
                   const std::vector<string>& underlying_devices)
       : Device(/*env=*/nullptr, device_attributes),
-        underlying_devices_(underlying_devices) {}
+        underlying_devices_(underlying_devices) {
+    LOG(ERROR) << "hello boy **************************** create CompositeDevice";
+  }
 
   const std::vector<string> underlying_devices_;
 

@@ -67,7 +67,9 @@ void VirtualDeviceContext::CopyTensorInSameDevice(const Tensor* input_tensor,
 
 VirtualDevice::VirtualDevice(Env* env,
                              const DeviceAttributes& device_attributes)
-    : Device(env, device_attributes) {}
+    : Device(env, device_attributes) {
+  LOG(ERROR) << "hello boy **************************** create VirtualDevice";
+}
 
 Status VirtualDevice::Sync() { return Status::OK(); }
 

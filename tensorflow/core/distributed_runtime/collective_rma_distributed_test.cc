@@ -59,7 +59,9 @@ static std::unique_ptr<Device> NewDevice(const string& type, const string& name,
   class FakeDevice : public Device {
    public:
     explicit FakeDevice(const DeviceAttributes& attr, Allocator* allocator)
-        : Device(nullptr, attr), allocator_(allocator) {}
+        : Device(nullptr, attr), allocator_(allocator) {
+      LOG(ERROR) << "hello boy **************************** create FakeDevice";
+    }
     Status Sync() override { return Status::OK(); }
     Allocator* GetAllocator(AllocatorAttributes) override { return allocator_; }
 

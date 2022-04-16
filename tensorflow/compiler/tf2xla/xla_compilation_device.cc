@@ -75,7 +75,9 @@ XlaCompilationDevice::XlaCompilationDevice(const SessionOptions& options,
                                type, Bytes(256 << 20), DeviceLocality(),
                                absl::StrCat("device: XLA compilation device ",
                                             type.type()))),
-      allocator_(new XlaCompilationAllocator()) {}
+      allocator_(new XlaCompilationAllocator()) {
+  LOG(ERROR) << "hello boy **************************** create XlaCompilationDevice";
+}
 
 XlaCompilationDevice::~XlaCompilationDevice() {}
 

@@ -112,7 +112,9 @@ AttrSlice FunctionInstantiationAttributes(const FunctionDef& func,
 // Placer.
 class FakeDevice : public Device {
  public:
-  FakeDevice(Env* env, const string& device) : Device(env, attr(device)) {}
+  FakeDevice(Env* env, const string& device) : Device(env, attr(device)) {
+    LOG(ERROR) << "hello boy **************************** create FakeDevice";
+  }
   explicit FakeDevice(const string& device) : FakeDevice(nullptr, device) {}
   Status Sync() override { return Status::OK(); }
 

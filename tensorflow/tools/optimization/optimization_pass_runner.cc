@@ -47,7 +47,9 @@ namespace {
 class FakeDevice : public Device {
  private:
   explicit FakeDevice(const DeviceAttributes& device_attributes)
-      : Device(nullptr, device_attributes) {}
+      : Device(nullptr, device_attributes) {
+    LOG(ERROR) << "hello boy **************************** create FakeDevice";
+  }
 
  public:
   Status Sync() override;

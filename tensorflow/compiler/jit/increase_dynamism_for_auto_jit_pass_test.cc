@@ -42,7 +42,9 @@ using testing::matchers::Out;
 class FakeDevice : public Device {
  public:
   explicit FakeDevice(const DeviceAttributes& device_attributes)
-      : Device(nullptr, device_attributes) {}
+      : Device(nullptr, device_attributes) {
+    LOG(ERROR) << "hello boy **************************** create FakeDevice";
+  }
 
   Status Sync() override { return errors::Unimplemented("FakeDevice::Sync()"); }
 

@@ -28,7 +28,9 @@ class VirtualDevice : public Device, public DeviceTraits<VirtualDevice> {
     return kName;
   }
 
-  explicit VirtualDevice(string_view name) : Device(kDeviceType, name) {}
+  explicit VirtualDevice(string_view name) : Device(kDeviceType, name) {
+    LOG(ERROR) << "hello boy **************************** create VirtualDevice";
+  }
 
   ~VirtualDevice() override = default;
 };
