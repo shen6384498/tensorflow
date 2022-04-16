@@ -557,7 +557,8 @@ StatusOr<Node*> Graph::AddNode(NodeDef node_def) {
 }
 
 Node* Graph::AddNode(NodeDef node_def, Status* status) {
-  LOG(ERROR) << "hello boy ****************************** add node";
+  LOG(ERROR) << "hello boy ****************************** add node name:"
+             << node_def.name();
   const OpRegistrationData* op_reg_data;
   status->Update(ops_.LookUp(node_def.op(), &op_reg_data));
   if (!status->ok()) return nullptr;
