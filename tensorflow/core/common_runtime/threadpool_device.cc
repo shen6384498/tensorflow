@@ -61,6 +61,7 @@ ThreadPoolDevice::ThreadPoolDevice(const SessionOptions& options,
                                name, DEVICE_CPU, memory_limit, locality)),
       allocator_(allocator),
       scoped_allocator_mgr_(new ScopedAllocatorMgr(name)) {
+  LOG(ERROR) << "hello boy **************************** create ThreadPoolDevice";
   auto s = NodeFileWriter::GetNodeFileWriterIfEnabled(name, env());
   if (!s.ok()) {
     LOG(ERROR) << s.status();

@@ -394,6 +394,8 @@ BaseGPUDevice::BaseGPUDevice(const SessionOptions& options, const string& name,
       scoped_allocator_mgr_(new ScopedAllocatorMgr(name)),
       tf_device_id_(tf_device_id),
       sync_every_op_(sync_every_op) {
+  LOG(ERROR)
+      << "hello boy **************************** create BaseGPUDevice";
   // XLA device IDs for GPUs are arbitrary but must be unique, so we hash device
   // names (which include a replica index even for multi-client).
   set_xla_global_id(Fingerprint32(name) % std::numeric_limits<int32_t>::max());

@@ -153,6 +153,7 @@ PluggableDevice::PluggableDevice(
   if (options.config.has_gpu_options()) {
     force_gpu_compatible_ = options.config.gpu_options().force_gpu_compatible();
   }
+  LOG(ERROR) << "hello boy **************************** create PluggableDevice";
   PluggableDeviceProcessState::singleton(device_type, platform_name)
       ->EnablePluggableDevice();
 }
