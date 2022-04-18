@@ -45,6 +45,7 @@ class SingleThreadedCpuDevice : public Device {
       : Device(env, Device::BuildDeviceAttributes("/device:CPU:0", DEVICE_CPU,
                                                   Bytes(256 << 20),
                                                   DeviceLocality())) {
+    LOG(ERROR) << "hello boy **************************** create SingleThreadedCpuDevice";
     eigen_worker_threads_.num_threads = kNumThreads;
     eigen_worker_threads_.workers = GraphRunnerThreadPool();
     eigen_device_.reset(new Eigen::ThreadPoolDevice(

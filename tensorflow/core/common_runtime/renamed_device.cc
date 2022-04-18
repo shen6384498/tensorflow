@@ -56,6 +56,7 @@ RenamedDevice::RenamedDevice(Device* underlying,
       underlying_device_(underlying),
       owns_underlying_device_(owns_underlying_device),
       isolate_session_state_(isolate_session_state) {
+  LOG(ERROR) << "hello boy **************************** create RenamedDevice";
   if (underlying_threadpool != nullptr) {
     underlying_threadpool_.reset(new thread::ThreadPool(underlying_threadpool));
     eigen_worker_threads_.workers = underlying_threadpool_.get();
