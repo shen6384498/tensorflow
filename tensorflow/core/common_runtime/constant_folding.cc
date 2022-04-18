@@ -653,7 +653,7 @@ Status ConstantFold(const ConstantFoldingOptions& opts,
         strings::StrCat(n.first.first->name(), ":", n.first.second));
     tensors_to_replace.push_back(n.second);
   }
-
+  LOG(ERROR) << "hello boy ************************* create graph runner";
   auto graph_runner = std::unique_ptr<GraphRunner>(new GraphRunner(env));
   // Evaluate the constant foldable nodes.
   std::vector<Tensor> outputs;

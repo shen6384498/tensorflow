@@ -95,7 +95,9 @@ class SimpleRendezvous : public RendezvousInterface {
 
 GraphRunner::GraphRunner(Env* env)
     : device_deleter_(NewSingleThreadedCpuDevice(env)),
-      device_(device_deleter_.get()) {}
+      device_(device_deleter_.get()) {
+  LOG(ERROR) << "hello boy ************************* create graph runner in construct";
+}
 GraphRunner::GraphRunner(Device* device) : device_(device) {}
 
 GraphRunner::~GraphRunner() {}
