@@ -311,6 +311,7 @@ class HostComputeOp : public XlaOpKernel {
 
     // Now run shape inference, filling in the shapes of recvathost nodes.
     bool got_output_shapes = false;
+    LOG(ERROR) << "hello boy ************************** create shape refiner";
     ShapeRefiner shape_refiner{graph->versions().producer(),
                                graph->op_registry()};
 

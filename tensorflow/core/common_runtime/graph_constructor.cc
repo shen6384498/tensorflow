@@ -1435,6 +1435,7 @@ Status GraphConstructor::MakeEdge(Node* src, int output_index, Node* dst,
 
 Status ConvertGraphDefToGraph(const GraphConstructorOptions& opts,
                               const GraphDef& gdef, Graph* g) {
+  LOG(ERROR) << "hello boy ************************** create shape refiner";
   ShapeRefiner refiner(gdef.versions().producer(), g->op_registry());
   return GraphConstructor::Construct(
       opts, gdef.node(), &gdef.versions(), &gdef.library(), g, &refiner,
@@ -1444,6 +1445,7 @@ Status ConvertGraphDefToGraph(const GraphConstructorOptions& opts,
 
 Status ConvertGraphDefToGraph(const GraphConstructorOptions& opts,
                               GraphDef&& gdef, Graph* g) {
+  LOG(ERROR) << "hello boy ************************** create shape refiner";
   ShapeRefiner refiner(gdef.versions().producer(), g->op_registry());
   return GraphConstructor::Construct(opts, std::move(gdef), g, &refiner,
                                      /*return_tensors=*/nullptr,
@@ -1453,6 +1455,7 @@ Status ConvertGraphDefToGraph(const GraphConstructorOptions& opts,
 
 Status ConvertNodeDefsToGraph(const GraphConstructorOptions& opts,
                               gtl::ArraySlice<NodeDef> nodes, Graph* g) {
+  LOG(ERROR) << "hello boy ************************** create shape refiner";
   ShapeRefiner refiner(TF_GRAPH_DEF_VERSION, g->op_registry());
   // TODO(irving): Copy will go away once NodeInfo exists
   std::vector<const NodeDef*> node_defs;
@@ -1498,6 +1501,7 @@ Status ImportGraphDef(const ImportGraphDefOptions& opts, const GraphDef& gdef,
     }
   }
 
+  LOG(ERROR) << "hello boy ************************** create shape refiner";
   ShapeRefiner default_refiner(gdef.versions().producer(), g->op_registry());
   if (refiner == nullptr) {
     refiner = &default_refiner;

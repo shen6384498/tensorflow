@@ -814,6 +814,7 @@ Status ImporterBase::GetInputOutputNodes(
 // TODO(jpienaar): Remove this post shape inference on import flag is removed.
 Status ImporterBase::AddNodesToShapeRefiner(
     std::unordered_map<string, Node*>* node_name_map) {
+  LOG(ERROR) << "hello boy ************************** create shape refiner";
   shape_refiner_ = absl::make_unique<ShapeRefiner>(graph_->versions(),
                                                    graph_->op_registry());
   // Some operations (for example "TPUExecute") don't have shape inference

@@ -1514,6 +1514,7 @@ Status FunctionalizeCond::FunctionalizeInternal() {
   if (VLOG_IS_ON(4)) DumpGraphWithCondState("id");
 
   // Determine the shapes of the ops in the graph.
+  LOG(ERROR) << "hello boy ************************** create shape refiner";
   ShapeRefiner shape_refiner{graph_->versions().producer(),
                              graph_->op_registry()};
   std::vector<Node*> nodes;

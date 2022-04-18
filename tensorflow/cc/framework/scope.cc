@@ -67,6 +67,7 @@ Scope Scope::NewRootScope() {
   LOG(ERROR) << "hello boy ******************** create graph in "
                 "NewRootScope";
   Graph* graph = new Graph(OpRegistry::Global());
+  LOG(ERROR) << "hello boy ************************** create shape refiner";
   ShapeRefiner* refiner =
       new ShapeRefiner(graph->versions(), graph->op_registry());
   return Scope(new Impl(graph, new Status, new Impl::NameMap, refiner,
@@ -77,6 +78,7 @@ Scope Scope::DisabledShapeInferenceScope() {
   LOG(ERROR) << "hello boy ******************** create graph in "
                 "DisabledShapeInferenceScope";
   Graph* graph = new Graph(OpRegistry::Global());
+  LOG(ERROR) << "hello boy ************************** create shape refiner";
   ShapeRefiner* refiner =
       new ShapeRefiner(graph->versions(), graph->op_registry());
   return Scope(new Impl(graph, new Status, new Impl::NameMap, refiner,

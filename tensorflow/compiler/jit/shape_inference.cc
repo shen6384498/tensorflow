@@ -243,6 +243,7 @@ Status StoreOutputShapes(const Graph& graph, const ShapeRefiner& shape_refiner,
 Status InferShapes(Graph* graph, const std::map<int, InferredShape>& arg_shapes,
                    const tensorflow::FunctionLibraryDefinition* fnlib_def,
                    GraphShapeInfo* shape_info) {
+  LOG(ERROR) << "hello boy ************************** create shape refiner";
   ShapeRefiner shape_refiner(graph->versions(), graph->op_registry());
   shape_refiner.set_require_shape_inference_fns(false);
   // TODO(dlibenzi): Verify if it is worth trying to infer shaped within

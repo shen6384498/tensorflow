@@ -217,6 +217,7 @@ Status FoldConstants(const GraphDef& input_graph_def,
   Graph input_graph(OpRegistry::Global());
   TF_RETURN_IF_ERROR(input_graph.AddFunctionLibrary(input_graph_def.library()));
 
+  LOG(ERROR) << "hello boy ************************** create shape refiner";
   ShapeRefiner shape_refiner(input_graph.versions(), input_graph.op_registry());
   shape_refiner.set_require_shape_inference_fns(false);
   shape_refiner.set_disable_constant_propagation(false);
