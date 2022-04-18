@@ -98,6 +98,7 @@ class SimpleTestGraph : public GraphInfo {
 void PartitionGraph(const SimpleTestGraph& graph,
                     const std::vector<int>& nodes_to_partition,
                     std::vector<NodeSubset>* subgraphs) {
+  LOG(ERROR) << "hello boy ************************* partition graph";
   TfLiteIntArray* nodes_to_partition_int_array =
       ConvertVector(nodes_to_partition);
   PartitionGraphIntoIndependentNodeSubsets(&graph, nodes_to_partition_int_array,

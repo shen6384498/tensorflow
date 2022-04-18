@@ -107,7 +107,7 @@ Status EagerExecutor::SyncExecute(EagerNode* node) {
   // NOTE: SyncExecute runs every node regardless of error status in executor.
 
   uint64 id = next_node_id_++;
-
+  LOG(ERROR) << "hello boy ************************** eager executor sync exec";
   Status s = node->Prepare();
   if (!s.ok()) {
     return s;
@@ -121,6 +121,7 @@ Status EagerExecutor::SyncExecute(EagerNode* node) {
 }
 
 Status EagerExecutor::AddOrExecute(std::unique_ptr<EagerNode> node) {
+  LOG(ERROR) << "hello boy ************************** eager executor AddOrExecute";
   Status status;
   core::RefCountPtr<NodeItem> item(new NodeItem);
   item->id = next_node_id_++;
@@ -209,6 +210,8 @@ void EagerExecutor::ClearError() {
 
 void EagerExecutor::NodeDone(const core::RefCountPtr<NodeItem>& item,
                              const Status& status, bool from_queue) {
+  LOG(ERROR)
+      << "hello boy ************************** eager executor NodeDone";
   DVLOG(3) << "Node Done: [id " << item->id << "] " << item->node->DebugString()
            << " with status: " << status.ToString();
   DCHECK(item->state != NodeState::kDONE);
@@ -287,6 +290,7 @@ void EagerExecutor::NodeDone(const core::RefCountPtr<NodeItem>& item,
 }
 
 void EagerExecutor::NotifyWaiters(uint64 id) {
+  LOG(ERROR) << "hello boy ************************** eager executor NotifyWaiters";
   if (!node_done_notifications_.empty()) {
     uint64 upperbound_id = 0;
     if (!unfinished_nodes_.empty()) {
@@ -318,6 +322,8 @@ void EagerExecutor::NotifyWaiters(uint64 id) {
 }
 
 void EagerExecutor::Run() {
+  LOG(ERROR)
+      << "hello boy ************************** eager executor Run";
   auto thread_exited_notifier =
       gtl::MakeCleanup([this] { thread_exited_notification_.Notify(); });
   while (true) {
@@ -347,6 +353,7 @@ void EagerExecutor::Run() {
 
 Status EagerExecutor::RunItem(core::RefCountPtr<NodeItem> item,
                               bool from_queue) {
+  LOG(ERROR) << "hello boy ************************** eager executor RunItem";
   DVLOG(3) << "Running Node: [id " << item->id << "] "
            << item->node->DebugString();
   AsyncRemoteExecuteNode* async_remote_node =

@@ -36,6 +36,7 @@ bool ExecuteNodeArgs::IsRemote(EagerContext* ctx, Device* input_device,
 Status ExecuteNodeArgs::InitPackedHandle(const int index, EagerContext* ctx,
                                          Device* input_device,
                                          TensorHandle* packed_handle) {
+  LOG(ERROR) << "hello boy ************************** eager executor node args InitPackedHandleInitPackedHandle";
   int num_handles = packed_handle->NumPackedHandles();
   packed_args_.emplace(index, gtl::InlinedVector<TensorValue, 4>(num_handles));
   TensorValue* packed_arg_flat = &(packed_args_[index][0]);
@@ -64,6 +65,8 @@ Status ExecuteNodeArgs::InitPackedHandle(const int index, EagerContext* ctx,
 Status ExecuteNodeArgs::Init(
     EagerContext* ctx, const gtl::InlinedVector<TensorHandle*, 4>& op_inputs,
     const core::RefCountPtr<KernelAndDevice>& kernel) {
+  LOG(ERROR) << "hello boy ************************** eager executor node args "
+                "Init";
   // If there are multiple references to a TensorHandle in 'op_inputs' we must
   // increment the reference count of the corresponding Tensor or risk it being
   // overwritten during kernel execution. The reference count is incremented
@@ -123,6 +126,8 @@ Status ExecuteNodeArgs::Init(
 
 Status ExecuteNodeArgs::GetLocalArg(const FunctionArgIndex& index,
                                     Tensor* val) const {
+  LOG(ERROR) << "hello boy ************************** eager executor node get "
+                "local args";
   Status s = EagerKernelArgs::GetLocalArg(index, val);
   if (s.ok()) {
     return Status::OK();

@@ -101,6 +101,7 @@ KernelAndDeviceFunc::~KernelAndDeviceFunc() {
 Status KernelAndDeviceOp::Init(const bool log_device_placement,
                                const NodeDef& ndef,
                                GraphCollector* graph_collector) {
+  LOG(ERROR) << "hello boy ************************** kernel and device init";
   OpKernel* k = nullptr;
   if (flr_ == nullptr) {
     return errors::Internal(
@@ -139,6 +140,7 @@ Status KernelAndDeviceOp::Init(const bool log_device_placement,
 Status KernelAndDeviceFunc::InstantiateFunc(const bool log_device_placement,
                                             const NodeDef& ndef,
                                             GraphCollector* graph_collector) {
+  LOG(ERROR) << "hello boy ************************** kernel and device InstantiateFunc";
   const OpDef* op_def = nullptr;
   const FunctionDef* function_def;
   if (flr_ == nullptr) {
@@ -240,6 +242,8 @@ Status KernelAndDeviceFunc::InstantiateFunc(const bool log_device_placement,
 Status KernelAndDeviceFunc::Init(const bool log_device_placement,
                                  const NodeDef& ndef,
                                  GraphCollector* graph_collector) {
+  LOG(ERROR) << "hello boy ************************** kernel and device func "
+                "Init";
   TF_RETURN_IF_ERROR(
       InstantiateFunc(log_device_placement, ndef, graph_collector));
   return pflr_->GetOutputDevices(handle_, &output_devices_);
@@ -263,6 +267,8 @@ Status KernelAndDeviceOp::Run(
     const absl::optional<EagerFunctionParams>& eager_func_params,
     const absl::optional<ManagedStackTrace>& stack_trace,
     CoordinationServiceAgent* coordination_service_agent) {
+  LOG(ERROR) << "hello boy ************************** kernel and device "
+                "op run ";
   OpKernelContext::Params params;
   params.device = device_;
   params.frame_iter = FrameAndIter(0, 0);
@@ -351,6 +357,8 @@ KernelAndDeviceFunc::PrepareForRun(
     const absl::optional<EagerFunctionParams>& eager_func_params,
     const absl::optional<ManagedStackTrace>& stack_trace,
     CoordinationServiceAgent* coordination_service_agent) {
+  LOG(ERROR) << "hello boy ************************** kernel and device "
+                "func PrepareForRun ";
   std::shared_ptr<FunctionLibraryRuntime::Options> opts = nullptr;
   if (eager_func_params.has_value()) {
     const EagerFunctionParams& params = eager_func_params.value();
@@ -411,6 +419,8 @@ Status KernelAndDeviceFunc::Run(
     const absl::optional<EagerFunctionParams>& eager_func_params,
     const absl::optional<ManagedStackTrace>& stack_trace,
     CoordinationServiceAgent* coordination_service_agent) {
+  LOG(ERROR) << "hello boy ************************** kernel and device "
+                "func run ";
   profiler::TraceMe activity("KernelAndDeviceFunc::Run",
                              profiler::TraceMeLevel::kInfo);
   // Don't try to handle packed or remote inputs synchronously.
@@ -456,6 +466,8 @@ void KernelAndDeviceFunc::RunAsync(
     const absl::optional<EagerFunctionParams>& eager_func_params,
     CoordinationServiceAgent* coordination_service_agent,
     std::function<void(const Status&)> done) {
+  LOG(ERROR) << "hello boy ************************** kernel and device "
+                "func RunAsync ";
   profiler::TraceMe activity("KernelAndDeviceFunc::RunAsync",
                              profiler::TraceMeLevel::kInfo);
   std::shared_ptr<FunctionLibraryRuntime::Options> opts = PrepareForRun(
