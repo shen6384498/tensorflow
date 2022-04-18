@@ -74,7 +74,6 @@ struct TF_Graph {
   tensorflow::Graph graph TF_GUARDED_BY(mu);
 
   // Runs shape inference.
-  LOG(ERROR) << "hello boy ************************** create shape refiner";
   tensorflow::ShapeRefiner refiner TF_GUARDED_BY(mu);
 
   // Maps from name of an operation to the Node* in 'graph'.
