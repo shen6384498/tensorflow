@@ -43,7 +43,9 @@ ShapeRefiner::ShapeRefiner(int graph_def_version,
                            const OpRegistryInterface* ops)
     : graph_def_version_(graph_def_version),
       ops_registry_(ops),
-      graph_runner_(Env::Default()) {}
+      graph_runner_(Env::Default()) {
+  LOG(ERROR) << "hello boy ************************* create ShapeRefiner";
+}
 
 ShapeRefiner::ShapeRefiner(const VersionDef& versions,
                            const OpRegistryInterface* ops)

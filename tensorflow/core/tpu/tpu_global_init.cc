@@ -169,6 +169,7 @@ Status InitializeTPUSystemGlobally(absl::string_view job_name,
   // initialization graph given that we need to a session in distributed
   // initialization anyway.
   if (session_target.empty()) {
+    LOG(ERROR) << "hello boy ************************* create graph runner";
     GraphRunner graph_runner(tpu_system_device);
     TF_RETURN_IF_ERROR(graph_runner.Run(graph_to_run.get(), nullptr, {},
                                         {"InitializeTPUSystemGlobally:0"},
