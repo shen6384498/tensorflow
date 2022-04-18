@@ -1616,12 +1616,15 @@ TF_Graph::TF_Graph()
       parent(nullptr),
       parent_inputs(nullptr) {
   // Tell the shape refiner to also run shape inference on functions.
+  LOG(ERROR) << "hello boy ********************* create graph";
   refiner.set_function_library_for_shape_inference(&graph.flib_def());
 }
 
 TF_Graph* TF_NewGraph() {
-  LOG(ERROR) << "hello boy ********************* interface TF_NewGraph";
-  return new TF_Graph;
+  LOG(ERROR) << "hello boy ********************* interface TF_NewGraph start";
+  auto a = new TF_Graph;
+  LOG(ERROR) << "hello boy ********************* interface TF_NewGraph end";
+  return a;
 }
 
 void TF_DeleteGraph(TF_Graph* g) {
