@@ -445,7 +445,7 @@ ExecutorState<PropagatorStateType>::~ExecutorState() {
 template <class PropagatorStateType>
 template <typename Closure>
 void ExecutorState<PropagatorStateType>::RunTask(Closure&& c) {
-  LOG(ERROR) << "hello boy *********************** RunTask for Closure";
+  LOG(ERROR) << "hello boy *********************** RunTask in ExecutorState";
   // Align the atomic variables at 64 bytes to avoid false-sharing, assuming the
   // cacheline size is 64 bytes or smaller.
   alignas(64) static std::atomic<int64_t> num_enqueue_ops{0};

@@ -565,6 +565,7 @@ void GraphMgr::StartParallelExecutors(
       args.runner =
           std::bind(&thread::ThreadPool::Schedule, device_thread_pool, _1);
     }
+    LOG(ERROR) << "hello boy ***************************** GraphMgr RunAsync";
     unit.root->RunAsync(args, barrier->Get());
   }
 }

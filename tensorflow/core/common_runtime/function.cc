@@ -1106,6 +1106,8 @@ void FunctionLibraryRuntimeImpl::RunRemote(const Options& opts, Handle handle,
           done(s);
           return;
         }
+        LOG(ERROR) << "hello boy ***************************** "
+                      "FunctionLibraryRuntimeImpl RunAsync in ReceiveTensorsAsync";
         item->exec->RunAsync(
             *exec_args,
             [frame, rets, done, source_device, target_device,
@@ -1197,6 +1199,8 @@ void FunctionLibraryRuntimeImpl::Run(const Options& opts, Handle handle,
   ExecutorArgsFromOptions(run_opts, frame, &exec_args);
 
   bool allow_dead_tensors = run_opts.allow_dead_tensors;
+  LOG(ERROR) << "hello boy ***************************** "
+                "FunctionLibraryRuntimeImpl RunAsync in activity";
   item->exec->RunAsync(
       // Executor args
       exec_args,
@@ -1268,6 +1272,8 @@ void FunctionLibraryRuntimeImpl::Run(const Options& opts, Handle handle,
 
   Executor::Args exec_args;
   ExecutorArgsFromOptions(run_opts, frame, &exec_args);
+  LOG(ERROR) << "hello boy ***************************** "
+                "FunctionLibraryRuntimeImpl RunAsync";
   item->exec->RunAsync(exec_args, std::move(done));
 }
 

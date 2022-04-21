@@ -755,7 +755,7 @@ Status DirectSession::RunInternal(
     for (const auto& item : executors_and_keys->items) {
       set_threadpool_args_for_item(item, &args);
       LOG(ERROR)
-          << "hello boy ************************************** ExecutorState ";
+          << "hello boy ***************************** RunInternal RunAsync";
       item.executor->RunAsync(args, barrier->Get());
     }
 
@@ -1030,6 +1030,7 @@ Status DirectSession::PRunSetup(const std::vector<string>& input_names,
   }
 
   for (auto& item : executors_and_keys->items) {
+    LOG(ERROR) << "hello boy ***************************** PRunSetup RunAsync";
     item.executor->RunAsync(args, barrier->Get());
   }
 
