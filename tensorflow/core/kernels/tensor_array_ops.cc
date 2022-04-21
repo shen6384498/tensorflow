@@ -107,6 +107,8 @@ class TensorArrayCreationOp : public OpKernel {
       : OpKernel(context), device_type_(context->device_type()) {}
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     Tensor tensor_array_output_handle;
 
     AllocatorAttributes alloc_attr;
@@ -416,6 +418,8 @@ class TensorArrayWriteOp : public OpKernel {
       : OpKernel(context) {}
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     OP_REQUIRES_OK(ctx, SetupFlowControlInputs(ctx, true));
 
     const Tensor* tensor_index;
@@ -499,6 +503,8 @@ class TensorArrayReadOp : public OpKernel {
   }
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     OP_REQUIRES_OK(ctx, SetupFlowControlInputs(ctx, false));
 
     const Tensor* tensor_index;
@@ -594,6 +600,8 @@ class TensorArrayPackOrGatherOp : public OpKernel {
   }
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     OP_REQUIRES_OK(ctx, SetupFlowControlInputs(ctx, false));
 
     TensorArray* tensor_array = nullptr;
@@ -819,6 +827,8 @@ class TensorArrayConcatOp : public OpKernel {
   }
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     OP_REQUIRES_OK(ctx, SetupFlowControlInputs(ctx, false));
 
     TensorArray* tensor_array = nullptr;
