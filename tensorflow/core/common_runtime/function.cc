@@ -485,7 +485,11 @@ FunctionLibraryRuntimeImpl::FunctionLibraryRuntimeImpl(
              absl::flat_hash_map<Handle, std::unique_ptr<Item>>>()),
       function_handle_cache_(absl::make_unique<FunctionHandleCache>(this)),
       parent_(parent) {
+  LOG(ERROR) << "hello boy ******************************** create "
+                "FunctionLibraryRuntimeImpl";
   get_func_sig_ = [this](const string& op, const OpDef** sig) {
+    LOG(ERROR) << "hello boy ******************************** call LookUpOpDef "
+                  "in FunctionLibraryRuntimeImpl by base_lib_def_";
     return base_lib_def_->LookUpOpDef(op, sig);
   };
   create_kernel_ = [this](const std::shared_ptr<const NodeProperties>& props,
@@ -581,6 +585,8 @@ class CallOp : public AsyncOpKernel {
 };
 
 const FunctionBody* FunctionLibraryRuntimeImpl::GetFunctionBody(Handle h) {
+  LOG(ERROR) << "hello boy ******************************** "
+                "FunctionLibraryRuntimeImpl GetFunctionBody";
   LocalHandle local_handle = parent_->GetHandleOnDevice(device_name_, h);
   if (local_handle == kInvalidLocalHandle) {
     LOG(ERROR) << "Could not find Handle: " << h
@@ -616,6 +622,8 @@ Status FunctionLibraryRuntimeImpl::CreateKernel(
 Status FunctionLibraryRuntimeImpl::CreateKernel(
     const std::shared_ptr<const NodeProperties>& props,
     FunctionLibraryRuntime* flr, OpKernel** kernel) {
+  LOG(ERROR) << "hello boy ******************************** "
+                "FunctionLibraryRuntimeImpl CreateKernel";
   // If a custom kernel creator is given, try that.
   Status s;
   const CustomKernelCreator* custom_kernel_creator =
@@ -686,6 +694,8 @@ Status FunctionLibraryRuntimeImpl::FunctionDefToBody(
     const FunctionDef& fdef, AttrSlice attrs,
     const FunctionLibraryDefinition* lib_def,
     std::unique_ptr<FunctionBody>* fbody) {
+  LOG(ERROR) << "hello boy ******************************** "
+                "FunctionLibraryRuntimeImpl FunctionDefToBody";
   if (lib_def == base_lib_def_) {
     return FunctionDefToBodyHelper(fdef, attrs, lib_def, get_func_sig_, fbody);
   } else {
@@ -699,6 +709,8 @@ Status FunctionLibraryRuntimeImpl::FunctionDefToBody(
 Status FunctionLibraryRuntimeImpl::InstantiateSymbolicGradient(
     const NameAttrList& func, const FunctionLibraryDefinition* lib_def,
     std::unique_ptr<FunctionBody>* g_body) {
+  LOG(ERROR) << "hello boy ******************************** "
+                "FunctionLibraryRuntimeImpl InstantiateSymbolicGradient";
   const FunctionDef* fdef = lib_def->Find(func.name());
   if (fdef == nullptr) {
     // f is a primitive op.
@@ -732,6 +744,8 @@ Status FunctionLibraryRuntimeImpl::InstantiateSymbolicGradient(
 
 bool FunctionLibraryRuntimeImpl::IsLocalTarget(
     const InstantiateOptions& options) const {
+  LOG(ERROR) << "hello boy ******************************** "
+                "FunctionLibraryRuntimeImpl IsLocalTarget";
   if (device_ == nullptr) return true;
   if (options.target.empty()) return true;
   if (options.is_multi_device_function) return false;
@@ -753,6 +767,8 @@ bool FunctionLibraryRuntimeImpl::IsLocalTarget(
 Status FunctionLibraryRuntimeImpl::Instantiate(
     const string& function_name, AttrSlice attrs,
     const InstantiateOptions& options, Handle* handle) {
+  LOG(ERROR) << "hello boy ******************************** "
+                "FunctionLibraryRuntimeImpl Instantiate";
   if (!IsLocalTarget(options)) {
     return parent_->Instantiate(function_name, attrs, options, handle);
   }
@@ -851,6 +867,8 @@ Status FunctionLibraryRuntimeImpl::Instantiate(
 }
 
 Status FunctionLibraryRuntimeImpl::ReleaseHandle(Handle handle) {
+  LOG(ERROR) << "hello boy ******************************** "
+                "FunctionLibraryRuntimeImpl ReleaseHandle";
   LocalHandle h = parent_->GetHandleOnDevice(device_name_, handle);
   if (h == kInvalidLocalHandle) {
     return parent_->ReleaseHandle(handle);
@@ -930,6 +948,8 @@ void PruneFunctionBody(const FunctionDef& fdef, Graph* g) {
 }  // namespace
 
 Status FunctionLibraryRuntimeImpl::CreateItem(Item** item) {
+  LOG(ERROR) << "hello boy ******************************** "
+                "FunctionLibraryRuntimeImpl CreateItem";
   const FunctionBody* fbody;
   FunctionLibraryRuntime* flr;
   string executor_type;
@@ -998,6 +1018,8 @@ Status FunctionLibraryRuntimeImpl::CreateItem(Item** item) {
 
 Status FunctionLibraryRuntimeImpl::GetOrCreateItem(LocalHandle local_handle,
                                                    Item** item) {
+  LOG(ERROR) << "hello boy ******************************** "
+                "FunctionLibraryRuntimeImpl GetOrCreateItem";
   {
     tf_shared_lock l(mu_);
     auto iter = items_->find(local_handle);
@@ -1018,6 +1040,8 @@ Status FunctionLibraryRuntimeImpl::GetOrCreateItem(LocalHandle local_handle,
 void FunctionLibraryRuntimeImpl::ExecutorArgsFromOptions(
     const FunctionLibraryRuntime::Options& run_opts, CallFrameInterface* frame,
     Executor::Args* exec_args) {
+  LOG(ERROR) << "hello boy ******************************** "
+                "FunctionLibraryRuntimeImpl ExecutorArgsFromOptions";
   // Inherit the step_id from the caller.
   exec_args->step_id = run_opts.step_id;
   exec_args->rendezvous = run_opts.rendezvous;
@@ -1040,6 +1064,8 @@ void FunctionLibraryRuntimeImpl::RunRemote(const Options& opts, Handle handle,
                                            gtl::ArraySlice<Tensor> args,
                                            std::vector<Tensor>* rets,
                                            Item* item, DoneCallback done) {
+  LOG(ERROR) << "hello boy ******************************** "
+                "FunctionLibraryRuntimeImpl RunRemote";
   string target_device = parent_->GetDeviceName(handle);
   string source_device = opts.source_device;
   RendezvousInterface* rendezvous = opts.rendezvous;
@@ -1137,6 +1163,8 @@ void FunctionLibraryRuntimeImpl::Run(const Options& opts, Handle handle,
                                      gtl::ArraySlice<Tensor> args,
                                      std::vector<Tensor>* rets,
                                      DoneCallback done) {
+  LOG(ERROR) << "hello boy ******************************** "
+                "FunctionLibraryRuntimeImpl Run";
   if (opts.cancellation_manager && opts.cancellation_manager->IsCancelled()) {
     done(errors::Cancelled("Function was cancelled before it was started"));
     return;
@@ -1218,6 +1246,8 @@ void FunctionLibraryRuntimeImpl::Run(const Options& opts, Handle handle,
 void FunctionLibraryRuntimeImpl::Run(const Options& opts, Handle handle,
                                      CallFrameInterface* frame,
                                      DoneCallback done) {
+  LOG(ERROR) << "hello boy ******************************** "
+                "FunctionLibraryRuntimeImpl Run";
   if (opts.cancellation_manager && opts.cancellation_manager->IsCancelled()) {
     done(errors::Cancelled(""));
     return;
@@ -1280,6 +1310,8 @@ void FunctionLibraryRuntimeImpl::Run(const Options& opts, Handle handle,
 Status FunctionLibraryRuntimeImpl::PrepareRunSync(
     Handle handle, Options* run_opts, Item** out_item,
     std::unique_ptr<PrivateIntraProcessRendezvous>* out_rendezvous) {
+  LOG(ERROR) << "hello boy ******************************** "
+                "FunctionLibraryRuntimeImpl PrepareRunSync";
   if (run_opts->cancellation_manager &&
       run_opts->cancellation_manager->IsCancelled()) {
     return errors::Cancelled("");
@@ -1320,6 +1352,8 @@ Status FunctionLibraryRuntimeImpl::PrepareRunSync(
 Status FunctionLibraryRuntimeImpl::RunSync(Options opts, Handle handle,
                                            gtl::ArraySlice<Tensor> args,
                                            std::vector<Tensor>* rets) {
+  LOG(ERROR) << "hello boy ******************************** "
+                "FunctionLibraryRuntimeImpl RunSync";
   Item* item = nullptr;
   std::unique_ptr<PrivateIntraProcessRendezvous> rendezvous;
   TF_RETURN_IF_ERROR(PrepareRunSync(handle, &opts, &item, &rendezvous));
@@ -1339,6 +1373,8 @@ Status FunctionLibraryRuntimeImpl::RunSync(Options opts, Handle handle,
 
 Status FunctionLibraryRuntimeImpl::RunSync(Options opts, Handle handle,
                                            CallFrameInterface* call_frame) {
+  LOG(ERROR) << "hello boy ******************************** "
+                "FunctionLibraryRuntimeImpl RunSync";
   Item* item = nullptr;
   std::unique_ptr<PrivateIntraProcessRendezvous> rendezvous;
   TF_RETURN_IF_ERROR(PrepareRunSync(handle, &opts, &item, &rendezvous));
@@ -1376,6 +1412,8 @@ Status FunctionLibraryRuntimeImpl::Clone(
     std::unique_ptr<FunctionLibraryDefinition>* out_lib_def,
     std::unique_ptr<ProcessFunctionLibraryRuntime>* out_pflr,
     FunctionLibraryRuntime** out_flr, bool skip_flib_def) {
+  LOG(ERROR) << "hello boy ******************************** "
+                "FunctionLibraryRuntimeImpl Clone";
   TF_RETURN_IF_ERROR(parent_->Clone(env_, graph_def_version_,
                                     optimizer_.options(), out_lib_def, out_pflr,
                                     skip_flib_def));
@@ -1426,6 +1464,8 @@ std::unique_ptr<FunctionLibraryRuntime> NewFunctionLibraryRuntime(
     const OptimizerOptions& optimizer_options,
     const SessionMetadata* session_metadata,
     ProcessFunctionLibraryRuntime* parent) {
+  LOG(ERROR) << "hello boy ******************************** "
+                "new FunctionLibraryRuntimeImpl";
   return std::unique_ptr<FunctionLibraryRuntime>(new FunctionLibraryRuntimeImpl(
       device_mgr, env, config, device, graph_def_version, lib_def, thread_pool,
       optimizer_options, session_metadata, parent));

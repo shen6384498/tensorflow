@@ -107,6 +107,8 @@ ProcessFunctionLibraryRuntime::ProcessFunctionLibraryRuntime(
       optimizer_options_(optimizer_options),
       graph_def_version_(graph_def_version) {
   if (device_mgr == nullptr) {
+    LOG(ERROR) << "hello boy ******************************** "
+                  "ProcessFunctionLibraryRuntime call NewFunctionLibraryRuntime";
     (*flr_map_)[nullptr] = NewFunctionLibraryRuntime(
         nullptr, env, config_ ? &(*config_) : nullptr, nullptr,
         graph_def_version, lib_def_, default_thread_pool, optimizer_options,
@@ -241,6 +243,9 @@ void ProcessFunctionLibraryRuntime::InitializeDeviceAndFlr() {
   // Update flr_map_ by adding new devices
   for (Device* d : device_mgr_->ListDevices()) {
     if ((*flr_map_)[d] == nullptr) {
+      LOG(ERROR) << "hello boy ******************************** "
+                    "ProcessFunctionLibraryRuntime InitializeDeviceAndFlr call "
+                    "NewFunctionLibraryRuntime";
       (*flr_map_)[d] = NewFunctionLibraryRuntime(
           device_mgr_, env_, config_ ? &(*config_) : nullptr, d,
           graph_def_version_, lib_def_, default_thread_pool_,
