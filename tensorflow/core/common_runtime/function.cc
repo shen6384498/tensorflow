@@ -623,7 +623,8 @@ Status FunctionLibraryRuntimeImpl::CreateKernel(
     const std::shared_ptr<const NodeProperties>& props,
     FunctionLibraryRuntime* flr, OpKernel** kernel) {
   LOG(ERROR) << "hello boy ******************************** "
-                "FunctionLibraryRuntimeImpl CreateKernel";
+                "FunctionLibraryRuntimeImpl CreateKernel for:"
+             << props->node_def.name();
   // If a custom kernel creator is given, try that.
   Status s;
   const CustomKernelCreator* custom_kernel_creator =
