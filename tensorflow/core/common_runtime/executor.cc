@@ -1180,7 +1180,9 @@ void ExecutorState<PropagatorStateType>::ScheduleReady(
   }
 
   if (run_all_kernels_inline_) {
+    LOG(ERROR) << "hello boy ************************ run all kernel inline";
     if (inline_ready == nullptr) {
+      LOG(ERROR) << "hello boy ************************ run all kernel inline, inline not ready";
       // Schedule all ready kernels from a single closure. This ensure that,
       // regardless of the `runner_` implementation, all kernels will run
       // sequentially on the same thread, and thread wakeup overhead and
@@ -1191,18 +1193,25 @@ void ExecutorState<PropagatorStateType>::ScheduleReady(
         }
       });
     } else {
+      LOG(ERROR) << "hello boy ************************ run all kernel inline, "
+                    "inline ready";
       for (auto& tagged_node : *ready) {
         inline_ready->push_back(tagged_node);
       }
     }
   } else {
+    LOG(ERROR) << "hello boy ************************ not run all kernel inline";
     const TaggedNode* curr_expensive_node = nullptr;
     if (inline_ready == nullptr) {
+      LOG(ERROR) << "hello boy ************************ not run all kernel inline, "
+                    "inline not ready";
       // Schedule to run all the ready ops in thread pool.
       for (auto& tagged_node : *ready) {
         RunTask([=]() { Process(tagged_node, scheduled_nsec); });
       }
     } else {
+      LOG(ERROR) << "hello boy ************************ not run all kernel inline, "
+                    "inline ready";
       for (auto& tagged_node : *ready) {
         const NodeItem& item = *tagged_node.node_item;
         if (tagged_node.get_is_dead() || !kernel_stats_->IsExpensive(item)) {
@@ -1220,9 +1229,13 @@ void ExecutorState<PropagatorStateType>::ScheduleReady(
       }
     }
     if (curr_expensive_node) {
+      LOG(ERROR) << "hello boy ************************ curr expensive ndoe";
       if (inline_ready->empty()) {
+        LOG(ERROR) << "hello boy ************************ curr expensive ndoe, inline_ready empty";
         inline_ready->push_back(*curr_expensive_node);
       } else {
+        LOG(ERROR) << "hello boy ************************ curr expensive ndoe, "
+                      "inline_ready not empty";
         // There are inline nodes to run already. We dispatch this expensive
         // node to other thread.
         RunTask(std::bind(&ExecutorState::Process, this, *curr_expensive_node,
@@ -1230,6 +1243,7 @@ void ExecutorState<PropagatorStateType>::ScheduleReady(
       }
     }
   }
+  LOG(ERROR) << "hello boy ************************ clear ready";
   ready->clear();
 }
 
