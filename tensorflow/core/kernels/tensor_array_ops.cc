@@ -54,6 +54,7 @@ namespace tensorflow {
 
 Status GetHandle(OpKernelContext* ctx, string* container, string* ta_handle) {
   {
+    LOG(ERROR) << "hello boy ******************** tensor array interface";
     Tensor tensor;
     // Assuming that handle is the input at index 0.
     if (IsRefType(ctx->input_dtype(0))) {
@@ -74,6 +75,7 @@ Status GetHandle(OpKernelContext* ctx, string* container, string* ta_handle) {
 }
 
 Status GetTensorArray(OpKernelContext* ctx, TensorArray** tensor_array) {
+  LOG(ERROR) << "hello boy ******************** tensor array interface";
   string container;
   string ta_handle;
   if (ctx->input_dtype(0) != DT_RESOURCE) {
@@ -89,6 +91,7 @@ Status GetTensorArray(OpKernelContext* ctx, TensorArray** tensor_array) {
 }
 
 Status SetupFlowControlInputs(OpKernelContext* ctx, bool set_output) {
+  LOG(ERROR) << "hello boy ******************** tensor array interface";
   const Tensor* flow_control;
   TF_RETURN_IF_ERROR(ctx->input("flow_in", &flow_control));
   if (set_output) {
@@ -104,7 +107,9 @@ Status SetupFlowControlInputs(OpKernelContext* ctx, bool set_output) {
 class TensorArrayCreationOp : public OpKernel {
  public:
   explicit TensorArrayCreationOp(OpKernelConstruction* context)
-      : OpKernel(context), device_type_(context->device_type()) {}
+      : OpKernel(context), device_type_(context->device_type()) {
+    LOG(ERROR) << "hello boy ******************** tensor array interface";
+  }
 
   void Compute(OpKernelContext* ctx) override {
     LOG(ERROR) << "hello boy ************************** kernel compute:"
@@ -163,6 +168,7 @@ class TensorArrayOp : public TensorArrayCreationOp {
  public:
   explicit TensorArrayOp(OpKernelConstruction* context)
       : TensorArrayCreationOp(context) {
+    LOG(ERROR) << "hello boy ******************** tensor array interface";
     OP_REQUIRES_OK(context, context->GetAttr("dtype", &dtype_));
     OP_REQUIRES_OK(context, context->GetAttr("element_shape", &element_shape_));
     OP_REQUIRES_OK(context, context->GetAttr("dynamic_size", &dynamic_size_));
@@ -184,6 +190,7 @@ class TensorArrayOp : public TensorArrayCreationOp {
   Status CreateTensorArray(OpKernelContext* ctx, ResourceMgr* rm,
                            Tensor* tensor_array_output_handle,
                            TensorArray** output_tensor_array) override {
+    LOG(ERROR) << "hello boy ******************** tensor array interface";
     const Tensor* tensor_size;
     TF_RETURN_IF_ERROR(ctx->input("size", &tensor_size));
 
@@ -275,12 +282,14 @@ class TensorArrayGradOp : public TensorArrayCreationOp {
  public:
   explicit TensorArrayGradOp(OpKernelConstruction* context)
       : TensorArrayCreationOp(context) {
+    LOG(ERROR) << "hello boy ******************** tensor array interface";
     OP_REQUIRES_OK(context, context->GetAttr("source", &source_));
   }
 
   Status CreateTensorArray(OpKernelContext* ctx, ResourceMgr* rm,
                            Tensor* tensor_array_output_handle,
                            TensorArray** output_tensor_array) override {
+    LOG(ERROR) << "hello boy ******************** tensor array interface";
     string container;
     string tensor_array_name;
     if (ctx->input_dtype(0) != DT_RESOURCE) {
@@ -415,7 +424,9 @@ template <typename Device, typename T>
 class TensorArrayWriteOp : public OpKernel {
  public:
   explicit TensorArrayWriteOp(OpKernelConstruction* context)
-      : OpKernel(context) {}
+      : OpKernel(context) {
+    LOG(ERROR) << "hello boy ******************** tensor array interface";
+  }
 
   void Compute(OpKernelContext* ctx) override {
     LOG(ERROR) << "hello boy ************************** kernel compute:"
@@ -499,6 +510,7 @@ class TensorArrayReadOp : public OpKernel {
  public:
   explicit TensorArrayReadOp(OpKernelConstruction* context)
       : OpKernel(context) {
+    LOG(ERROR) << "hello boy ******************** tensor array interface";
     OP_REQUIRES_OK(context, context->GetAttr("dtype", &dtype_));
   }
 
@@ -595,6 +607,7 @@ class TensorArrayPackOrGatherOp : public OpKernel {
 
   explicit TensorArrayPackOrGatherOp(OpKernelConstruction* context)
       : OpKernel(context) {
+    LOG(ERROR) << "hello boy ******************** tensor array interface";
     OP_REQUIRES_OK(context, context->GetAttr("dtype", &dtype_));
     OP_REQUIRES_OK(context, context->GetAttr("element_shape", &element_shape_));
   }
@@ -821,6 +834,7 @@ class TensorArrayConcatOp : public OpKernel {
 
   explicit TensorArrayConcatOp(OpKernelConstruction* context)
       : OpKernel(context) {
+    LOG(ERROR) << "hello boy ******************** tensor array interface";
     OP_REQUIRES_OK(context, context->GetAttr("dtype", &dtype_));
     OP_REQUIRES_OK(context, context->GetAttr("element_shape_except0",
                                              &element_shape_except0_));
@@ -1030,7 +1044,9 @@ template <typename Device, typename T, bool LEGACY_UNPACK>
 class TensorArrayUnpackOrScatterOp : public OpKernel {
  public:
   explicit TensorArrayUnpackOrScatterOp(OpKernelConstruction* context)
-      : OpKernel(context) {}
+      : OpKernel(context) {
+    LOG(ERROR) << "hello boy ******************** tensor array interface";
+  }
 
   void Compute(OpKernelContext* ctx) override {
     LOG(ERROR) << "hello boy ************************** kernel compute:"
@@ -1227,7 +1243,9 @@ template <typename Device, typename T>
 class TensorArraySplitOp : public OpKernel {
  public:
   explicit TensorArraySplitOp(OpKernelConstruction* context)
-      : OpKernel(context) {}
+      : OpKernel(context) {
+    LOG(ERROR) << "hello boy ******************** tensor array interface";
+  }
 
   void Compute(OpKernelContext* ctx) override {
     LOG(ERROR) << "hello boy ************************** kernel compute:"
@@ -1397,7 +1415,9 @@ TF_CALL_COMPLEX_TYPES(REGISTER_GPU);
 class TensorArraySizeOp : public OpKernel {
  public:
   explicit TensorArraySizeOp(OpKernelConstruction* context)
-      : OpKernel(context) {}
+      : OpKernel(context) {
+    LOG(ERROR) << "hello boy ******************** tensor array interface";
+  }
 
   void Compute(OpKernelContext* ctx) override {
     LOG(ERROR) << "hello boy ************************** kernel compute:"
@@ -1444,7 +1464,9 @@ REGISTER_KERNEL_BUILDER(Name("TensorArraySizeV3")
 class TensorArrayCloseOp : public OpKernel {
  public:
   explicit TensorArrayCloseOp(OpKernelConstruction* context)
-      : OpKernel(context) {}
+      : OpKernel(context) {
+    LOG(ERROR) << "hello boy ******************** tensor array interface";
+  }
 
   void Compute(OpKernelContext* ctx) override {
     LOG(ERROR) << "hello boy ************************** kernel compute:"
