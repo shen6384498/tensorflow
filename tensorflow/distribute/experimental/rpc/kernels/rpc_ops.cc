@@ -148,6 +148,8 @@ class DeleteRpcFutureResourceOp : public OpKernel {
 
  protected:
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     const ResourceHandle& handle = ctx->input(0).flat<ResourceHandle>()(0);
     // The resource is guaranteed to exist because the variant tensor
     // wrapping the deleter is provided as an unused input to this op, which
@@ -505,6 +507,8 @@ Status ExtractServerAddressFromInput(OpKernelContext* ctx,
 RpcServerOp::RpcServerOp(OpKernelConstruction* ctx) : OpKernel(ctx) {}
 
 void RpcServerOp::Compute(OpKernelContext* ctx) {
+  LOG(ERROR) << "hello boy ************************** kernel compute:"
+             << type_string();
   std::string address = "";
   OP_REQUIRES_OK(ctx, ExtractServerAddressFromInput(ctx, &address));
 
@@ -610,6 +614,8 @@ void RpcClientOp::ComputeAsync(OpKernelContext* ctx, DoneCallback done) {
 RpcServerStartOp::RpcServerStartOp(OpKernelConstruction* ctx) : OpKernel(ctx) {}
 
 void RpcServerStartOp::Compute(OpKernelContext* ctx) {
+  LOG(ERROR) << "hello boy ************************** kernel compute:"
+             << type_string();
   core::RefCountPtr<RpcServer> server;
   OP_REQUIRES_OK(ctx, LookupResource(ctx, HandleFromInput(ctx, 0), &server));
 
@@ -639,6 +645,8 @@ RpcServerRegisterOp::RpcServerRegisterOp(OpKernelConstruction* ctx)
 }
 
 void RpcServerRegisterOp::Compute(OpKernelContext* ctx) {
+  LOG(ERROR) << "hello boy ************************** kernel compute:"
+             << type_string();
   FunctionLibraryRuntime* lib = ctx->function_library();
   OP_REQUIRES(ctx, lib != nullptr,
               errors::Internal("No function library is provided"));
@@ -697,6 +705,8 @@ void RpcServerRegisterOp::Compute(OpKernelContext* ctx) {
 RpcCallOp::RpcCallOp(OpKernelConstruction* ctx) : OpKernel(ctx) {}
 
 void RpcCallOp::Compute(OpKernelContext* ctx) {
+  LOG(ERROR) << "hello boy ************************** kernel compute:"
+             << type_string();
   const Tensor* method_name;
   OP_REQUIRES_OK(ctx, ctx->input("method_name", &method_name));
   std::string method = method_name->scalar<tstring>()();

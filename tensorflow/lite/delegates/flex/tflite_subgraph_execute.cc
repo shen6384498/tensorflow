@@ -66,6 +66,8 @@ class TfLiteSubgraphExecute : public OpKernel {
       : OpKernel(ctx), tfl_tensors_need_allocation_(true) {}
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     // Fetch the TF Lite subgraph to execute.
     tflite::flex::TFLiteSubgraphResource* resource = nullptr;
     OP_REQUIRES_OK(

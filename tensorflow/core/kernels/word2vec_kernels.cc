@@ -69,6 +69,8 @@ class SkipgramOp : public OpKernel {
   }
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     Tensor words_per_epoch(DT_INT64, TensorShape({}));
     Tensor current_epoch(DT_INT32, TensorShape({}));
     Tensor total_words_processed(DT_INT64, TensorShape({}));
@@ -261,6 +263,8 @@ class NegTrainOp : public OpKernel {
   ~NegTrainOp() override { delete sampler_; }
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     Tensor w_in = ctx->mutable_input(0, false);
     OP_REQUIRES(ctx, TensorShapeUtils::IsMatrix(w_in.shape()),
                 errors::InvalidArgument("Must be a matrix"));

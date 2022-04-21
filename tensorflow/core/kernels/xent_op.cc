@@ -40,6 +40,8 @@ class SoftmaxXentWithLogitsOp : public OpKernel {
       : OpKernel(context) {}
 
   void Compute(OpKernelContext* context) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     const Tensor& logits_in = context->input(0);
     const Tensor& labels_in = context->input(1);
 

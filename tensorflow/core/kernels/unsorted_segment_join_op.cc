@@ -81,6 +81,8 @@ class UnsortedSegmentJoinOp : public OpKernel {
   }
 
   void Compute(OpKernelContext* context) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     const Tensor& input = context->input(0);
     const TensorShape& input_shape = input.shape();
     const int32_t input_dims = input_shape.dims();

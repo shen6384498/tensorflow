@@ -38,6 +38,8 @@ class ZeroOutOp : public OpKernel {
   explicit ZeroOutOp(OpKernelConstruction* context) : OpKernel(context) {}
 
   void Compute(OpKernelContext* context) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     // Grab the input tensor
     const Tensor& input_tensor = context->input(0);
     auto input = input_tensor.flat<int32>();

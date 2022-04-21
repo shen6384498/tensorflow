@@ -40,6 +40,8 @@ class UnpackOp : public OpKernel {
   }
 
   void Compute(OpKernelContext* context) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     const int32_t num = num_outputs();
     const Tensor& input = context->input(0);
     const TensorShape& input_shape = input.shape();

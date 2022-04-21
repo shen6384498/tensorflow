@@ -79,6 +79,8 @@ class UniqueOp : public OpKernel {
   explicit UniqueOp(OpKernelConstruction* context) : OpKernel(context) {}
 
   void Compute(OpKernelContext* context) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     const Tensor& input = context->input(0);
     // TODO(dga):  Make unique polymorphic for returning int32 and int64
     // vectors to support large tensors.

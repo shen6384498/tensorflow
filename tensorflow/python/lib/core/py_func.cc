@@ -324,6 +324,8 @@ class PyFuncOp : public OpKernel {
   bool IsExpensive() override { return true; }
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     PyCall call;
     call.token = token_;
     call.eager = eager_;

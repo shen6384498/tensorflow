@@ -130,6 +130,8 @@ class WhereCPUOp : public OpKernel {
   explicit WhereCPUOp(OpKernelConstruction* context) : OpKernel(context) {}
 
   void Compute(OpKernelContext* context) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     const Tensor& input = context->input(0);
 
     OP_REQUIRES(

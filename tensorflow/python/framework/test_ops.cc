@@ -129,6 +129,8 @@ class KernelLabelOp : public OpKernel {
   using OpKernel::OpKernel;
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     Tensor* output;
     OP_REQUIRES_OK(ctx,
                    ctx->allocate_output("result", TensorShape({}), &output));
@@ -169,6 +171,8 @@ class GraphDefVersionOp : public OpKernel {
       : OpKernel(ctx), graph_def_version_(ctx->graph_def_version()) {}
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     Tensor* output = nullptr;
     OP_REQUIRES_OK(ctx, ctx->allocate_output(0, TensorShape({}), &output));
     output->scalar<int>()() = graph_def_version_;
@@ -195,6 +199,8 @@ class GetDeadlineOp : public OpKernel {
   explicit GetDeadlineOp(OpKernelConstruction* ctx) : OpKernel(ctx) {}
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     if (!ctx->deadline()) {
       ctx->SetStatus(errors::InvalidArgument("Deadline has not ben set."));
     }
@@ -211,6 +217,8 @@ class SleepOp : public OpKernel {
   explicit SleepOp(OpKernelConstruction* ctx) : OpKernel(ctx) {}
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     absl::SleepFor(absl::Seconds(ctx->input(0).scalar<int>()()));
   }
 };
@@ -222,6 +230,8 @@ class SleepIdentityOp : public OpKernel {
   explicit SleepIdentityOp(OpKernelConstruction* ctx) : OpKernel(ctx) {}
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     absl::SleepFor(absl::Seconds(ctx->input(0).scalar<int>()()));
     ctx->set_output(0, ctx->input(1));
   }
@@ -246,6 +256,8 @@ class ResourceCreateOp : public OpKernel {
   explicit ResourceCreateOp(OpKernelConstruction* c) : OpKernel(c) {}
 
   void Compute(OpKernelContext* c) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     OP_REQUIRES_OK(c,
                    CreateResource(c, HandleFromInput(c, 0), new StubResource));
   }
@@ -260,6 +272,8 @@ class ResourceUsingOp : public OpKernel {
   explicit ResourceUsingOp(OpKernelConstruction* context) : OpKernel(context) {}
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     StubResource* unused;
     OP_REQUIRES_OK(ctx, LookupResource<StubResource>(
                             ctx, HandleFromInput(ctx, 0), &unused));
@@ -275,6 +289,8 @@ class IsResourceHandleRefCountingOp : public OpKernel {
       : OpKernel(ctx) {}
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     const auto& handle = HandleFromInput(ctx, 0);
     Tensor* output;
     OP_REQUIRES_OK(ctx, ctx->allocate_output(0, {}, &output));
@@ -291,6 +307,8 @@ class MakeWeakResourceHandleOp : public OpKernel {
   explicit MakeWeakResourceHandleOp(OpKernelConstruction* c) : OpKernel(c) {}
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     Tensor tensor;
     ResourceHandleProto proto;
     HandleFromInput(ctx, 0).AsProto(&proto);
@@ -314,6 +332,8 @@ class TestAttrOp : public OpKernel {
   explicit TestAttrOp(OpKernelConstruction* ctx) : OpKernel(ctx) {}
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     Tensor* output;
     OP_REQUIRES_OK(ctx, ctx->allocate_output(0, TensorShape({}), &output));
     output->scalar<float>()() = 1.0;
@@ -789,6 +809,8 @@ class DevicePlacementOp : public OpKernel {
   using OpKernel::OpKernel;
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     Tensor* output;
     OP_REQUIRES_OK(ctx,
                    ctx->allocate_output("device", TensorShape({}), &output));
@@ -815,6 +837,8 @@ class DTypeWithDefaultOp : public OpKernel {
   using OpKernel::OpKernel;
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     const Tensor& input = ctx->input(0);
     Tensor* output;
     OP_REQUIRES_OK(ctx,
@@ -839,6 +863,8 @@ class IsTensorFloat32Enabled : public OpKernel {
   using OpKernel::OpKernel;
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     Tensor* output;
     OP_REQUIRES_OK(ctx,
                    ctx->allocate_output("enabled", TensorShape({}), &output));

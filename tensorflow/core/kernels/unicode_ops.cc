@@ -251,6 +251,8 @@ inline bool ShouldHandleFormatError(const ErrorOptions& error_options,
 class UnicodeTranscodeOp : public OpKernel {
  public:
   explicit UnicodeTranscodeOp(OpKernelConstruction* ctx) : OpKernel(ctx) {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     OP_REQUIRES_OK(ctx, GetErrorOptions(ctx, &error_options_));
 
     string output_encoding;
@@ -357,6 +359,8 @@ class UnicodeDecodeBaseOp : public OpKernel {
  public:
   explicit UnicodeDecodeBaseOp(OpKernelConstruction* ctx, bool generate_offsets)
       : OpKernel(ctx), generate_offsets_(generate_offsets) {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     OP_REQUIRES_OK(ctx, GetErrorOptions(ctx, &error_options_));
     OP_REQUIRES_OK(ctx, ctx->GetAttr("input_encoding", &input_encoding_));
     // Make a temporary UConverter to ensure it will create without error
@@ -527,6 +531,8 @@ class UnicodeEncodeOp : public OpKernel {
    * and ends from the provided code points.
    */
   void Compute(OpKernelContext* context) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     // Get inputs
     const Tensor& input_tensor = context->input(0);
     const auto input_tensor_flat = input_tensor.flat<int32>();

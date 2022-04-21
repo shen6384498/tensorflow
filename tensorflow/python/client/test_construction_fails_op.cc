@@ -28,7 +28,10 @@ class ConstructionFailsOp : public OpKernel {
                 errors::InvalidArgument("Failure during construction."));
   }
 
-  void Compute(OpKernelContext* ctx) override {}
+  void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
+  }
 };
 
 REGISTER_KERNEL_BUILDER(Name("ConstructionFails").Device(DEVICE_CPU),

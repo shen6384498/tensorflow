@@ -431,7 +431,11 @@ y: output
 class TestOp : public OpKernel {
  public:
   explicit TestOp(OpKernelConstruction* ctx) : OpKernel(ctx) {}
-  void Compute(OpKernelContext* ctx) override { ctx->set_output(0, Tensor()); }
+  void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
+    ctx->set_output(0, Tensor());
+  }
 };
 REGISTER_KERNEL_BUILDER(Name("TestOpWithNoGrad").Device(DEVICE_CPU), TestOp);
 

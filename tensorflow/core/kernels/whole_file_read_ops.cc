@@ -101,6 +101,8 @@ class ReadFileOp : public OpKernel {
  public:
   using OpKernel::OpKernel;
   void Compute(OpKernelContext* context) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     const Tensor* input;
     OP_REQUIRES_OK(context, context->input("filename", &input));
     OP_REQUIRES(context, TensorShapeUtils::IsScalar(input->shape()),
@@ -123,6 +125,8 @@ class WriteFileOp : public OpKernel {
  public:
   using OpKernel::OpKernel;
   void Compute(OpKernelContext* context) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     const Tensor* filename_input;
     const Tensor* contents_input;
     OP_REQUIRES_OK(context, context->input("filename", &filename_input));

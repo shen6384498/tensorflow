@@ -33,6 +33,8 @@ class DoubleOp : public OpKernel {
   explicit DoubleOp(OpKernelConstruction* context) : OpKernel(context) {}
 
   void Compute(OpKernelContext* context) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     // Grab the input tensor
     const Tensor& input_tensor = context->input(0);
     auto input_flat = input_tensor.flat<T>();

@@ -129,6 +129,8 @@ xla::StatusOr<std::vector<int32_t>> ConstructDevicesPerHost(
 }
 
 void ConfigureDistributedTpuOp::Compute(OpKernelContext* ctx) {
+  LOG(ERROR) << "hello boy ************************** kernel compute:"
+             << type_string();
   VLOG(1) << "ConfigureDistributedTpuOp";
   XLA_SCOPED_LOGGING_TIMER("ConfigureDistributedTpuOp");
 
@@ -165,6 +167,8 @@ void ConfigureDistributedTpuOp::Compute(OpKernelContext* ctx) {
 }
 
 void WaitForDistributedTpuOp::Compute(OpKernelContext* ctx) {
+  LOG(ERROR) << "hello boy ************************** kernel compute:"
+             << type_string();
   VLOG(1) << "WaitForDistributedTpuOp";
   XLA_SCOPED_LOGGING_TIMER("WaitForDistributedTpuOp");
 
@@ -255,6 +259,8 @@ void WaitForDistributedTpuOp::Compute(OpKernelContext* ctx) {
 }
 
 void ShutdownDistributedTpuOp::Compute(OpKernelContext* ctx) {
+  LOG(ERROR) << "hello boy ************************** kernel compute:"
+             << type_string();
   VLOG(1) << "ShutdownDistributedTpuOp";
   XLA_SCOPED_LOGGING_TIMER("ShutdownDistributedTpuOp");
 
@@ -271,6 +277,8 @@ void ShutdownDistributedTpuOp::Compute(OpKernelContext* ctx) {
 }
 
 void InitializeHostForDistributedTpuOp::Compute(OpKernelContext* ctx) {
+  LOG(ERROR) << "hello boy ************************** kernel compute:"
+             << type_string();
   VLOG(1) << "InitializeHostForDistributedTpuOp";
   XLA_SCOPED_LOGGING_TIMER("InitializeHostForDistributedTpuOp");
 
@@ -441,6 +449,8 @@ void InitializeHostForDistributedTpuOp::Compute(OpKernelContext* ctx) {
 }
 
 void SetGlobalTPUArrayOp::Compute(OpKernelContext* ctx) {
+  LOG(ERROR) << "hello boy ************************** kernel compute:"
+             << type_string();
   VLOG(1) << "SetGlobalTPUArrayOp";
   XLA_SCOPED_LOGGING_TIMER("SetGlobalTPUArrayOp");
 
@@ -457,6 +467,8 @@ void SetGlobalTPUArrayOp::Compute(OpKernelContext* ctx) {
 }
 
 void DisconnectDistributedTpuChipsOp::Compute(OpKernelContext* ctx) {
+  LOG(ERROR) << "hello boy ************************** kernel compute:"
+             << type_string();
   VLOG(1) << "DisconnectDistributedTpuChipsOp";
   XLA_SCOPED_LOGGING_TIMER("DisconnectDistributedTpuChipsOp");
 

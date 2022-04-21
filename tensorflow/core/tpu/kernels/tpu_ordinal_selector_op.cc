@@ -33,6 +33,8 @@ class TPUOrdinalSelectorOp : public OpKernel {
   ~TPUOrdinalSelectorOp() override {}
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     Tensor output(DT_INT32, TensorShape({}));
     output.flat<int>().setValues({tpu::kDeferredCoreSelectionReserved});
     ctx->set_output(0, output);

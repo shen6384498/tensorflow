@@ -32,6 +32,8 @@ class TpuHandleToProtoKeyOp : public OpKernel {
   TpuHandleToProtoKeyOp& operator=(const TpuHandleToProtoKeyOp&) = delete;
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     VLOG(1) << "TpuHandleToProtoKeyOp::Compute " << ctx->op_kernel().name()
             << " on device " << ctx->op_kernel().requested_device();
     const Tensor& uid = ctx->input(0);

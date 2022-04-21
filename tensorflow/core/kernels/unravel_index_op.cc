@@ -43,6 +43,8 @@ class UnravelIndexOp : public OpKernel {
       : OpKernel(ctx), dtidx_(DataTypeToEnum<Tidx>::v()) {}
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     const Tensor& indices_tensor = ctx->input(0);
     OP_REQUIRES(ctx,
                 TensorShapeUtils::IsVector(indices_tensor.shape()) ||

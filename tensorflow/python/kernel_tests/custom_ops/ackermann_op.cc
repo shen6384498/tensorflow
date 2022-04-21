@@ -31,6 +31,8 @@ class AckermannOp : public OpKernel {
   explicit AckermannOp(OpKernelConstruction* context) : OpKernel(context) {}
 
   void Compute(OpKernelContext* context) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     // Output a scalar string.
     Tensor* output_tensor = nullptr;
     OP_REQUIRES_OK(context,

@@ -73,6 +73,8 @@ VariableOp::VariableOp(OpKernelConstruction* context) : OpKernel(context) {
 }
 
 void VariableOp::Compute(OpKernelContext* ctx) {
+  LOG(ERROR) << "hello boy ************************** kernel compute:"
+             << type_string();
   auto creator = [this](LegacyVar** var) {
     *var = new LegacyVar(dtype_);
     (*var)->tensor()->set_shape(shape_);
@@ -104,6 +106,8 @@ class TemporaryVariableOp : public OpKernel {
   }
 
   void Compute(OpKernelContext* context) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     Status s;
     ResourceMgr* rm = context->resource_manager();
     OP_REQUIRES(context, rm, errors::Internal("No per-step resource manager."));
@@ -152,6 +156,8 @@ class DestroyTemporaryVariableOp : public OpKernel {
   }
 
   void Compute(OpKernelContext* context) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     // NOTE(pbar): All other mutators of the Tensor Ref *must* have completed
     // their execution before this DestroyTemporaryVariable op executes.
     // This is typically achieved using control dependencies.
@@ -180,6 +186,8 @@ class IsVariableInitializedOp : public OpKernel {
       : OpKernel(context) {}
 
   void Compute(OpKernelContext* context) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     // Get a mutable input tensor of the Ref input.
     const Tensor& input_tensor = context->mutable_input(0, false);
     Tensor* output = nullptr;

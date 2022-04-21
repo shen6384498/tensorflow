@@ -148,6 +148,8 @@ class COpKernel : public OpKernel {
   }
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     (*compute_func_)(c_kernel_, reinterpret_cast<TF_OpKernelContext*>(ctx));
   }
 

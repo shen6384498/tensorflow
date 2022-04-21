@@ -105,6 +105,8 @@ class UnaryOpsComposition : public OpKernel {
   }
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     const Tensor& in = ctx->input(0);
     Tensor* out = nullptr;
     OP_REQUIRES_OK(

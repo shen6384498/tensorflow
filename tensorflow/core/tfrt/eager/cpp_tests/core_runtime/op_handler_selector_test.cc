@@ -80,7 +80,10 @@ constexpr char kFullGPU[] = "/job:a/replica:0/task:0/device:FakeGPU:0";
 class DummyOp : public OpKernel {
  public:
   explicit DummyOp(OpKernelConstruction* context) : OpKernel(context) {}
-  void Compute(OpKernelContext* context) override {}
+  void Compute(OpKernelContext* context) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
+  }
 };
 
 // Register the following ops so they can be added to a Graph, and

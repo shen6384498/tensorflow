@@ -205,6 +205,8 @@ class AudioMicrofrontendOp : public OpKernel {
   }
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     const Tensor* audio;
     OP_REQUIRES_OK(ctx, ctx->input("audio", &audio));
     OP_REQUIRES(ctx, TensorShapeUtils::IsVector(audio->shape()),
