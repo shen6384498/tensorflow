@@ -1216,7 +1216,7 @@ void ExecutorState<PropagatorStateType>::ScheduleReady(
         const NodeItem& item = *tagged_node.node_item;
         LOG(ERROR) << "hello boy ************************ not run all kernel "
                       "inline, ready node item:"
-                   << item.node->DebugString();
+                   << item.DebugString();
         if (tagged_node.get_is_dead() || !kernel_stats_->IsExpensive(item)) {
           // Inline this inexpensive node.
           inline_ready->push_back(tagged_node);
