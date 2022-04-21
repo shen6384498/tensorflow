@@ -49,6 +49,8 @@ class TopK : public OpKernel {
   }
 
   void Compute(OpKernelContext* context) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     int k = k_;
     if (num_inputs() >= 2) {
       const auto& k_in = context->input(1);

@@ -42,6 +42,8 @@ class BatchNormOp : public OpKernel {
   }
 
   void Compute(OpKernelContext* context) override {
+    LOG(ERROR) << "hello boy *************************** kernel compute:"
+               << type_string();
     const Tensor& input = context->input(0);
     const Tensor& mean = context->input(1);
     const Tensor& var = context->input(2);

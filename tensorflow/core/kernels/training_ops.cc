@@ -965,6 +965,8 @@ class ApplyGradientDescentOp : public OpKernel {
   }
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     const bool sparse = false;
     auto locks = MaybeLockVariableInputMutexesInOrder<Device, T>(
         ctx, use_exclusive_lock_, sparse, {0});
@@ -1048,6 +1050,8 @@ class ApplyAdadeltaOp : public OpKernel {
   }
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     const bool sparse = false;
     auto locks = MaybeLockVariableInputMutexesInOrder<Device, T>(
         ctx, use_exclusive_lock_, sparse, {0, 1, 2});
@@ -1193,6 +1197,8 @@ class SparseApplyAdadeltaOp : public OpKernel {
   }
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     const bool sparse = true;
     auto locks = MaybeLockVariableInputMutexesInOrder<Device, T>(
         ctx, use_exclusive_lock_, sparse, {0, 1, 2});
@@ -1362,6 +1368,8 @@ class ApplyProximalGradientDescentOp : public OpKernel {
   }
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     const bool sparse = false;
     auto locks = MaybeLockVariableInputMutexesInOrder<Device, T>(
         ctx, use_exclusive_lock_, sparse, {0});
@@ -1432,6 +1440,8 @@ class SparseApplyProximalGradientDescentOp : public OpKernel {
   }
 
   void Compute(OpKernelContext* ctx) override TF_NO_THREAD_SAFETY_ANALYSIS {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     const bool sparse = true;
     auto locks = MaybeLockVariableInputMutexesInOrder<CPUDevice, T>(
         ctx, use_exclusive_lock_, sparse, {0});
@@ -1578,6 +1588,8 @@ class ApplyAdagradOp : public OpKernel {
   }
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     const bool sparse = false;
     auto locks = MaybeLockVariableInputMutexesInOrder<Device, T>(
         ctx, use_exclusive_lock_, sparse, {0, 1});
@@ -1675,6 +1687,8 @@ class ApplyAdagradV2Op : public OpKernel {
   }
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     const bool sparse = false;
     auto locks = MaybeLockVariableInputMutexesInOrder<Device, T>(
         ctx, use_exclusive_lock_, sparse, {0, 1});
@@ -1776,6 +1790,8 @@ class ApplyProximalAdagradOp : public OpKernel {
   }
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     const bool sparse = false;
     auto locks = MaybeLockVariableInputMutexesInOrder<Device, T>(
         ctx, use_exclusive_lock_, sparse, {0, 1});
@@ -1887,6 +1903,8 @@ class SparseApplyAdagradOp : public OpKernel {
   }
 
   void Compute(OpKernelContext* ctx) override TF_NO_THREAD_SAFETY_ANALYSIS {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     const bool sparse = true;
     auto locks = MaybeLockVariableInputMutexesInOrder<Device, T>(
         ctx, use_exclusive_lock_, sparse, {0, 1});
@@ -2017,6 +2035,8 @@ class SparseApplyAdagradV2Op : public OpKernel {
   }
 
   void Compute(OpKernelContext* ctx) override TF_NO_THREAD_SAFETY_ANALYSIS {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     const bool sparse = true;
     auto locks = MaybeLockVariableInputMutexesInOrder<Device, T>(
         ctx, use_exclusive_lock_, sparse, {0, 1});
@@ -2150,6 +2170,8 @@ class SparseApplyProximalAdagradOp : public OpKernel {
   }
 
   void Compute(OpKernelContext* ctx) override TF_NO_THREAD_SAFETY_ANALYSIS {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     const bool sparse = true;
     auto locks = MaybeLockVariableInputMutexesInOrder<Device, T>(
         ctx, use_exclusive_lock_, sparse, {0, 1});
@@ -2292,6 +2314,8 @@ class ApplyAdagradDAOp : public OpKernel {
   }
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     const bool sparse = false;
     auto locks = MaybeLockVariableInputMutexesInOrder<Device, T>(
         ctx, use_exclusive_lock_, sparse, {0, 1, 2});
@@ -2394,6 +2418,8 @@ class SparseApplyAdagradDAOp : public OpKernel {
   }
 
   void Compute(OpKernelContext* ctx) override TF_NO_THREAD_SAFETY_ANALYSIS {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     const bool sparse = true;
     auto locks = MaybeLockVariableInputMutexesInOrder<CPUDevice, T>(
         ctx, use_exclusive_lock_, sparse, {0, 1, 2});
@@ -2595,6 +2621,8 @@ class ApplyFtrlOp : public OpKernel {
   }
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     const bool sparse = false;
     auto locks = MaybeLockVariableInputMutexesInOrder<Device, T>(
         ctx, use_exclusive_lock_, sparse, {0, 1, 2});
@@ -2805,6 +2833,8 @@ class SparseApplyFtrlOp : public OpKernel {
   }
 
   void Compute(OpKernelContext* ctx) override TF_NO_THREAD_SAFETY_ANALYSIS {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     const bool sparse = true;
     auto locks = MaybeLockVariableInputMutexesInOrder<Device, T>(
         ctx, use_exclusive_lock_, sparse, {0, 1, 2});
@@ -3067,6 +3097,8 @@ class ApplyMomentumOp : public OpKernel {
   }
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     const bool sparse = false;
     auto locks = MaybeLockVariableInputMutexesInOrder<Device, T>(
         ctx, use_exclusive_lock_, sparse, {0, 1});

@@ -42,6 +42,8 @@ class TensorToHashBucketOp : public OpKernel {
   }
 
   void Compute(OpKernelContext* context) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     const Tensor* input_tensor;
     OP_REQUIRES_OK(context, context->input("input", &input_tensor));
     const auto& input_flat = input_tensor->flat<T>();

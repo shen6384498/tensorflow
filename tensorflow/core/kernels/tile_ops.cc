@@ -161,6 +161,8 @@ class TileOp : public OpKernel {
   explicit TileOp(OpKernelConstruction* context) : OpKernel(context) {}
 
   void Compute(OpKernelContext* context) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     const Tensor& input = context->input(0);
     const Tensor& multiples = context->input(1);
 
@@ -327,6 +329,8 @@ class TileGradientOp : public OpKernel {
   explicit TileGradientOp(OpKernelConstruction* context) : OpKernel(context) {}
 
   void Compute(OpKernelContext* context) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     const Tensor& input = context->input(0);
     const Tensor& multiples = context->input(1);
     OP_REQUIRES(

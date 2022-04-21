@@ -1023,6 +1023,8 @@ class TensorArrayUnpackOrScatterOp : public OpKernel {
       : OpKernel(context) {}
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     OP_REQUIRES_OK(ctx, SetupFlowControlInputs(ctx, true));
 
     TensorArray* tensor_array = nullptr;
@@ -1218,6 +1220,8 @@ class TensorArraySplitOp : public OpKernel {
       : OpKernel(context) {}
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     OP_REQUIRES_OK(ctx, SetupFlowControlInputs(ctx, true));
 
     TensorArray* tensor_array = nullptr;
@@ -1386,6 +1390,8 @@ class TensorArraySizeOp : public OpKernel {
       : OpKernel(context) {}
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     TensorArray* tensor_array;
     OP_REQUIRES_OK(ctx, GetTensorArray(ctx, &tensor_array));
     core::ScopedUnref unref(tensor_array);
@@ -1431,6 +1437,8 @@ class TensorArrayCloseOp : public OpKernel {
       : OpKernel(context) {}
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ************************** kernel compute:"
+               << type_string();
     TensorArray* tensor_array;
     OP_REQUIRES_OK(ctx, GetTensorArray(ctx, &tensor_array));
     core::ScopedUnref unref(tensor_array);
