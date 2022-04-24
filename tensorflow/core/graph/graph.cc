@@ -792,6 +792,7 @@ Status Graph::AddWhileInputHack(Node* new_src, int new_src_index, Node* dst) {
         "dst argument to AddWhileEdgeHack should be a While op, got: ",
         dst->DebugString());
   }
+  LOG(ERROR) << "hello boy *********************** check output valid";
   TF_RETURN_IF_ERROR(IsValidOutputTensor(new_src, new_src_index));
   // Find the current number of data inputs. We'll add the new edge to the next
   // missing data input.
@@ -838,8 +839,9 @@ void Graph::ToGraphDef(GraphDef* graph_def) const {
 }
 
 GraphDef Graph::ToGraphDefDebug() const {
-  LOG(ERROR) << "hello boy *************************** ToGraphDefDebug for graph:"
-             << this;
+  LOG(ERROR)
+      << "hello boy *************************** ToGraphDefDebug for graph:"
+      << this;
   GraphDef ret;
   ToGraphDef(&ret);
   return ret;

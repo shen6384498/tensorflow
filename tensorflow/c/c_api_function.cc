@@ -57,6 +57,7 @@ Status ProcessInputs(
     Node* node = inputs[i].oper ? &inputs[i].oper->node : nullptr;
     int idx = inputs[i].index;
 
+    LOG(ERROR) << "hello boy *********************** check output valid";
     TF_RETURN_WITH_CONTEXT_IF_ERROR(
         fn_body->graph.IsValidOutputTensor(node, idx),
         "Encountered while processing input ", i, " into function '", fn_name,
@@ -88,6 +89,7 @@ Status ProcessOutputs(const TF_Graph* fn_body, const char* fn_name,
                       int noutputs, const TF_Output* outputs,
                       std::vector<OutputTensor>* output_tensors)
     TF_EXCLUSIVE_LOCKS_REQUIRED(fn_body->mu) {
+  LOG(ERROR) << "hello boy *********************** check output valid";
   output_tensors->reserve(noutputs);
   for (int i = 0; i < noutputs; ++i) {
     Node* node = outputs[i].oper ? &outputs[i].oper->node : nullptr;
