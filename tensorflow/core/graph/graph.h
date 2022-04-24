@@ -970,12 +970,16 @@ inline bool Edge::IsControlEdge() const {
 }
 
 inline gtl::iterator_range<NodeIter> Graph::nodes() const {
+  LOG(ERROR) << "hello boy *************************** get nodes for graph:"
+             << this;
   // Note that NodeId 0 is always valid since we don't let the source
   // node be removed from the graph.
   return gtl::make_range(NodeIter(this, 0), NodeIter(this, num_node_ids()));
 }
 
 inline gtl::iterator_range<NodeIter> Graph::op_nodes() const {
+  LOG(ERROR) << "hello boy *************************** get op nodes for graph:"
+             << this;
   // Note that NodeId 0 is always valid since we don't let the source
   // node be removed from the graph.
   //

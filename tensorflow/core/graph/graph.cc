@@ -831,16 +831,23 @@ void AddInput(NodeDef* dst, StringPiece src_name, int src_slot) {
 }  // namespace
 
 void Graph::ToGraphDef(GraphDef* graph_def) const {
+  LOG(ERROR) << "hello boy *************************** ToGraphDef for graph:"
+             << this;
   ToGraphDefSubRange(graph_def, 0);
 }
 
 GraphDef Graph::ToGraphDefDebug() const {
+  LOG(ERROR) << "hello boy *************************** ToGraphDefDebug for graph:"
+             << this;
   GraphDef ret;
   ToGraphDef(&ret);
   return ret;
 }
 
 void Graph::ToGraphDefSubRange(GraphDef* graph_def, int from_node_id) const {
+  LOG(ERROR)
+      << "hello boy *************************** ToGraphDefSubRange for graph:"
+      << this;
   graph_def->Clear();
   *graph_def->mutable_versions() = versions();
   *graph_def->mutable_library() = ops_.ToProto();
@@ -912,6 +919,9 @@ std::string Graph::NewName(StringPiece prefix) {
 }
 
 Status Graph::IsValidNode(const Node* node) const {
+  LOG(ERROR) << "hello boy *************************** check is valid node "
+                "tensor for graph:"
+             << this;
   if (node == nullptr) {
     return errors::InvalidArgument("Node is null");
   }
@@ -932,6 +942,9 @@ Status Graph::IsValidNode(const Node* node) const {
 }
 
 Status Graph::IsValidOutputTensor(const Node* node, int idx) const {
+  LOG(ERROR) << "hello boy *************************** check is valid output"
+                "tensor for graph:"
+             << this;
   TF_RETURN_IF_ERROR(IsValidNode(node));
   if (idx >= node->num_outputs() || idx < 0) {
     return errors::OutOfRange("Node '", node->name(), "' (type: '",
@@ -943,6 +956,9 @@ Status Graph::IsValidOutputTensor(const Node* node, int idx) const {
 }
 
 Status Graph::IsValidInputTensor(const Node* node, int idx) const {
+  LOG(ERROR) << "hello boy *************************** check is valid input "
+                "tensor for graph:"
+             << this;
   TF_RETURN_IF_ERROR(IsValidNode(node));
   if (idx >= node->num_inputs() || idx < 0) {
     return errors::OutOfRange("Node '", node->name(), "' (type: '",
