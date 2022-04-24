@@ -1219,11 +1219,18 @@ void ExecutorState<PropagatorStateType>::ScheduleReady(
                    << item.DebugString();
         if (tagged_node.get_is_dead() || !kernel_stats_->IsExpensive(item)) {
           // Inline this inexpensive node.
+          LOG(ERROR) << "hello boy ************************ not run all kernel "
+                        "inline, ready node item:"
+                     << item.DebugString()<<" push into ready list";
           inline_ready->push_back(tagged_node);
         } else {
           if (curr_expensive_node) {
             // Dispatch to another thread since there is plenty of work to
             // do for this thread.
+            LOG(ERROR)
+                << "hello boy ************************ not run all kernel "
+                   "inline, ready node item:"
+                << item.DebugString() << " run task start";
             RunTask(std::bind(&ExecutorState::Process, this,
                               *curr_expensive_node, scheduled_nsec));
           }
