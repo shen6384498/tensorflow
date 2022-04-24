@@ -128,19 +128,26 @@ void TF_DeleteSessionOptions(TF_SessionOptions* opt) {
 }
 
 void TF_SetTarget(TF_SessionOptions* options, const char* target) {
+  LOG(ERROR) << "hello boy ********************* interface TF_SetTarget";
   options->options.target = target;
 }
 
 void TF_SetConfig(TF_SessionOptions* options, const void* proto,
                   size_t proto_len, TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface TF_SetConfig";
   if (!options->options.config.ParseFromArray(proto, proto_len)) {
     status->status = InvalidArgument("Unparseable ConfigProto");
   }
 }
 // --------------------------------------------------------------------------
-TF_Buffer* TF_NewBuffer() { return new TF_Buffer{nullptr, 0, nullptr}; }
+TF_Buffer* TF_NewBuffer() {
+  LOG(ERROR) << "hello boy ********************* interface TF_NewBuffer";
+  return new TF_Buffer{nullptr, 0, nullptr};
+}
 
 TF_Buffer* TF_NewBufferFromString(const void* proto, size_t proto_len) {
+  LOG(ERROR)
+      << "hello boy ********************* interface TF_NewBufferFromString";
   void* copy = tensorflow::port::Malloc(proto_len);
   memcpy(copy, proto, proto_len);
 
@@ -154,6 +161,7 @@ TF_Buffer* TF_NewBufferFromString(const void* proto, size_t proto_len) {
 }
 
 void TF_DeleteBuffer(TF_Buffer* buffer) {
+  LOG(ERROR) << "hello boy ********************* interface TF_DeleteBuffer";
   if (buffer == nullptr) return;
   if (buffer->data_deallocator != nullptr) {
     (*buffer->data_deallocator)(const_cast<void*>(buffer->data),
@@ -162,24 +170,31 @@ void TF_DeleteBuffer(TF_Buffer* buffer) {
   delete buffer;
 }
 
-TF_Buffer TF_GetBuffer(TF_Buffer* buffer) { return *buffer; }
+TF_Buffer TF_GetBuffer(TF_Buffer* buffer) {
+  LOG(ERROR) << "hello boy ********************* interface TF_GetBuffer";
+  return *buffer;
+}
 
 void TF_TensorFromProto(const TF_Buffer* from, TF_Tensor* to,
                         TF_Status* status) {
-  TF_SetStatus(status, TF_OK, "");
-  tensorflow::TensorProto from_tensor_proto;
-  status->status = BufferToMessage(from, &from_tensor_proto);
-  if (!status->status.ok()) {
-    return;
-  }
-  status->status =
-      tensorflow::down_cast<tensorflow::TensorInterface*>(to->tensor)
-          ->FromProto(from_tensor_proto);
+  LOG(ERROR) << "hello boy ********************* interface TF_TensorFromProto";
+  return *buffer;
+}
+TF_SetStatus(status, TF_OK, "");
+tensorflow::TensorProto from_tensor_proto;
+status->status = BufferToMessage(from, &from_tensor_proto);
+if (!status->status.ok()) {
+  return;
+}
+status->status = tensorflow::down_cast<tensorflow::TensorInterface*>(to->tensor)
+                     ->FromProto(from_tensor_proto);
 }
 // --------------------------------------------------------------------------
 
 TF_DeprecatedSession* TF_NewDeprecatedSession(const TF_SessionOptions* opt,
                                               TF_Status* status) {
+  LOG(ERROR)
+      << "hello boy ********************* interface TF_NewDeprecatedSession";
   Session* session;
   status->status = NewSession(opt->options, &session);
   if (status->status.ok()) {
@@ -191,10 +206,14 @@ TF_DeprecatedSession* TF_NewDeprecatedSession(const TF_SessionOptions* opt,
 }
 
 void TF_CloseDeprecatedSession(TF_DeprecatedSession* s, TF_Status* status) {
+  LOG(ERROR)
+      << "hello boy ********************* interface TF_CloseDeprecatedSession";
   status->status = s->session->Close();
 }
 
 void TF_DeleteDeprecatedSession(TF_DeprecatedSession* s, TF_Status* status) {
+  LOG(ERROR)
+      << "hello boy ********************* interface TF_DeleteDeprecatedSession";
   status->status = Status::OK();
   if (s == nullptr) return;
   delete s->session;
@@ -203,6 +222,7 @@ void TF_DeleteDeprecatedSession(TF_DeprecatedSession* s, TF_Status* status) {
 
 void TF_ExtendGraph(TF_DeprecatedSession* s, const void* proto,
                     size_t proto_len, TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface TF_ExtendGraph";
   GraphDef g;
   if (!tensorflow::ParseProtoUnlimited(&g, proto, proto_len)) {
     status->status = InvalidArgument("Invalid GraphDef");
@@ -217,6 +237,7 @@ void TF_ExtendGraph(TF_DeprecatedSession* s, const void* proto,
 static void TF_Reset_Helper(const TF_SessionOptions* opt,
                             const char** containers, int ncontainers,
                             TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface TF_Reset_Helper";
   std::vector<string> container_names(ncontainers);
   for (int i = 0; i < ncontainers; ++i) {
     container_names[i] = containers[i];
@@ -229,6 +250,7 @@ extern "C" {
 
 void TF_Reset(const TF_SessionOptions* opt, const char** containers,
               int ncontainers, TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface TF_Reset";
   TF_Reset_Helper(opt, containers, ncontainers, status);
 }
 
@@ -238,6 +260,7 @@ namespace tensorflow {
 
 Status MessageToBuffer(const tensorflow::protobuf::MessageLite& in,
                        TF_Buffer* out) {
+  LOG(ERROR) << "hello boy ********************* MessageToBuffer";
   if (out->data != nullptr) {
     return InvalidArgument("Passing non-empty TF_Buffer is invalid.");
   }
@@ -262,6 +285,7 @@ Status MessageToBuffer(const tensorflow::protobuf::MessageLite& in,
 
 Status BufferToMessage(const TF_Buffer* in,
                        tensorflow::protobuf::MessageLite* out) {
+  LOG(ERROR) << "hello boy ********************* BufferToMessage";
   if (in == nullptr || !out->ParseFromArray(in->data, in->length)) {
     return errors::InvalidArgument("Unparseable ", out->GetTypeName(),
                                    " proto");
@@ -271,6 +295,7 @@ Status BufferToMessage(const TF_Buffer* in,
 
 void RecordMutation(TF_Graph* graph, const TF_Operation& op,
                     const char* mutation_type) {
+  LOG(ERROR) << "hello boy ********************* RecordMutation";
   // If any session has already run this node_id, mark this session as
   // unrunnable.
   for (auto it : graph->sessions) {
@@ -312,6 +337,8 @@ void TF_GraphSetOutputHandleShapesAndTypes(TF_Graph* graph, TF_Output output,
                                            const int* ranks,
                                            const TF_DataType* types,
                                            TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_GraphSetOutputHandleShapesAndTypes";
   Node* node = &output.oper->node;
 
   mutex_lock l(graph->mu);
@@ -344,6 +371,7 @@ Status LoadDynamicLibrary(const char* library_filename, void** result,
 // directly, instead of requiring us to serialize to a GraphDef and
 // call Session::Extend().
 bool ExtendSessionGraphHelper(TF_Session* session, TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* ExtendSessionGraphHelper";
   if (session->graph != nullptr) {
     // Take the graph lock before the session lock to avoid deadlock. This is
     // safe since session->graph does not change.
@@ -401,6 +429,8 @@ bool ExtendSessionGraphHelper(TF_Session* session, TF_Status* status) {
 
 static void TF_Run_Setup(int noutputs, TF_Tensor** c_outputs,
                          TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_Run_Setup";
   status->status = Status::OK();
   for (int i = 0; i < noutputs; ++i) {
     c_outputs[i] = nullptr;
@@ -416,6 +446,8 @@ static void TF_Run_Setup(int noutputs, TF_Tensor** c_outputs,
 // TF_TensorFromTensorV1 because the conversion to string is performed by the
 // python side of Session.
 static Status TF_TensorToTensorV1(const TF_Tensor* src, Tensor* dst) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_TensorToTensorV1";
   Status status = TF_TensorToTensor(src, dst);
   if (!status.ok()) {
     return status;
@@ -445,6 +477,8 @@ static Status TF_TensorToTensorV1(const TF_Tensor* src, Tensor* dst) {
 static bool TF_Run_Inputs(TF_Tensor* const* c_inputs,
                           std::vector<std::pair<string, Tensor>>* input_pairs,
                           TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_Run_Inputs";
   const int ninputs = input_pairs->size();
   for (int i = 0; i < ninputs; ++i) {
     status->status =
@@ -458,6 +492,8 @@ static bool TF_Run_Inputs(TF_Tensor* const* c_inputs,
 // result in a zero-sized tensor.
 static TF_Tensor* EmptyTensor(TF_DataType dtype,
                               const tensorflow::TensorShape& shape) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "EmptyTensor";
   static char empty;
   int64_t nelems = 1;
   std::vector<int64_t> dims;
@@ -481,6 +517,8 @@ static void TF_Run_Helper(
     // Target nodes
     const std::vector<string>& target_oper_names, TF_Buffer* run_metadata,
     TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_Run_Helper";
   const int noutputs = output_tensor_names.size();
   std::vector<Tensor> outputs(noutputs);
   Status result;
@@ -539,6 +577,8 @@ void TF_Run(TF_DeprecatedSession* s, const TF_Buffer* run_options,
             // Target nodes
             const char** c_target_oper_names, int ntargets,
             TF_Buffer* run_metadata, TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_Run";
   TF_Run_Setup(noutputs, c_outputs, status);
   std::vector<std::pair<string, Tensor>> input_pairs(ninputs);
   if (!TF_Run_Inputs(c_inputs, &input_pairs, status)) return;
@@ -565,6 +605,8 @@ void TF_PRunSetup(TF_DeprecatedSession* s,
                   // Target nodes
                   const char** c_target_oper_names, int ntargets,
                   const char** handle, TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_PRunSetup";
   *handle = nullptr;
 
   std::vector<string> input_names(ninputs);
@@ -597,6 +639,8 @@ void TF_PRun(TF_DeprecatedSession* s, const char* handle,
              // Target nodes
              const char** c_target_oper_names, int ntargets,
              TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_PRun";
   TF_Run_Setup(noutputs, c_outputs, status);
   std::vector<std::pair<string, Tensor>> input_pairs(ninputs);
   if (!TF_Run_Inputs(c_inputs, &input_pairs, status)) return;
@@ -617,6 +661,8 @@ void TF_PRun(TF_DeprecatedSession* s, const char* handle,
 }
 
 TF_Library* TF_LoadLibrary(const char* library_filename, TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_LoadLibrary";
   TF_Library* lib_handle = new TF_Library;
   status->status = tensorflow::LoadDynamicLibrary(
       library_filename, &lib_handle->lib_handle, &lib_handle->op_list.data,
@@ -628,15 +674,23 @@ TF_Library* TF_LoadLibrary(const char* library_filename, TF_Status* status) {
   return lib_handle;
 }
 
-TF_Buffer TF_GetOpList(TF_Library* lib_handle) { return lib_handle->op_list; }
+TF_Buffer TF_GetOpList(TF_Library* lib_handle) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_GetOpList";
+  return lib_handle->op_list;
+}
 
 void TF_DeleteLibraryHandle(TF_Library* lib_handle) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_DeleteLibraryHandle";
   if (lib_handle == nullptr) return;
   tensorflow::port::Free(const_cast<void*>(lib_handle->op_list.data));
   delete lib_handle;
 }
 
 TF_Buffer* TF_GetAllOpList() {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_GetAllOpList";
   std::vector<tensorflow::OpDef> op_defs;
   tensorflow::OpRegistry::Global()->GetRegisteredOps(&op_defs);
   tensorflow::OpList op_list;
@@ -651,9 +705,15 @@ TF_Buffer* TF_GetAllOpList() {
 // --------------------------------------------------------------------------
 // ListDevices & SessionListDevices API
 
-void TF_DeleteDeviceList(TF_DeviceList* list) { delete list; }
+void TF_DeleteDeviceList(TF_DeviceList* list) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_DeleteDeviceList";
+  delete list;
+}
 
 TF_DeviceList* TF_SessionListDevices(TF_Session* session, TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_SessionListDevices";
   TF_DeviceList* response = new TF_DeviceList;
   if (session && session->session)
     status->status = session->session->ListDevices(&response->response);
@@ -662,6 +722,8 @@ TF_DeviceList* TF_SessionListDevices(TF_Session* session, TF_Status* status) {
 
 TF_DeviceList* TF_DeprecatedSessionListDevices(TF_DeprecatedSession* session,
                                                TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_DeprecatedSessionListDevices";
   TF_DeviceList* response = new TF_DeviceList;
   if (session && session->session)
     status->status = session->session->ListDevices(&response->response);
@@ -669,6 +731,8 @@ TF_DeviceList* TF_DeprecatedSessionListDevices(TF_DeprecatedSession* session,
 }
 
 int TF_DeviceListCount(const TF_DeviceList* list) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_DeviceListCount";
   return list->response.size();
 }
 
@@ -705,6 +769,8 @@ TF_DEVICELIST_METHOD(uint64_t, TF_DeviceListIncarnation, incarnation(), 0);
 namespace {
 
 TF_Operation* ToOperation(Node* node) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "ToOperation";
   return static_cast<TF_Operation*>(static_cast<void*>(node));
 }
 
@@ -730,6 +796,8 @@ TensorId ToTensorId(const TF_Output& output) {
 #if !defined(IS_MOBILE_PLATFORM) && !defined(IS_SLIM_BUILD)
 std::vector<tensorflow::Output> OutputsFromTFOutputs(TF_Output* tf_outputs,
                                                      int n) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "OutputsFromTFOutputs";
   std::vector<tensorflow::Output> outputs(n);
   for (int i = 0; i < n; ++i) {
     outputs[i] =
@@ -740,6 +808,8 @@ std::vector<tensorflow::Output> OutputsFromTFOutputs(TF_Output* tf_outputs,
 
 void TFOutputsFromOutputs(const std::vector<tensorflow::Output>& outputs,
                           TF_Output* tf_outputs) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TFOutputsFromOutputs";
   for (int i = 0; i < outputs.size(); i++) {
     tf_outputs[i].oper = ToOperation(outputs[i].node());
     tf_outputs[i].index = outputs[i].index();
@@ -754,6 +824,8 @@ void TFOutputsFromOutputs(const std::vector<tensorflow::Output>& outputs,
 void TF_GraphSetTensorShape(TF_Graph* graph, TF_Output output,
                             const int64_t* dims, const int num_dims,
                             TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_GraphSetTensorShape";
   Node* node = &output.oper->node;
 
   mutex_lock l(graph->mu);
@@ -771,6 +843,8 @@ void TF_GraphSetTensorShape(TF_Graph* graph, TF_Output output,
 
 int TF_GraphGetTensorNumDims(TF_Graph* graph, TF_Output output,
                              TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_GraphGetTensorNumDims";
   Node* node = &output.oper->node;
 
   mutex_lock l(graph->mu);
@@ -794,6 +868,8 @@ int TF_GraphGetTensorNumDims(TF_Graph* graph, TF_Output output,
 
 void TF_GraphGetTensorShape(TF_Graph* graph, TF_Output output, int64_t* dims,
                             int num_dims, TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_GraphGetTensorShape";
   Node* node = &output.oper->node;
 
   mutex_lock l(graph->mu);
@@ -843,25 +919,35 @@ TF_OperationDescription* TF_NewOperationLocked(TF_Graph* graph,
                                                const char* op_type,
                                                const char* oper_name)
     TF_EXCLUSIVE_LOCKS_REQUIRED(graph->mu) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_NewOperationLocked";
   return new TF_OperationDescription(graph, op_type, oper_name);
 }
 
 TF_OperationDescription* TF_NewOperation(TF_Graph* graph, const char* op_type,
                                          const char* oper_name) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_NewOperation";
   mutex_lock l(graph->mu);
   return TF_NewOperationLocked(graph, op_type, oper_name);
 }
 
 void TF_SetDevice(TF_OperationDescription* desc, const char* device) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_SetDevice";
   desc->node_builder.Device(device);
 }
 
 void TF_AddInput(TF_OperationDescription* desc, TF_Output input) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_AddInput";
   desc->node_builder.Input(&input.oper->node, input.index);
 }
 
 void TF_AddInputList(TF_OperationDescription* desc, const TF_Output* inputs,
                      int num_inputs) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_AddInputList";
   std::vector<NodeBuilder::NodeOut> input_list;
   input_list.reserve(num_inputs);
   for (int i = 0; i < num_inputs; ++i) {
@@ -871,16 +957,22 @@ void TF_AddInputList(TF_OperationDescription* desc, const TF_Output* inputs,
 }
 
 void TF_AddControlInput(TF_OperationDescription* desc, TF_Operation* input) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_AddControlInput";
   desc->node_builder.ControlInput(&input->node);
 }
 
 void TF_ColocateWith(TF_OperationDescription* desc, TF_Operation* op) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_ColocateWith";
   desc->colocation_constraints.emplace(
       StrCat(tensorflow::kColocationGroupPrefix, op->node.name()));
 }
 
 void TF_SetAttrString(TF_OperationDescription* desc, const char* attr_name,
                       const void* value, size_t length) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_SetAttrString";
   tensorflow::StringPiece s(static_cast<const char*>(value), length);
   desc->node_builder.Attr(attr_name, s);
 }
@@ -888,6 +980,8 @@ void TF_SetAttrString(TF_OperationDescription* desc, const char* attr_name,
 void TF_SetAttrStringList(TF_OperationDescription* desc, const char* attr_name,
                           const void* const* values, const size_t* lengths,
                           int num_values) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_SetAttrStringList";
   if (strcmp(attr_name, tensorflow::kColocationAttrName) == 0) {
     desc->colocation_constraints.clear();
     for (int i = 0; i < num_values; ++i) {
@@ -906,6 +1000,8 @@ void TF_SetAttrStringList(TF_OperationDescription* desc, const char* attr_name,
 
 void TF_SetAttrInt(TF_OperationDescription* desc, const char* attr_name,
                    int64_t value) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_SetAttrInt";
   desc->node_builder.Attr(attr_name, static_cast<int64_t>(value));
 }
 

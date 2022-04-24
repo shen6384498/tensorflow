@@ -157,6 +157,8 @@ TF_Function* TF_GraphToFunctionWithControlOutputs(
     int ncontrol_outputs, const TF_Operation* const* control_outputs,
     const char* const* control_output_names, const TF_FunctionOptions* opts,
     const char* description, TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_GraphToFunctionWithControlOutputs";
   tensorflow::mutex_lock l(fn_body->mu);
 
   // Process inputs.
@@ -232,6 +234,8 @@ TF_Function* TF_GraphToFunction(const TF_Graph* fn_body, const char* fn_name,
                                 const char* const* output_names,
                                 const TF_FunctionOptions* opts,
                                 const char* description, TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_GraphToFunction";
   return TF_GraphToFunctionWithControlOutputs(
       fn_body, fn_name, append_hash_to_fn_name, num_opers, opers, ninputs,
       inputs, noutputs, outputs, output_names, 0, nullptr, nullptr, opts,
@@ -244,6 +248,8 @@ const char* TF_FunctionName(TF_Function* func) {
 
 void TF_GraphCopyFunction(TF_Graph* g, const TF_Function* func,
                           const TF_Function* grad, TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_GraphCopyFunction";
   if (func == nullptr) {
     status->status = InvalidArgument(
         "'func' argument to TF_GraphCopyFunction cannot be null");
@@ -266,12 +272,16 @@ void TF_GraphCopyFunction(TF_Graph* g, const TF_Function* func,
 }
 
 int TF_GraphNumFunctions(TF_Graph* g) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_GraphNumFunctions";
   tensorflow::mutex_lock l(g->mu);
   return g->graph.flib_def().num_functions();
 }
 
 int TF_GraphGetFunctions(TF_Graph* g, TF_Function** funcs, int max_func,
                          TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_GraphGetFunctions";
   tensorflow::FunctionDefLibrary lib;
   {
     tensorflow::mutex_lock l(g->mu);
@@ -289,11 +299,15 @@ int TF_GraphGetFunctions(TF_Graph* g, TF_Function** funcs, int max_func,
 
 void TF_FunctionToFunctionDef(TF_Function* func, TF_Buffer* output_func_def,
                               TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_FunctionToFunctionDef";
   status->status = MessageToBuffer(func->fdef, output_func_def);
 }
 
 TF_Function* TF_FunctionImportFunctionDef(const void* proto, size_t proto_len,
                                           TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_FunctionImportFunctionDef";
   TF_Function* func = new TF_Function();
   if (!func->fdef.ParseFromArray(proto, proto_len)) {
     status->status = InvalidArgument(
@@ -308,6 +322,8 @@ TF_Function* TF_FunctionImportFunctionDef(const void* proto, size_t proto_len,
 void TF_FunctionSetAttrValueProto(TF_Function* func, const char* attr_name,
                                   const void* proto, size_t proto_len,
                                   TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_FunctionSetAttrValueProto";
   tensorflow::AttrValue attr_value;
   if (!attr_value.ParseFromArray(proto, proto_len)) {
     status->status = InvalidArgument(
@@ -322,6 +338,8 @@ void TF_FunctionSetAttrValueProto(TF_Function* func, const char* attr_name,
 void TF_FunctionGetAttrValueProto(TF_Function* func, const char* attr_name,
                                   TF_Buffer* output_attr_value,
                                   TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_FunctionGetAttrValueProto";
   const auto& it = func->fdef.attr().find(attr_name);
   if (it == func->fdef.attr().end()) {
     status->status =
@@ -332,4 +350,8 @@ void TF_FunctionGetAttrValueProto(TF_Function* func, const char* attr_name,
   status->status = MessageToBuffer(it->second, output_attr_value);
 }
 
-void TF_DeleteFunction(TF_Function* func) { delete func; }
+void TF_DeleteFunction(TF_Function* func) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_DeleteFunction";
+  delete func;
+}
