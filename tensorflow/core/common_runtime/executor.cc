@@ -563,7 +563,8 @@ template <class PropagatorStateType>
 Status ExecutorState<PropagatorStateType>::ProcessSync(
     const NodeItem& item, OpKernelContext::Params* params, EntryVector* outputs,
     NodeExecStatsInterface* stats) {
-  LOG(ERROR) << "hello boy *********************** ProcessSync for NodeItem";
+  LOG(ERROR) << "hello boy *********************** ProcessSync for NodeItem:"
+             << item.DebugString();
   Status s;
   OpKernelContext ctx(params, item.num_outputs);
   nodestats::SetOpStart(stats);
