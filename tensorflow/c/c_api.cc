@@ -116,8 +116,16 @@ const char* TF_Version() { return TF_VERSION_STRING; }
 // --------------------------------------------------------------------------
 
 // --------------------------------------------------------------------------
-TF_SessionOptions* TF_NewSessionOptions() { return new TF_SessionOptions; }
-void TF_DeleteSessionOptions(TF_SessionOptions* opt) { delete opt; }
+TF_SessionOptions* TF_NewSessionOptions() {
+  LOG(ERROR)
+      << "hello boy ********************* interface TF_NewSessionOptions";
+  return new TF_SessionOptions;
+}
+void TF_DeleteSessionOptions(TF_SessionOptions* opt) {
+  LOG(ERROR)
+      << "hello boy ********************* interface TF_DeleteSessionOptions";
+  delete opt;
+}
 
 void TF_SetTarget(TF_SessionOptions* options, const char* target) {
   options->options.target = target;
