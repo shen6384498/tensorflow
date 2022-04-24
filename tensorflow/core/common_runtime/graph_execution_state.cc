@@ -441,6 +441,7 @@ Status ValidateFeedAndFetchDevices(
       const TensorAndDevice& td = tensors_and_devices[i];
       if (td.tensor.first != node->name()) continue;
       found[i] = true;
+      LOG(ERROR) << "hello boy *********************** check output valid";
       TF_RETURN_IF_ERROR(graph.IsValidOutputTensor(node, td.tensor.second));
       const DataType dtype = node->output_type(td.tensor.second);
       if (!IsFeedAndFetchSupported(dtype, td.device->device_type())) {

@@ -103,6 +103,7 @@ Status CreateCond(const Scope& scope, const CondGraphBuilderFn& cond,
   Output raw_cond_out;
   TF_RETURN_IF_ERROR(cond(cond_scope, inputs, &raw_cond_out));
 
+  LOG(ERROR) << "hello boy *********************** check output valid";
   TF_RETURN_IF_ERROR(scope.graph()->IsValidOutputTensor(raw_cond_out.node(),
                                                         raw_cond_out.index()));
   if (raw_cond_out.type() != DT_BOOL) {
@@ -136,6 +137,7 @@ Status CreateBody(const Scope& scope, const BodyGraphBuilderFn& body,
         " output(s), got ", outputs->size());
   }
   for (const Output& output : *outputs) {
+    LOG(ERROR) << "hello boy *********************** check output valid";
     TF_RETURN_IF_ERROR(
         scope.graph()->IsValidOutputTensor(output.node(), output.index()));
     // TODO(skyewm): check output types/shapes

@@ -769,6 +769,7 @@ const Edge* FindEdge(const Node* dst, int index) {
 
 Status Graph::UpdateEdge(Node* new_src, int new_src_index, Node* dst,
                          int dst_index) {
+  LOG(ERROR) << "hello boy *********************** check output valid";
   TF_RETURN_IF_ERROR(IsValidOutputTensor(new_src, new_src_index));
   TF_RETURN_IF_ERROR(IsValidInputTensor(dst, dst_index));
   const Edge* e = FindEdge(dst, dst_index);
