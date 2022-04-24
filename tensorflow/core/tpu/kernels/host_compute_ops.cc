@@ -230,6 +230,9 @@ class SendFromHostOp : public OpKernel {
   }
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ***************************** compute "
+                  "SendFromHostOp:"
+               << name();
     std::string tpu_device;
     if (!device_ordinal_is_attr) {
       const Tensor& device_ordinal_tensor = ctx->input(ctx->num_inputs() - 1);

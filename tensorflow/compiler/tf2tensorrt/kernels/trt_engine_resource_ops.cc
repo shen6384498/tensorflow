@@ -47,6 +47,8 @@ class CreateTRTResourceHandle : public OpKernel {
   }
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ***************************** compute CreateTRTResourceHandle:"
+               << name();
     {
       mutex_lock l(mutex_);
       if (!initialized_) {
@@ -88,6 +90,9 @@ class InitializeTRTResource : public OpKernel {
   }
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ***************************** compute "
+                  "InitializeTRTResource:"
+               << name();
     ResourceHandle handle = HandleFromInput(ctx, 0);
     core::RefCountPtr<TRTEngineCacheResource> resource;
     OP_REQUIRES_OK(
@@ -186,6 +191,9 @@ class SerializeTRTResource : public OpKernel {
   }
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy ***************************** compute "
+                  "SerializeTRTResource:"
+               << name();
     const string& resource_name = ctx->input(0).scalar<tstring>()();
     const string& filename = ctx->input(1).scalar<tstring>()();
     OP_REQUIRES(ctx, !filename.empty(),

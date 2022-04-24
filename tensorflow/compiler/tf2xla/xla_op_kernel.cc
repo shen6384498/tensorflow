@@ -790,6 +790,9 @@ const Tensor& XlaOpKernelContext::GetInputTensorByName(absl::string_view name) {
 XlaOpKernel::XlaOpKernel(OpKernelConstruction* context) : OpKernel(context) {}
 
 void XlaOpKernel::Compute(OpKernelContext* context) {
+  LOG(ERROR)
+      << "hello boy ***************************** compute XlaOpKernel:"
+      << name();
   XlaOpKernelContext xla_context(context);
   Compile(&xla_context);
 }

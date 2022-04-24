@@ -54,6 +54,9 @@ class UnaryElementWiseOp : public UnaryOp<T> {
   using UnaryOp<T>::UnaryOp;
 
   void Compute(OpKernelContext* context) override {
+    LOG(ERROR) << "hello boy ***************************** compute "
+                  "UnaryElementWiseOp:"
+               << name();
     // Output shape is the same as input shape.
     const Tensor& input = context->input(0);
     Tensor* output = nullptr;
@@ -70,6 +73,9 @@ class BinaryElementWiseOp : public BinaryOp<T> {
   using BinaryOp<T>::BinaryOp;
 
   void Compute(OpKernelContext* context) override {
+    LOG(ERROR) << "hello boy ***************************** compute "
+                  "BinaryElementWiseOp:"
+               << name();
     const Tensor& a = context->input(0);
     const Tensor& b = context->input(1);
 

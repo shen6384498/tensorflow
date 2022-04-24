@@ -23,7 +23,10 @@ namespace {
 class NoOp : public OpKernel {
  public:
   explicit NoOp(OpKernelConstruction* context) : OpKernel(context) {}
-  void Compute(OpKernelContext* context) override {}
+  void Compute(OpKernelContext* context) override {
+    LOG(ERROR) << "hello boy ***************************** no compute op:"
+               << name();
+  }
   bool IsExpensive() override { return false; }
 };
 

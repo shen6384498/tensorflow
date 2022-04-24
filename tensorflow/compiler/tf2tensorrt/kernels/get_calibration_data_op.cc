@@ -35,6 +35,8 @@ class GetCalibrationDataOp : public OpKernel {
   ~GetCalibrationDataOp() override {}
 
   void Compute(OpKernelContext* context) override {
+    LOG(ERROR) << "hello boy ***************************** compute GetCalibrationDataOp:"
+               << name();
     // TODO(laigd): it will allocate the tensor on the device and copy the
     // serialized string to that tensor, and later sess.run() will copy it back
     // to host. We need to optimize this.
