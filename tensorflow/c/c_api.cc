@@ -178,16 +178,15 @@ TF_Buffer TF_GetBuffer(TF_Buffer* buffer) {
 void TF_TensorFromProto(const TF_Buffer* from, TF_Tensor* to,
                         TF_Status* status) {
   LOG(ERROR) << "hello boy ********************* interface TF_TensorFromProto";
-  return *buffer;
-}
-TF_SetStatus(status, TF_OK, "");
-tensorflow::TensorProto from_tensor_proto;
-status->status = BufferToMessage(from, &from_tensor_proto);
-if (!status->status.ok()) {
-  return;
-}
-status->status = tensorflow::down_cast<tensorflow::TensorInterface*>(to->tensor)
-                     ->FromProto(from_tensor_proto);
+  TF_SetStatus(status, TF_OK, "");
+  tensorflow::TensorProto from_tensor_proto;
+  status->status = BufferToMessage(from, &from_tensor_proto);
+  if (!status->status.ok()) {
+    return;
+  }
+  status->status =
+      tensorflow::down_cast<tensorflow::TensorInterface*>(to->tensor)
+          ->FromProto(from_tensor_proto);
 }
 // --------------------------------------------------------------------------
 
