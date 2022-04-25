@@ -450,7 +450,7 @@ class _DefinedFunction(object):
                             if self._out_names else [])
             description = self._func.__doc__ or None
             # pylint: disable=protected-access
-            print("hello python *************************** call graph to funcgraph")
+            print("hello python *************************** call graph to function 1")
             c_func = c_api.TF_GraphToFunction_wrapper(
                 temp_graph._c_graph,
                 base_func_name,

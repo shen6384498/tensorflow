@@ -379,7 +379,7 @@ class _EagerDefinedFunction(object):
                 output_names = []
         else:
             output_names = []
-        print("hello python *************************** call graph to funcgraph")
+        print("hello python *************************** call graph to function 2")
         fn = pywrap_tf_session.TF_GraphToFunction_wrapper(
             graph._c_graph,  # pylint: disable=protected-access
             compat.as_str(name),
