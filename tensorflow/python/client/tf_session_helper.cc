@@ -583,6 +583,8 @@ TF_Function* TF_GraphToFunction_wrapper(
     const std::vector<TF_Operation*>* control_outputs,
     const NameVector& control_output_names, const TF_FunctionOptions* opts,
     const char* description, TF_Status* out_status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_GraphToFunction_wrapper";
   if (!output_names.empty() && output_names.size() != outputs.size()) {
     Set_TF_Status_from_Status(
         out_status,

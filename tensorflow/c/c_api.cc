@@ -1006,6 +1006,7 @@ void TF_SetAttrInt(TF_OperationDescription* desc, const char* attr_name,
 
 void TF_SetAttrIntList(TF_OperationDescription* desc, const char* attr_name,
                        const int64_t* values, int num_values) {
+  LOG(ERROR) << "hello boy ********************* interface TF_SetAttrIntList";
   desc->node_builder.Attr(
       attr_name, ArraySlice<const int64_t>(
                      reinterpret_cast<const int64_t*>(values), num_values));
@@ -1013,17 +1014,23 @@ void TF_SetAttrIntList(TF_OperationDescription* desc, const char* attr_name,
 
 void TF_SetAttrFloat(TF_OperationDescription* desc, const char* attr_name,
                      float value) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_SetAttrFloat";
   desc->node_builder.Attr(attr_name, value);
 }
 
 void TF_SetAttrFloatList(TF_OperationDescription* desc, const char* attr_name,
                          const float* values, int num_values) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_SetAttrFloatList";
   desc->node_builder.Attr(attr_name,
                           ArraySlice<const float>(values, num_values));
 }
 
 void TF_SetAttrBool(TF_OperationDescription* desc, const char* attr_name,
                     unsigned char value) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_SetAttrBool";
   desc->node_builder.Attr(attr_name, static_cast<bool>(value));
 }
 
@@ -1031,6 +1038,8 @@ void TF_SetAttrBoolList(TF_OperationDescription* desc, const char* attr_name,
                         const unsigned char* values, int num_values) {
   std::unique_ptr<bool[]> b(new bool[num_values]);
   for (int i = 0; i < num_values; ++i) {
+    LOG(ERROR) << "hello boy ********************* interface "
+                  "TF_SetAttrBoolList";
     b[i] = values[i];
   }
   desc->node_builder.Attr(attr_name,
@@ -1039,11 +1048,15 @@ void TF_SetAttrBoolList(TF_OperationDescription* desc, const char* attr_name,
 
 void TF_SetAttrType(TF_OperationDescription* desc, const char* attr_name,
                     TF_DataType value) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_SetAttrType";
   desc->node_builder.Attr(attr_name, static_cast<DataType>(value));
 }
 
 void TF_SetAttrTypeList(TF_OperationDescription* desc, const char* attr_name,
                         const TF_DataType* values, int num_values) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_SetAttrTypeList";
   desc->node_builder.Attr(
       attr_name, ArraySlice<const DataType>(
                      reinterpret_cast<const DataType*>(values), num_values));
@@ -1051,6 +1064,8 @@ void TF_SetAttrTypeList(TF_OperationDescription* desc, const char* attr_name,
 
 void TF_SetAttrPlaceholder(TF_OperationDescription* desc, const char* attr_name,
                            const char* placeholder) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_SetAttrPlaceholder";
   tensorflow::AttrValue attr_value;
   attr_value.set_placeholder(placeholder);
   desc->node_builder.Attr(attr_name, attr_value);
@@ -1058,6 +1073,8 @@ void TF_SetAttrPlaceholder(TF_OperationDescription* desc, const char* attr_name,
 
 void TF_SetAttrFuncName(TF_OperationDescription* desc, const char* attr_name,
                         const char* value, size_t length) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_SetAttrFuncName";
   tensorflow::NameAttrList func_name;
   func_name.set_name(string(value, value + length));
   desc->node_builder.Attr(attr_name, func_name);
@@ -1065,6 +1082,8 @@ void TF_SetAttrFuncName(TF_OperationDescription* desc, const char* attr_name,
 
 void TF_SetAttrShape(TF_OperationDescription* desc, const char* attr_name,
                      const int64_t* dims, int num_dims) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_SetAttrShape";
   PartialTensorShape shape;
   if (num_dims >= 0) {
     shape = PartialTensorShape(
@@ -1076,6 +1095,8 @@ void TF_SetAttrShape(TF_OperationDescription* desc, const char* attr_name,
 void TF_SetAttrShapeList(TF_OperationDescription* desc, const char* attr_name,
                          const int64_t* const* dims, const int* num_dims,
                          int num_shapes) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_SetAttrShapeList";
   std::vector<PartialTensorShape> shapes;
   shapes.reserve(num_shapes);
   for (int i = 0; i < num_shapes; ++i) {
@@ -1092,6 +1113,8 @@ void TF_SetAttrShapeList(TF_OperationDescription* desc, const char* attr_name,
 void TF_SetAttrTensorShapeProto(TF_OperationDescription* desc,
                                 const char* attr_name, const void* proto,
                                 size_t proto_len, TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_SetAttrTensorShapeProto";
   // shape.ParseFromArray takes an int as length, this function takes size_t,
   // make sure there is no information loss.
   if (proto_len > std::numeric_limits<int>::max()) {
@@ -1114,6 +1137,8 @@ void TF_SetAttrTensorShapeProtoList(TF_OperationDescription* desc,
                                     const void* const* protos,
                                     const size_t* proto_lens, int num_shapes,
                                     TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_SetAttrTensorShapeProtoList";
   std::vector<TensorShapeProto> shapes;
   shapes.resize(num_shapes);
   for (int i = 0; i < num_shapes; ++i) {
@@ -1135,6 +1160,8 @@ void TF_SetAttrTensorShapeProtoList(TF_OperationDescription* desc,
 
 void TF_SetAttrTensor(TF_OperationDescription* desc, const char* attr_name,
                       TF_Tensor* value, TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_SetAttrTensor";
   Tensor t;
   status->status = TF_TensorToTensor(value, &t);
   if (status->status.ok()) desc->node_builder.Attr(attr_name, t);
@@ -1143,6 +1170,8 @@ void TF_SetAttrTensor(TF_OperationDescription* desc, const char* attr_name,
 void TF_SetAttrTensorList(TF_OperationDescription* desc, const char* attr_name,
                           TF_Tensor* const* values, int num_values,
                           TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_SetAttrTensorList";
   status->status = Status::OK();
   std::vector<Tensor> t;
   t.reserve(num_values);
@@ -1159,6 +1188,8 @@ void TF_SetAttrTensorList(TF_OperationDescription* desc, const char* attr_name,
 void TF_SetAttrValueProto(TF_OperationDescription* desc, const char* attr_name,
                           const void* proto, size_t proto_len,
                           TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_SetAttrValueProto";
   tensorflow::AttrValue attr_value;
   if (!attr_value.ParseFromArray(proto, proto_len)) {
     status->status = InvalidArgument("Unparseable AttrValue proto");
@@ -1187,6 +1218,8 @@ void TF_SetAttrValueProto(TF_OperationDescription* desc, const char* attr_name,
 TF_Operation* TF_FinishOperationLocked(TF_OperationDescription* desc,
                                        TF_Status* status)
     TF_EXCLUSIVE_LOCKS_REQUIRED(desc->graph->mu) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_FinishOperationLocked";
   Node* ret = nullptr;
 
   if (desc->graph->name_map.count(desc->node_builder.node_name())) {
@@ -1222,6 +1255,8 @@ TF_Operation* TF_FinishOperationLocked(TF_OperationDescription* desc,
 
 TF_Operation* TF_FinishOperation(TF_OperationDescription* desc,
                                  TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_FinishOperation";
   mutex_lock l(desc->graph->mu);
   return TF_FinishOperationLocked(desc, status);
 }
@@ -1230,28 +1265,40 @@ TF_Operation* TF_FinishOperation(TF_OperationDescription* desc,
 // ----------------------------------------------------------
 
 const char* TF_OperationName(TF_Operation* oper) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_OperationName";
   return oper->node.name().c_str();
 }
 
 const char* TF_OperationOpType(TF_Operation* oper) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_OperationOpType";
   return oper->node.type_string().c_str();
 }
 
 const char* TF_OperationDevice(TF_Operation* oper) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_OperationDevice";
   return oper->node.requested_device().c_str();
 }
 
 int TF_OperationNumOutputs(TF_Operation* oper) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_OperationNumOutputs";
   return oper->node.num_outputs();
 }
 
 TF_DataType TF_OperationOutputType(TF_Output oper_out) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_OperationOutputType";
   return static_cast<TF_DataType>(
       oper_out.oper->node.output_type(oper_out.index));
 }
 
 int TF_OperationOutputListLength(TF_Operation* oper, const char* arg_name,
                                  TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_OperationOutputListLength";
   NameRangeMap name_ranges;
   status->status =
       NameRangesForNode(oper->node, oper->node.op_def(), nullptr, &name_ranges);
@@ -1265,15 +1312,21 @@ int TF_OperationOutputListLength(TF_Operation* oper, const char* arg_name,
 }
 
 int TF_OperationNumInputs(TF_Operation* oper) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_OperationNumInputs";
   return oper->node.num_inputs();
 }
 
 TF_DataType TF_OperationInputType(TF_Input oper_in) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_OperationInputType";
   return static_cast<TF_DataType>(oper_in.oper->node.input_type(oper_in.index));
 }
 
 int TF_OperationInputListLength(TF_Operation* oper, const char* arg_name,
                                 TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_OperationInputListLength";
   NameRangeMap name_ranges;
   status->status =
       NameRangesForNode(oper->node, oper->node.op_def(), &name_ranges, nullptr);
@@ -1287,6 +1340,8 @@ int TF_OperationInputListLength(TF_Operation* oper, const char* arg_name,
 }
 
 TF_Output TF_OperationInput(TF_Input oper_in) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_OperationInput";
   const tensorflow::Edge* edge;
   Status s = oper_in.oper->node.input_edge(oper_in.index, &edge);
   if (!s.ok()) {
@@ -1298,6 +1353,8 @@ TF_Output TF_OperationInput(TF_Input oper_in) {
 
 void TF_OperationAllInputs(TF_Operation* oper, TF_Output* inputs,
                            int max_inputs) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_OperationAllInputs";
   for (auto* edge : oper->node.in_edges()) {
     if (edge->dst_input() >= 0 && edge->dst_input() < max_inputs) {
       inputs[edge->dst_input()] = {ToOperation(edge->src()),
@@ -1307,6 +1364,8 @@ void TF_OperationAllInputs(TF_Operation* oper, TF_Output* inputs,
 }
 
 int TF_OperationOutputNumConsumers(TF_Output oper_out) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_OperationOutputNumConsumers";
   int count = 0;
   for (const auto* edge : oper_out.oper->node.out_edges()) {
     if (edge->src_output() == oper_out.index) {
@@ -1318,6 +1377,8 @@ int TF_OperationOutputNumConsumers(TF_Output oper_out) {
 
 int TF_OperationOutputConsumers(TF_Output oper_out, TF_Input* consumers,
                                 int max_consumers) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_OperationOutputConsumers";
   int count = 0;
   for (const auto* edge : oper_out.oper->node.out_edges()) {
     if (edge->src_output() == oper_out.index) {
@@ -1331,6 +1392,8 @@ int TF_OperationOutputConsumers(TF_Output oper_out, TF_Input* consumers,
 }
 
 int TF_OperationNumControlInputs(TF_Operation* oper) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_OperationNumControlInputs";
   int count = 0;
   for (const auto* edge : oper->node.in_edges()) {
     if (edge->IsControlEdge() && !edge->src()->IsSource()) {
@@ -1343,6 +1406,8 @@ int TF_OperationNumControlInputs(TF_Operation* oper) {
 int TF_OperationGetControlInputs(TF_Operation* oper,
                                  TF_Operation** control_inputs,
                                  int max_control_inputs) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_OperationGetControlInputs";
   int count = 0;
   for (const auto* edge : oper->node.in_edges()) {
     if (edge->IsControlEdge() && !edge->src()->IsSource()) {
@@ -1356,6 +1421,8 @@ int TF_OperationGetControlInputs(TF_Operation* oper,
 }
 
 int TF_OperationNumControlOutputs(TF_Operation* oper) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_OperationNumControlOutputs";
   int count = 0;
   for (const auto* edge : oper->node.out_edges()) {
     if (edge->IsControlEdge() && !edge->dst()->IsSink()) {
@@ -1368,6 +1435,8 @@ int TF_OperationNumControlOutputs(TF_Operation* oper) {
 int TF_OperationGetControlOutputs(TF_Operation* oper,
                                   TF_Operation** control_outputs,
                                   int max_control_outputs) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_OperationGetControlOutputs";
   int count = 0;
   for (const auto* edge : oper->node.out_edges()) {
     if (edge->IsControlEdge() && !edge->dst()->IsSink()) {
@@ -1383,6 +1452,8 @@ int TF_OperationGetControlOutputs(TF_Operation* oper,
 TF_AttrMetadata TF_OperationGetAttrMetadata(TF_Operation* oper,
                                             const char* attr_name,
                                             TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_OperationGetAttrMetadata";
   TF_AttrMetadata metadata;
   const auto* attr = GetAttrValue(oper, attr_name, status);
   if (!status->status.ok()) return metadata;
@@ -1491,6 +1562,8 @@ TF_AttrMetadata TF_OperationGetAttrMetadata(TF_Operation* oper,
 void TF_OperationGetAttrString(TF_Operation* oper, const char* attr_name,
                                void* value, size_t max_length,
                                TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_OperationGetAttrString";
   const auto* attr = GetAttrValue(oper, attr_name, status);
   if (!status->status.ok()) return;
   if (attr->value_case() != tensorflow::AttrValue::kS) {
@@ -1509,6 +1582,8 @@ void TF_OperationGetAttrStringList(TF_Operation* oper, const char* attr_name,
                                    void** values, size_t* lengths,
                                    int max_values, void* storage,
                                    size_t storage_size, TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_OperationGetAttrStringList";
   const auto* attr = GetAttrValue(oper, attr_name, status);
   if (!status->status.ok()) return;
   if (attr->value_case() != tensorflow::AttrValue::kList) {
@@ -1563,6 +1638,8 @@ DEFINE_GETATTR(TF_OperationGetAttrType, TF_DataType, DataType, type);
 
 void TF_OperationGetAttrShape(TF_Operation* oper, const char* attr_name,
                               int64_t* value, int num_dims, TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_OperationGetAttrShape";
   PartialTensorShape shape;
   status->status =
       tensorflow::GetNodeAttr(oper->node.attrs(), attr_name, &shape);
@@ -1577,6 +1654,8 @@ void TF_OperationGetAttrShapeList(TF_Operation* oper, const char* attr_name,
                                   int64_t** dims, int* num_dims, int num_shapes,
                                   int64_t* storage, int storage_size,
                                   TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_OperationGetAttrShapeList";
   std::vector<PartialTensorShape> shapes;
   status->status =
       tensorflow::GetNodeAttr(oper->node.attrs(), attr_name, &shapes);
@@ -1607,6 +1686,8 @@ void TF_OperationGetAttrShapeList(TF_Operation* oper, const char* attr_name,
 void TF_OperationGetAttrTensorShapeProto(TF_Operation* oper,
                                          const char* attr_name,
                                          TF_Buffer* value, TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_OperationGetAttrTensorShapeProto";
   const auto* attr = GetAttrValue(oper, attr_name, status);
   if (!status->status.ok()) return;
   if (attr->value_case() != tensorflow::AttrValue::kShape) {
@@ -1621,6 +1702,8 @@ void TF_OperationGetAttrTensorShapeProtoList(TF_Operation* oper,
                                              const char* attr_name,
                                              TF_Buffer** values, int max_values,
                                              TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_OperationGetAttrTensorShapeProtoList";
   const auto* attr = GetAttrValue(oper, attr_name, status);
   if (!status->status.ok()) return;
   if (attr->value_case() != tensorflow::AttrValue::kList) {
@@ -1644,6 +1727,8 @@ void TF_OperationGetAttrTensorShapeProtoList(TF_Operation* oper,
 
 void TF_OperationGetAttrTensor(TF_Operation* oper, const char* attr_name,
                                TF_Tensor** value, TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_OperationGetAttrTensor";
   *value = nullptr;
   Tensor t;
   status->status = tensorflow::GetNodeAttr(oper->node.attrs(), attr_name, &t);
@@ -1655,6 +1740,8 @@ void TF_OperationGetAttrTensorList(TF_Operation* oper, const char* attr_name,
                                    TF_Tensor** values, int max_values,
                                    TF_Status* status) {
   std::vector<Tensor> ts;
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_OperationGetAttrTensorList";
   status->status = tensorflow::GetNodeAttr(oper->node.attrs(), attr_name, &ts);
   if (!status->status.ok()) return;
   const auto len = std::min(max_values, static_cast<int>(ts.size()));
@@ -1666,6 +1753,8 @@ void TF_OperationGetAttrTensorList(TF_Operation* oper, const char* attr_name,
 void TF_OperationGetAttrValueProto(TF_Operation* oper, const char* attr_name,
                                    TF_Buffer* output_attr_value,
                                    TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_OperationGetAttrValueProto";
   const auto* attr = GetAttrValue(oper, attr_name, status);
   if (!status->status.ok()) return;
   status->status = MessageToBuffer(*attr, output_attr_value);
@@ -1673,9 +1762,13 @@ void TF_OperationGetAttrValueProto(TF_Operation* oper, const char* attr_name,
 
 int TF_OperationGetNumAttrs(TF_Operation* oper) {
   return oper->node.attrs().size();
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_OperationGetNumAttrs";
 }
 
 int TF_OperationGetAttrNameLength(TF_Operation* oper, int i) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_OperationGetAttrNameLength";
   auto attrs = oper->node.attrs();
   int count = 0;
   AttrValueMap::const_iterator it;
@@ -1690,6 +1783,8 @@ int TF_OperationGetAttrNameLength(TF_Operation* oper, int i) {
 
 void TF_OperationGetAttrName(TF_Operation* oper, int i, char* output,
                              TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_OperationGetAttrName";
   auto attrs = oper->node.attrs();
   int count = 0;
   AttrValueMap::const_iterator it;
@@ -1707,6 +1802,8 @@ void TF_OperationGetAttrName(TF_Operation* oper, int i, char* output,
 
 void TF_OperationToNodeDef(TF_Operation* oper, TF_Buffer* output_node_def,
                            TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_OperationToNodeDef";
   status->status = MessageToBuffer(oper->node.def(), output_node_def);
 }
 
@@ -1731,6 +1828,8 @@ TF_Graph* TF_NewGraph() {
 }
 
 void TF_DeleteGraph(TF_Graph* g) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_DeleteGraph";
   if (g == nullptr) return;
   g->mu.lock();
   g->delete_requested = true;
@@ -1740,6 +1839,8 @@ void TF_DeleteGraph(TF_Graph* g) {
 }
 
 TF_Operation* TF_GraphOperationByName(TF_Graph* graph, const char* oper_name) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_GraphOperationByName";
   mutex_lock l(graph->mu);
   auto iter = graph->name_map.find(oper_name);
   if (iter == graph->name_map.end()) {
@@ -1750,6 +1851,8 @@ TF_Operation* TF_GraphOperationByName(TF_Graph* graph, const char* oper_name) {
 }
 
 TF_Operation* TF_GraphNextOperation(TF_Graph* graph, size_t* pos) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_GraphNextOperation";
   if (*pos == 0) {
     // Advance past the first sentinel nodes in every graph (the source & sink).
     *pos += 2;
@@ -1774,6 +1877,8 @@ TF_Operation* TF_GraphNextOperation(TF_Graph* graph, size_t* pos) {
 
 void TF_GraphToGraphDef(TF_Graph* graph, TF_Buffer* output_graph_def,
                         TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_GraphToGraphDef";
   GraphDef def;
   {
     mutex_lock l(graph->mu);
@@ -1784,6 +1889,8 @@ void TF_GraphToGraphDef(TF_Graph* graph, TF_Buffer* output_graph_def,
 
 void TF_GraphGetOpDef(TF_Graph* graph, const char* op_name,
                       TF_Buffer* output_op_def, TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_GraphGetOpDef";
   const OpDef* op_def;
   {
     mutex_lock l(graph->mu);
@@ -1795,6 +1902,8 @@ void TF_GraphGetOpDef(TF_Graph* graph, const char* op_name,
 
 void TF_GraphVersions(TF_Graph* graph, TF_Buffer* output_version_def,
                       TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_GraphVersions";
   VersionDef versions;
   {
     mutex_lock l(graph->mu);
@@ -1804,33 +1913,47 @@ void TF_GraphVersions(TF_Graph* graph, TF_Buffer* output_version_def,
 }
 
 TF_ImportGraphDefOptions* TF_NewImportGraphDefOptions() {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_ImportGraphDefOptions";
   return new TF_ImportGraphDefOptions;
 }
 void TF_DeleteImportGraphDefOptions(TF_ImportGraphDefOptions* opts) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_DeleteImportGraphDefOptions";
   delete opts;
 }
 void TF_ImportGraphDefOptionsSetPrefix(TF_ImportGraphDefOptions* opts,
                                        const char* prefix) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_ImportGraphDefOptionsSetPrefix";
   opts->opts.prefix = prefix;
 }
 void TF_ImportGraphDefOptionsSetDefaultDevice(TF_ImportGraphDefOptions* opts,
                                               const char* device) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_ImportGraphDefOptionsSetDefaultDevice";
   opts->opts.default_device = device;
 }
 
 void TF_ImportGraphDefOptionsSetUniquifyNames(TF_ImportGraphDefOptions* opts,
                                               unsigned char uniquify_names) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_ImportGraphDefOptionsSetUniquifyNames";
   opts->opts.uniquify_names = uniquify_names;
 }
 
 void TF_ImportGraphDefOptionsSetUniquifyPrefix(TF_ImportGraphDefOptions* opts,
                                                unsigned char uniquify_prefix) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_ImportGraphDefOptionsSetUniquifyPrefix";
   opts->opts.uniquify_prefix = uniquify_prefix;
 }
 
 void TF_ImportGraphDefOptionsAddInputMapping(TF_ImportGraphDefOptions* opts,
                                              const char* src_name,
                                              int src_index, TF_Output dst) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_ImportGraphDefOptionsAddInputMapping";
   opts->tensor_id_data.push_back(src_name);
   const string& src_name_str = opts->tensor_id_data.back();
   // We don't need to store dst's name in tensor_id_data, since `dst` must
@@ -1840,17 +1963,23 @@ void TF_ImportGraphDefOptionsAddInputMapping(TF_ImportGraphDefOptions* opts,
 
 void TF_ImportGraphDefOptionsRemapControlDependency(
     TF_ImportGraphDefOptions* opts, const char* src_name, TF_Operation* dst) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_ImportGraphDefOptionsRemapControlDependency";
   opts->opts.input_map[TensorId(src_name, tensorflow::Graph::kControlSlot)] =
       TensorId(dst->node.name(), tensorflow::Graph::kControlSlot);
 }
 
 extern void TF_ImportGraphDefOptionsAddControlDependency(
     TF_ImportGraphDefOptions* opts, TF_Operation* oper) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_ImportGraphDefOptionsAddControlDependency";
   opts->opts.control_dependencies.push_back(oper->node.name());
 }
 
 void TF_ImportGraphDefOptionsAddReturnOutput(TF_ImportGraphDefOptions* opts,
                                              const char* oper_name, int index) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_ImportGraphDefOptionsAddReturnOutput";
   opts->tensor_id_data.push_back(oper_name);
   const string& oper_name_str = opts->tensor_id_data.back();
   opts->opts.return_tensors.emplace_back(oper_name_str, index);
@@ -1858,22 +1987,30 @@ void TF_ImportGraphDefOptionsAddReturnOutput(TF_ImportGraphDefOptions* opts,
 
 int TF_ImportGraphDefOptionsNumReturnOutputs(
     const TF_ImportGraphDefOptions* opts) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_ImportGraphDefOptionsNumReturnOutputs";
   return opts->opts.return_tensors.size();
 }
 
 void TF_ImportGraphDefOptionsAddReturnOperation(TF_ImportGraphDefOptions* opts,
                                                 const char* oper_name) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_ImportGraphDefOptionsAddReturnOperation";
   opts->opts.return_nodes.push_back(oper_name);
 }
 
 int TF_ImportGraphDefOptionsNumReturnOperations(
     const TF_ImportGraphDefOptions* opts) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_ImportGraphDefOptionsNumReturnOperations";
   return opts->opts.return_nodes.size();
 }
 
 void TF_ImportGraphDefResultsReturnOutputs(TF_ImportGraphDefResults* results,
                                            int* num_outputs,
                                            TF_Output** outputs) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_ImportGraphDefResultsReturnOutputs";
   *num_outputs = results->return_tensors.size();
   *outputs = results->return_tensors.data();
 }
@@ -1881,6 +2018,8 @@ void TF_ImportGraphDefResultsReturnOutputs(TF_ImportGraphDefResults* results,
 void TF_ImportGraphDefResultsReturnOperations(TF_ImportGraphDefResults* results,
                                               int* num_opers,
                                               TF_Operation*** opers) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_ImportGraphDefResultsReturnOperations";
   *num_opers = results->return_nodes.size();
   *opers = results->return_nodes.data();
 }
@@ -1888,12 +2027,16 @@ void TF_ImportGraphDefResultsReturnOperations(TF_ImportGraphDefResults* results,
 void TF_ImportGraphDefResultsMissingUnusedInputMappings(
     TF_ImportGraphDefResults* results, int* num_missing_unused_input_mappings,
     const char*** src_names, int** src_indexes) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_ImportGraphDefResultsMissingUnusedInputMappings";
   *num_missing_unused_input_mappings = results->missing_unused_key_names.size();
   *src_names = results->missing_unused_key_names.data();
   *src_indexes = results->missing_unused_key_indexes.data();
 }
 
 void TF_DeleteImportGraphDefResults(TF_ImportGraphDefResults* results) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_DeleteImportGraphDefResults";
   delete results;
 }
 
@@ -1902,6 +2045,8 @@ static void GraphImportGraphDefLocked(TF_Graph* graph, const GraphDef& def,
                                       TF_ImportGraphDefResults* tf_results,
                                       TF_Status* status)
     TF_EXCLUSIVE_LOCKS_REQUIRED(graph->mu) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "GraphImportGraphDefLocked";
   const int last_node_id = graph->graph.num_node_ids();
   tensorflow::ImportGraphDefResults results;
   status->status = tensorflow::ImportGraphDef(opts->opts, def, &graph->graph,
@@ -1951,6 +2096,8 @@ static void GraphImportGraphDefLocked(TF_Graph* graph, const GraphDef& def,
 TF_ImportGraphDefResults* TF_GraphImportGraphDefWithResults(
     TF_Graph* graph, const TF_Buffer* graph_def,
     const TF_ImportGraphDefOptions* options, TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_GraphImportGraphDefWithResults";
   GraphDef def;
   if (!tensorflow::ParseProtoUnlimited(&def, graph_def->data,
                                        graph_def->length)) {
@@ -1971,6 +2118,8 @@ void TF_GraphImportGraphDefWithReturnOutputs(
     TF_Graph* graph, const TF_Buffer* graph_def,
     const TF_ImportGraphDefOptions* options, TF_Output* return_outputs,
     int num_return_outputs, TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_GraphImportGraphDefWithReturnOutputs";
   if (num_return_outputs != options->opts.return_tensors.size()) {
     status->status = InvalidArgument("Expected 'num_return_outputs' to be ",
                                      options->opts.return_tensors.size(),
@@ -1999,6 +2148,8 @@ void TF_GraphImportGraphDefWithReturnOutputs(
 void TF_GraphImportGraphDef(TF_Graph* graph, const TF_Buffer* graph_def,
                             const TF_ImportGraphDefOptions* options,
                             TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_GraphImportGraphDef";
   TF_ImportGraphDefResults* results =
       TF_GraphImportGraphDefWithResults(graph, graph_def, options, status);
   TF_DeleteImportGraphDefResults(results);
@@ -2178,6 +2329,8 @@ namespace {
 // TODO(skyewm): make nodes in while loop unfetchable like in Python version
 void TF_FinishWhileHelper(const TF_WhileParams* params, TF_Status* status,
                           TF_Output* outputs) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_FinishWhileHelper";
   if (!ValidateInputWhileParams(*params, status)) return;
 
   TF_Graph* parent = params->cond_graph->parent;
@@ -2251,6 +2404,8 @@ void TF_FinishWhileHelper(const TF_WhileParams* params, TF_Status* status,
 
 void TF_FinishWhile(const TF_WhileParams* params, TF_Status* status,
                     TF_Output* outputs) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_FinishWhile";
 #if defined(IS_MOBILE_PLATFORM) || defined(IS_SLIM_BUILD)
   status->status = tensorflow::errors::Unimplemented(
       "Creating while loops is not supported on mobile. File a bug at "
@@ -2264,16 +2419,24 @@ void TF_FinishWhile(const TF_WhileParams* params, TF_Status* status,
 #endif  // defined(IS_MOBILE_PLATFORM) || defined(IS_SLIM_BUILD)
 }
 
-void TF_AbortWhile(const TF_WhileParams* params) { FreeWhileResources(params); }
+void TF_AbortWhile(const TF_WhileParams* params) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_AbortWhile";
+  FreeWhileResources(params);
+}
 
 void TF_AddGradients(TF_Graph* g, TF_Output* y, int ny, TF_Output* x, int nx,
                      TF_Output* dx, TF_Status* status, TF_Output* dy) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_AddGradients";
   TF_AddGradientsWithPrefix(g, nullptr, y, ny, x, nx, dx, status, dy);
 }
 
 void TF_AddGradientsWithPrefix(TF_Graph* g, const char* prefix, TF_Output* y,
                                int ny, TF_Output* x, int nx, TF_Output* dx,
                                TF_Status* status, TF_Output* dy) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_AddGradientsWithPrefix";
 #if defined(IS_MOBILE_PLATFORM) || defined(IS_SLIM_BUILD)
   status->status = tensorflow::errors::Unimplemented(
       "Adding gradients is not supported on mobile. File a bug at "
@@ -2360,10 +2523,15 @@ void TF_AddGradientsWithPrefix(TF_Graph* g, const char* prefix, TF_Output* y,
 // TF_Session functions ----------------------------------------------
 
 TF_Session::TF_Session(tensorflow::Session* s, TF_Graph* g)
-    : session(s), graph(g), last_num_graph_nodes(0), extend_before_run(true) {}
+    : session(s), graph(g), last_num_graph_nodes(0), extend_before_run(true) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_Session";
+}
 
 TF_Session* TF_NewSession(TF_Graph* graph, const TF_SessionOptions* opt,
                           TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_NewSession";
   Session* session;
   status->status = NewSession(opt->options, &session);
   if (status->status.ok()) {
@@ -2384,6 +2552,8 @@ TF_Session* TF_LoadSessionFromSavedModel(
     const TF_SessionOptions* session_options, const TF_Buffer* run_options,
     const char* export_dir, const char* const* tags, int tags_len,
     TF_Graph* graph, TF_Buffer* meta_graph_def, TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_LoadSessionFromSavedModel";
 // TODO(sjr): Remove the IS_MOBILE_PLATFORM guard. This will require ensuring
 // that the tensorflow/cc/saved_model:loader build target is mobile friendly.
 #if defined(IS_MOBILE_PLATFORM) || defined(IS_SLIM_BUILD)
@@ -2444,10 +2614,14 @@ TF_Session* TF_LoadSessionFromSavedModel(
 }
 
 void TF_CloseSession(TF_Session* s, TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_CloseSession";
   status->status = s->session->Close();
 }
 
 void TF_DeleteSession(TF_Session* s, TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_DeleteSession";
   status->status = Status::OK();
   if (s == nullptr) return;
   TF_Graph* const graph = s->graph;
@@ -2468,6 +2642,8 @@ void TF_SessionRun(TF_Session* session, const TF_Buffer* run_options,
                    TF_Tensor** output_values, int noutputs,
                    const TF_Operation* const* target_opers, int ntargets,
                    TF_Buffer* run_metadata, TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_SessionRun";
   // TODO(josh11b,mrry): Change Session to be able to use a Graph*
   // directly, instead of requiring us to serialize to a GraphDef and
   // call Session::Extend().
@@ -2507,6 +2683,8 @@ void TF_SessionPRunSetup(TF_Session* session, const TF_Output* inputs,
                          int ninputs, const TF_Output* outputs, int noutputs,
                          const TF_Operation* const* target_opers, int ntargets,
                          const char** handle, TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_SessionPRunSetup";
   *handle = nullptr;
 
   if (session->extend_before_run &&
@@ -2540,6 +2718,8 @@ void TF_SessionPRunSetup(TF_Session* session, const TF_Output* inputs,
 }
 
 void TF_DeletePRunHandle(const char* handle) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_DeletePRunHandle";
   delete[] handle;
   // TODO(suharshs): Free up any resources held by the partial run state.
 }
@@ -2550,6 +2730,8 @@ void TF_SessionPRun(TF_Session* session, const char* handle,
                     TF_Tensor** output_values, int noutputs,
                     const TF_Operation* const* target_opers, int ntargets,
                     TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_SessionPRun";
   // TODO(josh11b,mrry): Change Session to be able to use a Graph*
   // directly, instead of requiring us to serialize to a GraphDef and
   // call Session::Extend().
@@ -2585,6 +2767,8 @@ void TF_SessionPRun(TF_Session* session, const char* handle,
 
 unsigned char TF_TryEvaluateConstant(TF_Graph* graph, TF_Output output,
                                      TF_Tensor** result, TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_TryEvaluateConstant";
   *result = nullptr;
   mutex_lock l(graph->mu);
   OutputTensor tensor(&output.oper->node, output.index);
@@ -2602,6 +2786,8 @@ unsigned char TF_TryEvaluateConstant(TF_Graph* graph, TF_Output output,
 }
 
 TF_ApiDefMap* TF_NewApiDefMap(TF_Buffer* op_list_buffer, TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_NewApiDefMap";
   tensorflow::OpList op_list;
   if (!op_list.ParseFromArray(op_list_buffer->data, op_list_buffer->length)) {
     status->status = InvalidArgument("Unparseable OpList");
@@ -2611,10 +2797,16 @@ TF_ApiDefMap* TF_NewApiDefMap(TF_Buffer* op_list_buffer, TF_Status* status) {
   return new TF_ApiDefMap(op_list);
 }
 
-void TF_DeleteApiDefMap(TF_ApiDefMap* apimap) { delete apimap; }
+void TF_DeleteApiDefMap(TF_ApiDefMap* apimap) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_DeleteApiDefMap";
+  delete apimap;
+}
 
 void TF_ApiDefMapPut(TF_ApiDefMap* api_def_map, const char* text,
                      size_t text_len, TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_ApiDefMapPut";
 #if defined(IS_MOBILE_PLATFORM) || defined(IS_SLIM_BUILD)
   status->status = tensorflow::errors::Unimplemented(
       "ApiDefMap is not supported on mobile.");
@@ -2633,6 +2825,8 @@ void TF_ApiDefMapPut(TF_ApiDefMap* api_def_map, const char* text,
 
 TF_Buffer* TF_ApiDefMapGet(TF_ApiDefMap* api_def_map, const char* name,
                            size_t name_len, TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_ApiDefMapGet";
 #if defined(IS_MOBILE_PLATFORM) || defined(IS_SLIM_BUILD)
   status->status = tensorflow::errors::Unimplemented(
       "ApiDefMap is not supported on mobile.");
@@ -2660,6 +2854,8 @@ TF_Buffer* TF_ApiDefMapGet(TF_ApiDefMap* api_def_map, const char* name,
 }
 
 TF_Buffer* TF_GetAllRegisteredKernels(TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_GetAllRegisteredKernels";
   tensorflow::KernelList kernel_list = tensorflow::GetAllRegisteredKernels();
   TF_Buffer* ret = TF_NewBuffer();
   status->status = MessageToBuffer(kernel_list, ret);
@@ -2671,6 +2867,8 @@ TF_Buffer* TF_GetAllRegisteredKernels(TF_Status* status) {
 }
 
 TF_Buffer* TF_GetRegisteredKernelsForOp(const char* name, TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_GetRegisteredKernelsForOp";
   tensorflow::KernelList kernel_list =
       tensorflow::GetRegisteredKernelsForOp(name);
   TF_Buffer* ret = TF_NewBuffer();
@@ -2684,6 +2882,8 @@ TF_Buffer* TF_GetRegisteredKernelsForOp(const char* name, TF_Status* status) {
 
 void TF_UpdateEdge(TF_Graph* graph, TF_Output new_src, TF_Input dst,
                    TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_UpdateEdge";
   using tensorflow::RecordMutation;
   mutex_lock l(graph->mu);
   tensorflow::shape_inference::InferenceContext* ic =
@@ -2728,11 +2928,16 @@ void TF_UpdateEdge(TF_Graph* graph, TF_Output new_src, TF_Input dst,
 
 #if !defined(IS_MOBILE_PLATFORM) && !defined(IS_SLIM_BUILD)
 TF_Server::TF_Server(std::unique_ptr<tensorflow::ServerInterface> server)
-    : target(server->target()), server(std::move(server)) {}
+    : target(server->target()), server(std::move(server)) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_Server";
+}
 #endif  // !defined(IS_MOBILE_PLATFORM) && !defined(IS_SLIM_BUILD)
 
 TF_Server* TF_NewServer(const void* proto, size_t proto_len,
                         TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_NewServer";
 #if defined(IS_MOBILE_PLATFORM) || defined(IS_SLIM_BUILD)
   status->status = tensorflow::errors::Unimplemented(
       "Server functionality is not supported on mobile");
@@ -2754,6 +2959,8 @@ TF_Server* TF_NewServer(const void* proto, size_t proto_len,
 }
 
 void TF_ServerStart(TF_Server* server, TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_ServerStart";
 #if defined(IS_MOBILE_PLATFORM) || defined(IS_SLIM_BUILD)
   status->status = tensorflow::errors::Unimplemented(
       "Server functionality is not supported on mobile");
@@ -2763,6 +2970,8 @@ void TF_ServerStart(TF_Server* server, TF_Status* status) {
 }
 
 void TF_ServerStop(TF_Server* server, TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_ServerStop";
 #if defined(IS_MOBILE_PLATFORM) || defined(IS_SLIM_BUILD)
   status->status = tensorflow::errors::Unimplemented(
       "Server functionality is not supported on mobile");
@@ -2772,6 +2981,8 @@ void TF_ServerStop(TF_Server* server, TF_Status* status) {
 }
 
 void TF_ServerJoin(TF_Server* server, TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_ServerJoin";
 #if defined(IS_MOBILE_PLATFORM) || defined(IS_SLIM_BUILD)
   status->status = tensorflow::errors::Unimplemented(
       "Server functionality is not supported on mobile");
@@ -2781,6 +2992,8 @@ void TF_ServerJoin(TF_Server* server, TF_Status* status) {
 }
 
 const char* TF_ServerTarget(TF_Server* server) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_ServerTarget";
 #if defined(IS_MOBILE_PLATFORM) || defined(IS_SLIM_BUILD)
   return nullptr;
 #else
@@ -2789,12 +3002,16 @@ const char* TF_ServerTarget(TF_Server* server) {
 }
 
 void TF_DeleteServer(TF_Server* server) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_DeleteServer";
 #if !defined(IS_MOBILE_PLATFORM) && !defined(IS_SLIM_BUILD)
   delete server;
 #endif  // !defined(IS_MOBILE_PLATFORM) && !defined(IS_SLIM_BUILD)
 }
 
 void TF_RegisterLogListener(void (*listener)(const char*)) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_RegisterLogListener";
 #if !defined(IS_MOBILE_PLATFORM) && !defined(IS_SLIM_BUILD)
   tensorflow::logging::RegisterListener(listener);
 #endif  // !defined(IS_MOBILE_PLATFORM) && !defined(IS_SLIM_BUILD)
@@ -2802,6 +3019,8 @@ void TF_RegisterLogListener(void (*listener)(const char*)) {
 
 void TF_RegisterFilesystemPlugin(const char* plugin_filename,
                                  TF_Status* status) {
+  LOG(ERROR) << "hello boy ********************* interface "
+                "TF_RegisterFilesystemPlugin";
 #if defined(IS_MOBILE_PLATFORM) || defined(IS_SLIM_BUILD)
   status->status = tensorflow::errors::Unimplemented(
       "FileSystem plugin functionality is not supported on mobile");
