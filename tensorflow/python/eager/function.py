@@ -481,6 +481,7 @@ class _EagerDefinedFunction(object):
           FunctionAlreadyGarbageCollectedError: if the function is no longer
             available to be called because it has been garbage collected.
         """
+        print("hello python ********************* _EagerDefinedFunction __call__")
         if len(args) != len(self.signature.input_arg):
             raise ValueError(
                 f"Signature specifies {len(list(self.signature.input_arg))} "
@@ -504,8 +505,12 @@ class _EagerDefinedFunction(object):
         executing_eagerly = ctx.executing_eagerly()
         attrs = ("executor_type", executor_type, "config_proto", config)
         if executing_eagerly:
+            print(
+                "hello python ********************* _EagerDefinedFunction __call__ executing_eagerly")
             with _InterpolateFunctionError(self):
                 if cancellation_manager is None:
+                    print(
+                        "hello python ********************* _EagerDefinedFunction __call__ executing_eagerly none cancellation_manager")
                     outputs = execute.execute(
                         str(self.signature.name),
                         num_outputs=self._num_outputs,
@@ -513,6 +518,8 @@ class _EagerDefinedFunction(object):
                         attrs=attrs,
                         ctx=ctx)
                 else:
+                    print(
+                        "hello python ********************* _EagerDefinedFunction __call__ executing_eagerly cancellation_manager")
                     outputs = execute.execute_with_cancellation(
                         str(self.signature.name),
                         num_outputs=self._num_outputs,
@@ -526,6 +533,8 @@ class _EagerDefinedFunction(object):
             # TODO(akshayka): Either remove this if the FunctionLibraryRuntime
             # creates `PartitionedCallOp` kernels by default, or remove the previous
             # branch if a TPU kernel is registered for `PartitionedCall`.
+            print(
+                "hello python ********************* _EagerDefinedFunction __call__ no executing_eagerly")
             with _InterpolateFunctionError(self):
                 with ops.control_dependencies(self._control_captures):
                     # The caller must use record_operation to record this operation in the
@@ -1587,7 +1596,7 @@ class ConcreteFunction(core.ConcreteFunction, trackable.Trackable):
         The original function signature is generally preferred, but the flat input
         signature is supported for backward compatibility.
 
-        ### Original Function Signature
+        # Original Function Signature
 
         When calling a ConcreteFunction with the signature of the original function,
         each argument must match the type or value that was used when the
@@ -1605,7 +1614,7 @@ class ConcreteFunction(core.ConcreteFunction, trackable.Trackable):
         tensor arguments do not have a default value (even if the original function
         had a default value for that argument).
 
-        ### Flat Signature
+        # Flat Signature
 
         When calling a ConcreteFunction with the flat signature, the arguments
         correspond to the flattened component tensors of the arguments that were
