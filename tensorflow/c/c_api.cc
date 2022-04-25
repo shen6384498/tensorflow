@@ -1266,19 +1266,22 @@ TF_Operation* TF_FinishOperation(TF_OperationDescription* desc,
 
 const char* TF_OperationName(TF_Operation* oper) {
   LOG(ERROR) << "hello boy ********************* interface "
-                "TF_OperationName";
+                "TF_OperationName name:"
+             << oper->node.name();
   return oper->node.name().c_str();
 }
 
 const char* TF_OperationOpType(TF_Operation* oper) {
   LOG(ERROR) << "hello boy ********************* interface "
-                "TF_OperationOpType";
+                "TF_OperationOpType type:"
+             << oper->node.type_string();
   return oper->node.type_string().c_str();
 }
 
 const char* TF_OperationDevice(TF_Operation* oper) {
   LOG(ERROR) << "hello boy ********************* interface "
-                "TF_OperationDevice";
+                "TF_OperationDevice device:"
+             << oper->node.requested_device();
   return oper->node.requested_device().c_str();
 }
 
