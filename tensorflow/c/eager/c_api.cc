@@ -871,6 +871,7 @@ TF_CAPI_EXPORT extern int TFE_OpGetOutputLength(TFE_Op* op,
 
 void TFE_Execute(TFE_Op* op, TFE_TensorHandle** retvals, int* num_retvals,
                  TF_Status* status) {
+  LOG(ERROR) << "hello boy **************************** TFE_Execute start";
   tensorflow::ImmediateExecutionOperation* unwrapped_op =
       tensorflow::unwrap(op);
 
@@ -880,6 +881,7 @@ void TFE_Execute(TFE_Op* op, TFE_TensorHandle** retvals, int* num_retvals,
           reinterpret_cast<tensorflow::ImmediateExecutionTensorHandle**>(
               retvals),
           num_retvals);
+  LOG(ERROR) << "hello boy **************************** TFE_Execute end";
 }
 
 TFE_TensorHandle* TFE_TensorHandleCopyToDevice(TFE_TensorHandle* h,

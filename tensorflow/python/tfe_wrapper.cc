@@ -337,10 +337,18 @@ py::object TFE_Py_ExecuteCancelable_wrapper(
   LOG(ERROR) << "hello boy ************************* "
                 "TFE_Py_ExecuteCancelable_wrapper start";
   TFE_Context* ctx = tensorflow::InputTFE_Context(context);
+  LOG(ERROR) << "hello boy ************************* "
+                "InputTFE_InputTensorHandles start";
   TFE_InputTensorHandles input_tensor_handles =
       InputTFE_InputTensorHandles(inputs);
+  LOG(ERROR) << "hello boy ************************* "
+                "InputTFE_InputTensorHandles end";
+  LOG(ERROR) << "hello boy ************************* "
+                "InputTFE_OutputTensorHandles start";
   TFE_OutputTensorHandles output_tensor_handles =
       InputTFE_OutputTensorHandles(num_outputs);
+  LOG(ERROR) << "hello boy ************************* "
+                "InputTFE_OutputTensorHandles end";
   tensorflow::Safe_TF_StatusPtr status = tensorflow::make_safe(TF_NewStatus());
   TFE_Py_ExecuteCancelable(ctx, device_name, op_name, &input_tensor_handles,
                            attrs.ptr(), tensorflow::wrap(cancellation_manager),
@@ -348,11 +356,15 @@ py::object TFE_Py_ExecuteCancelable_wrapper(
 
   int output_len = output_tensor_handles.size();
   PyObject* output_list = PyList_New(output_len);
+  LOG(ERROR) << "hello boy ************************* "
+                "EagerTensorFromHandle start";
   for (int i = 0; i < output_len; ++i) {
     PyObject* output;
     output = EagerTensorFromHandle(output_tensor_handles.at(i));
     PyList_SetItem(output_list, i, output);
   }
+  LOG(ERROR) << "hello boy ************************* "
+                "EagerTensorFromHandle end";
   tensorflow::MaybeRaiseRegisteredFromTFStatus(status.get());
   LOG(ERROR) << "hello boy ************************* "
                 "TFE_Py_ExecuteCancelable_wrapper end";
