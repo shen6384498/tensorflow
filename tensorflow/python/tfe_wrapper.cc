@@ -334,6 +334,8 @@ py::object TFE_Py_ExecuteCancelable_wrapper(
     const py::handle& inputs, const py::handle& attrs,
     tensorflow::CancellationManager* cancellation_manager,
     const py::handle& num_outputs) {
+  LOG(ERROR) << "hello boy ************************* "
+                "TFE_Py_ExecuteCancelable_wrapper start";
   TFE_Context* ctx = tensorflow::InputTFE_Context(context);
   TFE_InputTensorHandles input_tensor_handles =
       InputTFE_InputTensorHandles(inputs);
@@ -352,6 +354,8 @@ py::object TFE_Py_ExecuteCancelable_wrapper(
     PyList_SetItem(output_list, i, output);
   }
   tensorflow::MaybeRaiseRegisteredFromTFStatus(status.get());
+  LOG(ERROR) << "hello boy ************************* "
+                "TFE_Py_ExecuteCancelable_wrapper end";
   return tensorflow::PyoOrThrow(output_list);
 }
 
