@@ -543,7 +543,6 @@ class _EagerDefinedFunction(object):
                     # registered for PartitionedCall, so recording this operation confuses
                     # forwardprop code (GradientTape manages to ignore it).
                     with tape.stop_recording():
-
                     print(
                         "hello python ********************* run partitioned_call")
                     outputs = functional_ops.partitioned_call(
