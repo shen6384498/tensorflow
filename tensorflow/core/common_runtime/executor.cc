@@ -572,9 +572,6 @@ Status ExecutorState<PropagatorStateType>::ProcessSync(
   OpKernel* op_kernel = item.kernel;
   Device* device = immutable_state_.params().device;
   const bool is_expensive = kernel_stats_->IsExpensive(item);
-  LOG(ERROR) << "Compute kernel:" << op_kernel->name()
-             << " by device:" << device->name()
-             << " parse name:" << device->parsed_name();
   if (TF_PREDICT_FALSE(MightTrace(event_collector_, is_expensive))) {
     tracing::ScopedRegion region(tracing::EventCategory::kCompute,
                                  op_kernel->name_view());
@@ -584,9 +581,15 @@ Status ExecutorState<PropagatorStateType>::ProcessSync(
               ctx, /*verbose=*/profiler::TfOpDetailsEnabled());
         },
         profiler::GetTFTraceMeLevel(is_expensive));
+    LOG(ERROR) << "Compute kernel:" << op_kernel->name()
+               << " by device:" << device->name()
+               << " parse name:" << device->parsed_name();
     device->Compute(op_kernel, &ctx);
   } else if (kernel_stats_->HasExpensiveMarker(item)) {
     KernelTimer timer;
+    LOG(ERROR) << "Compute kernel:" << op_kernel->name()
+               << " by device:" << device->name()
+               << " parse name:" << device->parsed_name();
     device->Compute(op_kernel, &ctx);
     // For expensive kernels, always update the cost estimate. For inexpensive
     // kernels, update the cost estimate with ~1/16 probability. This assumes
@@ -597,6 +600,9 @@ Status ExecutorState<PropagatorStateType>::ProcessSync(
       kernel_stats_->UpdateCostEstimate(item, timer.ElapsedCycles());
     }
   } else {
+    LOG(ERROR) << "Compute kernel:" << op_kernel->name()
+               << " by device:" << device->name()
+               << " parse name:" << device->parsed_name();
     device->Compute(op_kernel, &ctx);
   }
   nodestats::SetOpEnd(stats);
