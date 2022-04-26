@@ -174,6 +174,7 @@ Status EagerContext::RegisterFunction(AbstractFunction* f) {
 // eager_operation.cc we can avoid a circular dependency between them.
 Status EagerOperation::Execute(absl::Span<AbstractTensorHandle*> retvals,
                                int* num_retvals) {
+  LOG(ERROR) << "hello boy *************************** EagerOperation Execute";
   for (ImmediateExecutionTensorHandle* handle : inputs_) {
     if (TensorHandle::classof(handle)) {
       TF_RETURN_IF_ERROR(down_cast<TensorHandle*>(handle)->WaitUnknownDevice());

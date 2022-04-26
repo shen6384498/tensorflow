@@ -1256,7 +1256,8 @@ Status AddOrExecuteNode(core::RefCountPtr<KernelAndDevice> kernel,
 //    running without an explicitly requested device.
 Status EagerLocalExecute(EagerOperation* op, TensorHandle** retvals,
                          int* num_retvals) {
-  LOG(ERROR) << "hello boy ************************** EagerLocalExecute";
+  LOG(ERROR) << "hello boy ************************** EagerLocalExecute op:"
+             << op->Name();
   profiler::ScopedMemoryDebugAnnotation op_annotation(
       op->op_name(), op->eager_func_params().has_value()
                          ? op->eager_func_params().value().step_id.value_or(0)
@@ -1652,7 +1653,7 @@ void CollectGraphs(EagerContext* ctx) {
 
 Status EagerExecute(EagerOperation* op, TensorHandle** retvals,
                     int* num_retvals) {
-  LOG(ERROR) << "hello boy ************************** EagerExecute";
+  LOG(ERROR) << "hello boy ************************** EagerExecute start";
   profiler::TraceMe activity(
       [&] { return absl::StrCat("EagerExecute: ", op->Name()); },
       profiler::TraceMeLevel::kInfo);
@@ -1679,6 +1680,8 @@ Status EagerExecute(EagerOperation* op, TensorHandle** retvals,
       op = out_op.get();
     }
     TF_RETURN_IF_ERROR(MaybePackInputTensor(op));
+
+    LOG(ERROR) << "hello boy ************************** EagerExecute end";
     return EagerLocalExecute(op, retvals, num_retvals);
   }
 
@@ -1689,6 +1692,7 @@ Status EagerExecute(EagerOperation* op, TensorHandle** retvals,
   if (out_op) {
     op = out_op.get();
   }
+  LOG(ERROR) << "hello boy ************************** EagerExecute end";
   return EagerRemoteExecute(op, retvals, num_retvals);
 #endif  // !IS_MOBILE_PLATFORM
 }
