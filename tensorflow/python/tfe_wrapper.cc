@@ -1002,6 +1002,8 @@ PYBIND11_MODULE(_pywrap_tfe, m) {
         [](const py::handle& context, const char* device_name,
            const char* op_name, const py::handle& inputs,
            const py::handle& attrs, const py::handle& num_outputs) {
+          LOG(ERROR) << "hello boy ************************* "
+                        "m.def TFE_Py_Execute";
           return tensorflow::TFE_Py_ExecuteCancelable_wrapper(
               context, device_name, op_name, inputs, attrs.ptr(), nullptr,
               num_outputs);
