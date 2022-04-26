@@ -737,8 +737,7 @@ class Function(core.GenericFunction, trackable.Trackable):
             jit_compile=self._jit_compile,
             experimental_autograph_options=self._experimental_autograph_options,
             experimental_follow_type_hints=self._experimental_follow_type_hints,
-            experimental_relax_shapes=self._experimental_relax_shapes)
-
+  
     def _initialize(self, args, kwds, add_initializers_to=None):
         """Initializes, on the first call.
 
@@ -896,7 +895,7 @@ class Function(core.GenericFunction, trackable.Trackable):
     @traceback_utils.filter_traceback
     def __call__(self, *args, **kwds):
         # Implements GenericFunction.__call__.
-        print("hello boy ************************** python function __call__:", self.name)
+        print("hello boy ************************** python function __call__ start:", self.name)
         if self._run_functions_eagerly:
             with trace.Trace(self._name, tf_function_call="eager"):
                 return self._python_function(*args, **kwds)
@@ -931,20 +930,29 @@ class Function(core.GenericFunction, trackable.Trackable):
             tm.set_metadata(tf_function_call=execution_mode + "-" + compiler,
                             tracing_count=new_tracing_count)
 
+        print(
+            "hello boy ************************** python function __call__ mid 1:", self.name)
         if context.executing_eagerly():
             if without_tracing:
+                print(
+                    "hello boy ************************** python function __call__ mid 2:", self.name)
                 _frequent_tracing_detector_manager.called_without_tracing(
                     self._key_for_call_stats)
             else:
+                print(
+                    "hello boy ************************** python function __call__ mid 3:", self.name)
                 _frequent_tracing_detector_manager.called_with_tracing(
                     self._key_for_call_stats, self._python_function,
                     self._omit_frequent_tracing_warning)
 
+        print(
+            "hello boy ************************** python function __call__ end:", self.name)
         return result
 
     def _call(self, *args, **kwds):
         """Calls the graph function."""
-        print("hello boy ************************** python function _call:", self.name)
+        print(
+            "hello boy ************************** python function _call start:", self.name)
         self._lock.acquire()
         if ALLOW_DYNAMIC_VARIABLE_CREATION:
             condition = self._created_variables and self._stateful_fn is None
@@ -956,6 +964,8 @@ class Function(core.GenericFunction, trackable.Trackable):
             self._lock.release()
             # In this case we have created variables on the first call, so we run the
             # defunned version which is guaranteed to never create variables.
+            print(
+                "hello boy ************************** python function _call end 1:", self.name)
             return self._stateless_fn(*args, **kwds)  # pylint: disable=not-callable
         elif self._stateful_fn is not None:
             # Release the lock early so that multiple threads can perform the call
@@ -967,6 +977,8 @@ class Function(core.GenericFunction, trackable.Trackable):
             if self._created_variables and not ALLOW_DYNAMIC_VARIABLE_CREATION:
                 raise ValueError("Creating variables on a non-first call to a function"
                                  " decorated with tf.function.")
+            print(
+                "hello boy ************************** python function _call end 2:", self.name)
             return results
 
         try:
@@ -989,12 +1001,16 @@ class Function(core.GenericFunction, trackable.Trackable):
             else:
                 # Lifting succeeded, so variables are initialized and we can run the
                 # stateless function.
+                print(
+                    "hello boy ************************** python function _call end 3:", self.name)
                 return self._stateless_fn(*args, **kwds)
         else:
             _, _, _, filtered_flat_args = \
                 self._stateful_fn._function_spec.canonicalize_function_inputs(  # pylint: disable=protected-access
                     *args, **kwds)
             # If we did not create any variables the trace we have is good enough.
+            print(
+                "hello boy ************************** python function _call end 4:", self.name)
             return self._concrete_stateful_fn._call_flat(
                 filtered_flat_args, self._concrete_stateful_fn.captured_inputs)  # pylint: disable=protected-access
 
@@ -1056,6 +1072,8 @@ class Function(core.GenericFunction, trackable.Trackable):
         canon_args, canon_kwds, _, filtered_flat_args = \
             self._stateful_fn._function_spec.canonicalize_function_inputs(  # pylint: disable=protected-access
                 *args, **kwds)
+        print(
+            "hello boy ************************** python function _call end 5:", self.name)
         return function_lib.defun(fn_with_cond)(canon_args, canon_kwds,
                                                 filtered_flat_args)
 

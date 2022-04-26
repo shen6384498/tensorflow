@@ -481,7 +481,7 @@ class _EagerDefinedFunction(object):
           FunctionAlreadyGarbageCollectedError: if the function is no longer
             available to be called because it has been garbage collected.
         """
-        print("hello python ********************* _EagerDefinedFunction __call__")
+        print("hello python ********************* _EagerDefinedFunction call start")
         if len(args) != len(self.signature.input_arg):
             raise ValueError(
                 f"Signature specifies {len(list(self.signature.input_arg))} "
@@ -543,17 +543,21 @@ class _EagerDefinedFunction(object):
                     # registered for PartitionedCall, so recording this operation confuses
                     # forwardprop code (GradientTape manages to ignore it).
                     with tape.stop_recording():
-                        outputs = functional_ops.partitioned_call(
-                            args=args,
-                            f=self,
-                            tout=self._output_types,
-                            executing_eagerly=executing_eagerly,
-                            config=config,
-                            executor_type=executor_type)
+                print(
+                    "hello python ********************* run partitioned_call")
+                outputs = functional_ops.partitioned_call(
+                    args=args,
+                    f=self,
+                    tout=self._output_types,
+                    executing_eagerly=executing_eagerly,
+                    config=config,
+                    executor_type=executor_type)
 
         for i, func_graph_output in enumerate(self._func_graph_outputs):
             handle_data_util.copy_handle_data(func_graph_output, outputs[i])
         if executing_eagerly:
+            print(
+                "hello python ********************* _EagerDefinedFunction call end 1")
             return outputs
         else:
             # TODO(b/128924522): This additional set_shape should not be
@@ -561,6 +565,8 @@ class _EagerDefinedFunction(object):
             # once that's done.
             for i, shape in enumerate(self._output_shapes):
                 outputs[i].set_shape(shape)
+            print(
+                "hello python ********************* _EagerDefinedFunction call end 2")
             return outputs
 
 
@@ -1839,6 +1845,7 @@ class ConcreteFunction(core.ConcreteFunction, trackable.Trackable):
         Raises:
           ValueError: If `args` contains anything other than Tensors or Variables.
         """
+        print("hello boy ***************************** _call_flat start")
         ctx = context.context()
         executing_eagerly = ctx.executing_eagerly()
 
@@ -1891,6 +1898,7 @@ class ConcreteFunction(core.ConcreteFunction, trackable.Trackable):
         if (possible_gradient_type == gradients_util.POSSIBLE_GRADIENT_TYPES_NONE
                 and executing_eagerly):
             # No tape is watching; skip to running the function.
+            print("hello boy ***************************** _call_flat end 1")
             return self._build_call_outputs(self._inference_function.call(
                 ctx, args, cancellation_manager=cancellation_manager))
         forward_backward = self._select_forward_and_backward_functions(
@@ -1907,6 +1915,7 @@ class ConcreteFunction(core.ConcreteFunction, trackable.Trackable):
                  "StatefulPartitionedCall": self._get_gradient_function()}):
                 flat_outputs = forward_function.call(ctx, args_with_tangents)
         forward_backward.record(flat_outputs)
+        print("hello boy ***************************** _call_flat end 2")
         return self._build_call_outputs(flat_outputs)
 
     def _experimental_with_cancellation_manager(self, cancellation_manager):
