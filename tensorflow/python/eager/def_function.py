@@ -737,7 +737,8 @@ class Function(core.GenericFunction, trackable.Trackable):
             jit_compile=self._jit_compile,
             experimental_autograph_options=self._experimental_autograph_options,
             experimental_follow_type_hints=self._experimental_follow_type_hints,
-  
+            experimental_relax_shapes=self._experimental_relax_shapes)
+
     def _initialize(self, args, kwds, add_initializers_to=None):
         """Initializes, on the first call.
 
