@@ -59,6 +59,8 @@ Status CustomDeviceOpHandler::Execute(ImmediateExecutionOperation* op,
   TF_RETURN_IF_ERROR(MaybePinToCustomDevice(&custom_device, *op));
 
   if (custom_device != nullptr) {
+    LOG(ERROR) << "hello boy ************************** CustomDeviceOpHandler "
+                  "custom execute";
     return custom_device->Execute(op, retvals, num_retvals);
   }
 
@@ -66,6 +68,8 @@ Status CustomDeviceOpHandler::Execute(ImmediateExecutionOperation* op,
   // device tensor handles. The tensor handles will be copy to physical device
   // first.
   if (op->HasCustomDeviceInput()) {
+    LOG(ERROR) << "hello boy ************************** CustomDeviceOpHandler "
+                  " has custom device input";
     auto inputs = op->GetInputs();
     for (int i = 0; i < inputs.size(); ++i) {
       auto target_device = op->DeviceName();
@@ -88,6 +92,8 @@ Status CustomDeviceOpHandler::Execute(ImmediateExecutionOperation* op,
     }
   }
 
+  LOG(ERROR) << "hello boy ************************** CustomDeviceOpHandler "
+                "op execute";
   return op->Execute(
       absl::MakeSpan(
           reinterpret_cast<tensorflow::AbstractTensorHandle**>(retvals),
