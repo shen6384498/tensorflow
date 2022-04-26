@@ -543,15 +543,15 @@ class _EagerDefinedFunction(object):
                     # registered for PartitionedCall, so recording this operation confuses
                     # forwardprop code (GradientTape manages to ignore it).
                     with tape.stop_recording():
-                    print(
-                        "hello python ********************* run partitioned_call")
-                    outputs = functional_ops.partitioned_call(
-                        args=args,
-                        f=self,
-                        tout=self._output_types,
-                        executing_eagerly=executing_eagerly,
-                        config=config,
-                        executor_type=executor_type)
+                        print(
+                            "hello python ********************* run partitioned_call")
+                        outputs = functional_ops.partitioned_call(
+                            args=args,
+                            f=self,
+                            tout=self._output_types,
+                            executing_eagerly=executing_eagerly,
+                            config=config,
+                            executor_type=executor_type)
 
         for i, func_graph_output in enumerate(self._func_graph_outputs):
             handle_data_util.copy_handle_data(func_graph_output, outputs[i])
