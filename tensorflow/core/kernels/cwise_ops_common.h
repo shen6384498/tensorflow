@@ -22,9 +22,6 @@ limitations under the License.
 
 #define EIGEN_USE_THREADS
 
-#include "tensorflow/core/platform/bfloat16.h"
-
-
 #include "tensorflow/core/framework/op.h"
 #include "tensorflow/core/framework/op_kernel.h"
 #include "tensorflow/core/framework/tensor_types.h"
@@ -32,6 +29,7 @@ limitations under the License.
 #include "tensorflow/core/kernels/cwise_ops.h"
 #include "tensorflow/core/kernels/cwise_ops_gradients.h"
 #include "tensorflow/core/kernels/fill_functor.h"
+#include "tensorflow/core/platform/bfloat16.h"
 #include "tensorflow/core/platform/logging.h"
 #include "tensorflow/core/util/bcast.h"
 
@@ -86,6 +84,8 @@ class BinaryOp : public BinaryOpShared {
                        DataTypeToEnum<Tin>::v()) {}
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy **************************** binary op compute:"
+               << name();
     const Tensor& input_0 = ctx->input(0);
     OP_REQUIRES(ctx, input_0.dtype() == DataTypeToEnum<Tin>::v(),
                 errors::InvalidArgument(
