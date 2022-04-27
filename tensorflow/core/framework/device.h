@@ -85,6 +85,7 @@ class Device : public DeviceBase {
   // Subclasses may override this function if they wish to perform
   // some initialization before each compute.
   virtual void Compute(OpKernel* op_kernel, OpKernelContext* context) {
+    LOG(ERROR) << "hello boy ****************************** Device compute";
     op_kernel->Compute(context);
   }
 
