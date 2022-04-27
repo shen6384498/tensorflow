@@ -120,6 +120,8 @@ class RenamedDevice : public Device {
   // Below are virtual methods defined on Device
 
   void Compute(OpKernel* op_kernel, OpKernelContext* context) override {
+    LOG(ERROR)
+        << "hello boy *************************** renamed device compute";
     underlying_device_->Compute(op_kernel, context);
   }
 
