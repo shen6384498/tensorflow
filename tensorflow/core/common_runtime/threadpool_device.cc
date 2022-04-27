@@ -25,7 +25,7 @@ info. It does not have any negative impact on performance. */
 #include "omp.h"  // NOLINT
 #endif
 #endif  // ENABLE_ONEDNN_OPENMP && ENABLE_MKL &&_OPENMP
-
+#include <typeinfo>
 #include "absl/base/call_once.h"
 #include "absl/container/flat_hash_set.h"
 #include "tensorflow/core/common_runtime/local_device.h"
@@ -185,7 +185,8 @@ void ThreadPoolDevice::Compute(OpKernel* op_kernel, OpKernelContext* context) {
     LogInputs(op_kernel, context);
   }
   LOG(ERROR) << "hello boy *********************** compute op kernel:"
-             << op_kernel->name();
+             << op_kernel->name()
+             << " class name:" << std::typeid(op_kernel).name();
   op_kernel->Compute(context);
 
   if (context->status().ok() && node_file_writer_) {
