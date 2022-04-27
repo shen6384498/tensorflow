@@ -76,7 +76,8 @@ XlaCompilationDevice::XlaCompilationDevice(const SessionOptions& options,
                                absl::StrCat("device: XLA compilation device ",
                                             type.type()))),
       allocator_(new XlaCompilationAllocator()) {
-  LOG(ERROR) << "hello boy **************************** create XlaCompilationDevice";
+  LOG(ERROR)
+      << "hello boy **************************** create XlaCompilationDevice";
 }
 
 XlaCompilationDevice::~XlaCompilationDevice() {}
@@ -102,6 +103,7 @@ static void AttachLocationToMetadata(xla::OpMetadata& metadata,
 
 void XlaCompilationDevice::Compute(OpKernel* op_kernel,
                                    OpKernelContext* context) {
+  LOG(ERROR) << "hello boy **************************** Xla compilation device";
   VLOG(4) << "XlaCompilationDevice::Compute "
           << FormatNodeDefForError(op_kernel->def());
   XlaContext& xla_context = XlaContext::Get(context);

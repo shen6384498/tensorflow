@@ -264,6 +264,7 @@ string PluggableDevice::ComputeOpKernelDebugString(const OpKernel& op_kernel,
 }
 
 void PluggableDevice::Compute(OpKernel* op_kernel, OpKernelContext* context) {
+  LOG(ERROR) << "hello boy **************************** pluggable device";
   PluggableDeviceContext* pluggable_device_context = device_context_;
   if (context->op_device_context() != nullptr) {
     pluggable_device_context =

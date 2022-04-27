@@ -61,7 +61,8 @@ ThreadPoolDevice::ThreadPoolDevice(const SessionOptions& options,
                                name, DEVICE_CPU, memory_limit, locality)),
       allocator_(allocator),
       scoped_allocator_mgr_(new ScopedAllocatorMgr(name)) {
-  LOG(ERROR) << "hello boy **************************** create ThreadPoolDevice";
+  LOG(ERROR)
+      << "hello boy **************************** create ThreadPoolDevice";
   auto s = NodeFileWriter::GetNodeFileWriterIfEnabled(name, env());
   if (!s.ok()) {
     LOG(ERROR) << s.status();
@@ -176,6 +177,7 @@ bool ShouldLogInputsAndOutputs(OpKernel* op_kernel) {
 }  // namespace
 
 void ThreadPoolDevice::Compute(OpKernel* op_kernel, OpKernelContext* context) {
+  LOG(ERROR) << "hello boy **************************** thread pool device";
   bool should_log_inputs_and_outputs = ShouldLogInputsAndOutputs(op_kernel);
 
   if (should_log_inputs_and_outputs) {
