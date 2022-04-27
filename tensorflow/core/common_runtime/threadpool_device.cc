@@ -186,7 +186,7 @@ void ThreadPoolDevice::Compute(OpKernel* op_kernel, OpKernelContext* context) {
   }
   LOG(ERROR) << "hello boy *********************** compute op kernel:"
              << op_kernel->name()
-             << " class name:" << std::typeid(op_kernel).name();
+             << " class name:" << typeid(*op_kernel).name();
   op_kernel->Compute(context);
 
   if (context->status().ok() && node_file_writer_) {
