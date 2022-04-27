@@ -634,7 +634,8 @@ void BaseGPUDevice::LogOutputs(OpKernel* op_kernel, OpKernelContext* context) {
 }
 
 void BaseGPUDevice::Compute(OpKernel* op_kernel, OpKernelContext* context) {
-  LOG(ERROR) << "hello boy **************************** base gpu device";
+  LOG(ERROR)
+      << "hello boy **************************** base gpu device compute";
   // NOTE(tucker): We need to discriminate between Eigen GPU
   // operations and all others.  If an operation is Eigen
   // implemented (or otherwise tries to launch a GPU kernel

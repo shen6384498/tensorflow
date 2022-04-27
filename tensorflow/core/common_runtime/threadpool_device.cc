@@ -177,13 +177,15 @@ bool ShouldLogInputsAndOutputs(OpKernel* op_kernel) {
 }  // namespace
 
 void ThreadPoolDevice::Compute(OpKernel* op_kernel, OpKernelContext* context) {
-  LOG(ERROR) << "hello boy **************************** thread pool device";
+  LOG(ERROR)
+      << "hello boy **************************** thread pool device compute";
   bool should_log_inputs_and_outputs = ShouldLogInputsAndOutputs(op_kernel);
 
   if (should_log_inputs_and_outputs) {
     LogInputs(op_kernel, context);
   }
-
+  LOG(ERROR) << "hello boy *********************** compute op kernel:"
+             << op_kernel->name();
   op_kernel->Compute(context);
 
   if (context->status().ok() && node_file_writer_) {

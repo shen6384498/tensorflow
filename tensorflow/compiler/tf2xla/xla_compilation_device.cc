@@ -103,7 +103,8 @@ static void AttachLocationToMetadata(xla::OpMetadata& metadata,
 
 void XlaCompilationDevice::Compute(OpKernel* op_kernel,
                                    OpKernelContext* context) {
-  LOG(ERROR) << "hello boy **************************** Xla compilation device";
+  LOG(ERROR) << "hello boy **************************** Xla compilation device "
+                "compute";
   VLOG(4) << "XlaCompilationDevice::Compute "
           << FormatNodeDefForError(op_kernel->def());
   XlaContext& xla_context = XlaContext::Get(context);

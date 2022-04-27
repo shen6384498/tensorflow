@@ -86,6 +86,8 @@ class Device : public DeviceBase {
   // some initialization before each compute.
   virtual void Compute(OpKernel* op_kernel, OpKernelContext* context) {
     LOG(ERROR) << "hello boy ****************************** Device compute";
+    LOG(ERROR) << "hello boy *********************** compute op kernel:"
+               << op_kernel->name();
     op_kernel->Compute(context);
   }
 

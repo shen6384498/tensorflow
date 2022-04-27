@@ -436,7 +436,7 @@ static void ShowXlaDeviceDeprecationWarning(
 }
 
 void XlaDevice::Compute(OpKernel* op_kernel, OpKernelContext* context) {
-  LOG(ERROR) << "hello boy **************************** Xla device";
+  LOG(ERROR) << "hello boy **************************** Xla device compute";
   VLOG(2) << "XlaDevice::Compute " << op_kernel->name() << ":"
           << op_kernel->type_string();
   ShowXlaDeviceDeprecationWarning(jit_device_name_.type_string());
