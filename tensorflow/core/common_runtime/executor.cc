@@ -143,6 +143,7 @@ class ExecutorImpl : public Executor {
   explicit ExecutorImpl(const LocalExecutorParams& p) : immutable_state_(p) {}
 
   Status Initialize(const Graph& graph) {
+    LOG(ERROR) << "hello boy *********************** ExecutorImpl Initialize";
     TF_RETURN_IF_ERROR(immutable_state_.Initialize(graph));
     kernel_stats_.Initialize(immutable_state_.graph_view());
     return Status::OK();
@@ -1427,7 +1428,7 @@ void ExecutorImpl::RunAsync(const Args& args, DoneCallback done) {
 
 Status NewLocalExecutor(const LocalExecutorParams& params, const Graph& graph,
                         Executor** executor) {
-  LOG(ERROR) << "hello boy *********************** NewLocalExecutor";
+  LOG(ERROR) << "hello boy *********************** NewLocalExecutor and Initialize";
   ExecutorImpl* impl = new ExecutorImpl(params);
   const Status s = impl->Initialize(graph);
   if (s.ok()) {
@@ -1464,6 +1465,8 @@ class DefaultExecutorRegistrar {
   class Factory : public ExecutorFactory {
     Status NewExecutor(const LocalExecutorParams& params, const Graph& graph,
                        std::unique_ptr<Executor>* out_executor) override {
+      LOG(ERROR)
+          << "hello boy ******************************* Factory NewExecutor NewLocalExecutor";
       Executor* ret = nullptr;
       TF_RETURN_IF_ERROR(NewLocalExecutor(params, std::move(graph), &ret));
       out_executor->reset(ret);

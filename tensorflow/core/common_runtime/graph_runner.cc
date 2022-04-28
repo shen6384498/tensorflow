@@ -171,6 +171,7 @@ Status GraphRunner::Run(Graph* graph, FunctionLibraryRuntime* function_library,
   params.delete_kernel = [](OpKernel* kernel) { delete kernel; };
 
   Executor* executor;
+  LOG(ERROR) << "hello boy ******************************* GraphRunner NewLocalExecutor";
   TF_RETURN_IF_ERROR(NewLocalExecutor(params, *graph_to_run, &executor));
   std::unique_ptr<Executor> executor_unref(executor);
 
