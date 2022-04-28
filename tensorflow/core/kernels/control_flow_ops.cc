@@ -24,6 +24,7 @@ limitations under the License.
 namespace tensorflow {
 
 void SwitchOp::Compute(OpKernelContext* context) {
+  LOG(ERROR) << "hello boy **************************** switch op compute";
   const Tensor& outputPorts = context->input(1);
   OP_REQUIRES(context, TensorShapeUtils::IsScalar(outputPorts.shape()),
               errors::InvalidArgument("The second input must be a scalar, "
@@ -40,6 +41,7 @@ void SwitchOp::Compute(OpKernelContext* context) {
 }
 
 void SwitchNOp::Compute(OpKernelContext* context) {
+  LOG(ERROR) << "hello boy **************************** switch n op compute";
   const Tensor& output_index_t = context->input(1);
   OP_REQUIRES(context, TensorShapeUtils::IsScalar(output_index_t.shape()),
               errors::InvalidArgument("The second input must be a scalar, "
@@ -156,7 +158,6 @@ REGISTER_GPU_HOST_KERNEL(ResourceHandle);
 #undef REGISTER_GPU_HOST_KERNEL
 #undef REGISTER_GPU_HOST_REF_KERNEL
 
-
 class RefSelectOp : public OpKernel {
  public:
   explicit RefSelectOp(OpKernelConstruction* context) : OpKernel(context) {
@@ -164,6 +165,8 @@ class RefSelectOp : public OpKernel {
   }
 
   void Compute(OpKernelContext* context) override {
+    LOG(ERROR)
+        << "hello boy **************************** ref select op compute";
     const Tensor& index_tensor = context->input(0);
     OP_REQUIRES(context, TensorShapeUtils::IsScalar(index_tensor.shape()),
                 errors::InvalidArgument("Index must be a scalar, "
@@ -206,6 +209,7 @@ MergeOp::MergeOp(OpKernelConstruction* context) : OpKernel(context) {
 }
 
 void MergeOp::Compute(OpKernelContext* context) {
+  LOG(ERROR) << "hello boy **************************** merge op compute";
   bool input_seen = false;
   for (int i = 0; i < context->num_inputs(); ++i) {
     if (context->has_input(i)) {
@@ -265,7 +269,6 @@ TF_CALL_variant(REGISTER_GPU_KERNEL);
 #undef REGISTER_GPU_KERNEL
 #undef REGISTER_GPU_REF_KERNEL
 
-
 // Special GPU kernels for int32 and string.
 // TODO(b/25387198): Also enable int32 in device memory. This kernel
 // registration requires all int32 inputs and outputs to be in host memory.
@@ -291,8 +294,8 @@ REGISTER_GPU_HOST_KERNEL(ResourceHandle);
 
 #undef REGISTER_GPU_HOST_KERNEL
 
-
 void EnterOp::Compute(OpKernelContext* context) {
+  LOG(ERROR) << "hello boy **************************** enter op compute";
   if (IsRefType(context->input_dtype(0))) {
     context->forward_ref_input_to_ref_output(0, 0);
   } else {
@@ -319,7 +322,6 @@ TF_CALL_variant(REGISTER_GPU_KERNEL);
 
 #undef REGISTER_GPU_KERNEL
 #undef REGISTER_GPU_REF_KERNEL
-
 
 // Special GPU kernels for int32 and string.
 // TODO(b/25387198): Also enable int32 in device memory. This kernel
@@ -350,6 +352,7 @@ REGISTER_GPU_HOST_KERNEL(ResourceHandle);
 #undef REGISTER_GPU_HOST_REF_KERNEL
 
 void ExitOp::Compute(OpKernelContext* context) {
+  LOG(ERROR) << "hello boy **************************** exit op compute";
   if (IsRefType(context->input_dtype(0))) {
     context->forward_ref_input_to_ref_output(0, 0);
   } else {
@@ -377,7 +380,6 @@ TF_CALL_variant(REGISTER_GPU_KERNEL);
 #undef REGISTER_GPU_KERNEL
 #undef REGISTER_GPU_REF_KERNEL
 
-
 // Special GPU kernels for int32 and string.
 // TODO(b/25387198): Also enable int32 in device memory. This kernel
 // registration requires all int32 inputs and outputs to be in host memory.
@@ -402,6 +404,8 @@ REGISTER_GPU_HOST_KERNEL(ResourceHandle);
 #undef REGISTER_GPU_HOST_KERNEL
 
 void NextIterationOp::Compute(OpKernelContext* context) {
+  LOG(ERROR)
+      << "hello boy **************************** next iteration op compute";
   if (IsRefType(context->input_dtype(0))) {
     context->forward_ref_input_to_ref_output(0, 0);
   } else {
@@ -453,11 +457,11 @@ REGISTER_GPU_HOST_KERNEL(ResourceHandle);
 
 #undef REGISTER_GPU_HOST_KERNEL
 
-
 LoopCondOp::LoopCondOp(OpKernelConstruction* context) : OpKernel(context) {}
 LoopCondOp::~LoopCondOp() = default;
 
 void LoopCondOp::Compute(OpKernelContext* context) {
+  LOG(ERROR) << "hello boy **************************** loop cond op compute";
   CancellationManager* cm = context->cancellation_manager();
   if (cm != nullptr) {
     bool already_cancelled = cm->IsCancelled();
@@ -499,6 +503,7 @@ class AbortOp : public OpKernel {
   }
 
   void Compute(OpKernelContext* context) override {
+    LOG(ERROR) << "hello boy **************************** abort op compute";
     if (!exit_without_error_) {
       LOG(FATAL) << "Abort_op intentional failure; " << error_msg_;
     } else {
