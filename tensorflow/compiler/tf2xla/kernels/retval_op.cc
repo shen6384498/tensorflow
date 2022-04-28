@@ -35,6 +35,7 @@ class RetvalOp : public XlaOpKernel {
   }
 
   void Compile(XlaOpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy **************************** retval op compute";
     const Tensor& input = ctx->op_kernel_context()->input(0);
 
     // Types that cannot be copied using memcpy (like DT_VARIANT types that

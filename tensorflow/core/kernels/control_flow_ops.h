@@ -38,7 +38,9 @@ class ControlTriggerOp : public OpKernel {
 // output:1.
 class SwitchOp : public OpKernel {
  public:
-  explicit SwitchOp(OpKernelConstruction* context) : OpKernel(context) {}
+  explicit SwitchOp(OpKernelConstruction* context) : OpKernel(context) {
+    LOG(ERROR) << "hello boy *************************** create switch op";
+  }
   void Compute(OpKernelContext* context) override;
   bool IsExpensive() override { return false; }
   ~SwitchOp() override {}
@@ -53,7 +55,9 @@ class SwitchOp : public OpKernel {
 // output:num_outputs()-1.
 class SwitchNOp : public OpKernel {
  public:
-  explicit SwitchNOp(OpKernelConstruction* context) : OpKernel(context) {}
+  explicit SwitchNOp(OpKernelConstruction* context) : OpKernel(context) {
+    LOG(ERROR) << "hello boy *************************** create switchn op";
+  }
   void Compute(OpKernelContext* context) override;
   bool IsExpensive() override { return false; }
   ~SwitchNOp() override {}
@@ -79,7 +83,9 @@ class MergeOp : public OpKernel {
 // and makes its input available to the child frame.
 class EnterOp : public OpKernel {
  public:
-  explicit EnterOp(OpKernelConstruction* context) : OpKernel(context) {}
+  explicit EnterOp(OpKernelConstruction* context) : OpKernel(context) {
+    LOG(ERROR) << "hello boy *************************** create enter op";
+  }
   void Compute(OpKernelContext* context) override;
   bool IsExpensive() override { return false; }
   ~EnterOp() override {}
@@ -92,7 +98,9 @@ class EnterOp : public OpKernel {
 // parent frame.
 class ExitOp : public OpKernel {
  public:
-  explicit ExitOp(OpKernelConstruction* context) : OpKernel(context) {}
+  explicit ExitOp(OpKernelConstruction* context) : OpKernel(context) {
+    LOG(ERROR) << "hello boy *************************** create exit op";
+  }
   void Compute(OpKernelContext* context) override;
   bool IsExpensive() override { return false; }
   ~ExitOp() override {}
@@ -104,7 +112,10 @@ class ExitOp : public OpKernel {
 // available to the next iteration.
 class NextIterationOp : public OpKernel {
  public:
-  explicit NextIterationOp(OpKernelConstruction* context) : OpKernel(context) {}
+  explicit NextIterationOp(OpKernelConstruction* context) : OpKernel(context) {
+    LOG(ERROR)
+        << "hello boy *************************** create next iteration op";
+  }
   void Compute(OpKernelContext* context) override;
   bool IsExpensive() override { return false; }
   ~NextIterationOp() override {}

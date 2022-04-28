@@ -23,7 +23,6 @@ limitations under the License.
 
 #include <limits>
 
-#include "third_party/eigen3/unsupported/Eigen/CXX11/Tensor"
 #include "tensorflow/core/framework/allocator.h"
 #include "tensorflow/core/framework/op_kernel.h"
 #include "tensorflow/core/framework/register_types.h"
@@ -34,6 +33,7 @@ limitations under the License.
 #include "tensorflow/core/lib/core/coding.h"
 #include "tensorflow/core/lib/core/errors.h"
 #include "tensorflow/core/util/util.h"
+#include "third_party/eigen3/unsupported/Eigen/CXX11/Tensor"
 
 namespace tensorflow {
 
@@ -133,6 +133,8 @@ class EmptyTensorList : public OpKernel {
   }
 
   void Compute(OpKernelContext* ctx) override {
+    LOG(ERROR) << "hello boy **************************** empty tensor list op "
+                  "compute";
     const Tensor& max_num_elements_t = ctx->input(1);
     OP_REQUIRES(
         ctx, TensorShapeUtils::IsScalar(max_num_elements_t.shape()),
@@ -184,6 +186,8 @@ class TensorListPushBack : public OpKernel {
   ~TensorListPushBack() override {}
 
   void Compute(OpKernelContext* c) override {
+    LOG(ERROR) << "hello boy **************************** tensor list push "
+                  "back op compute";
     const Tensor& input = c->input(1);
     OP_REQUIRES(c, element_dtype_ == input.dtype(),
                 errors::InvalidArgument("Invalid data types; list elements ",
@@ -241,6 +245,8 @@ class TensorListLength : public OpKernel {
   ~TensorListLength() override {}
 
   void Compute(OpKernelContext* c) override {
+    LOG(ERROR) << "hello boy **************************** tensor list length "
+                  "op compute";
     const TensorList* l = nullptr;
     OP_REQUIRES_OK(c, GetInputList(c, 0, &l));
     Tensor* result;
@@ -269,6 +275,8 @@ class TensorListElementShape : public OpKernel {
   explicit TensorListElementShape(OpKernelConstruction* c) : OpKernel(c) {}
 
   void Compute(OpKernelContext* c) override {
+    LOG(ERROR) << "hello boy **************************** tensor list element "
+                  "shape op compute";
     const TensorList* l = nullptr;
     OP_REQUIRES_OK(c, GetInputList(c, 0, &l));
     Tensor* result;
@@ -317,6 +325,8 @@ class TensorListReserve : public OpKernel {
   }
 
   void Compute(OpKernelContext* c) override {
+    LOG(ERROR) << "hello boy **************************** tensor list reserve "
+                  "op compute";
     PartialTensorShape element_shape;
     OP_REQUIRES_OK(c, TensorShapeFromTensor(c->input(0), &element_shape));
     int32_t num_elements = c->input(1).scalar<int32>()();
@@ -363,6 +373,8 @@ class TensorListResize : public OpKernel {
   explicit TensorListResize(OpKernelConstruction* c) : OpKernel(c) {}
 
   void Compute(OpKernelContext* c) override {
+    LOG(ERROR) << "hello boy **************************** tensor list resize "
+                  "op compute";
     const TensorList* input_list = nullptr;
     OP_REQUIRES_OK(c, GetInputList(c, 0, &input_list));
     int32_t size = c->input(1).scalar<int32>()();
@@ -431,6 +443,8 @@ class TensorListSetItem : public OpKernel {
   }
 
   void Compute(OpKernelContext* c) override {
+    LOG(ERROR) << "hello boy **************************** tensor list set item "
+                  "op compute";
     const TensorList* l = nullptr;
     OP_REQUIRES_OK(c, GetInputList(c, 0, &l));
     OP_REQUIRES(c, element_dtype_ == l->element_dtype,
@@ -499,6 +513,8 @@ class TensorListConcatLists : public OpKernel {
   }
 
   void Compute(OpKernelContext* c) override {
+    LOG(ERROR) << "hello boy **************************** tensor list concat "
+                  "list op compute";
     const TensorShape& tl_a_shape = c->input(0).shape();
     const TensorShape& tl_b_shape = c->input(1).shape();
     OP_REQUIRES(

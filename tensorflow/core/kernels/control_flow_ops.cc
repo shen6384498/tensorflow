@@ -202,6 +202,7 @@ TF_CALL_ALL_TYPES(REGISTER_CPU_REF_SELECT);
 #undef REGISTER_CPU_REF_SWITCH
 
 MergeOp::MergeOp(OpKernelConstruction* context) : OpKernel(context) {
+  LOG(ERROR) << "hello boy ******************************* create merge op";
   const DataType dt = context->input_type(0);
   const int num_in = context->num_inputs();
   OP_REQUIRES_OK(context, context->MatchSignature(DataTypeVector(num_in, dt),
@@ -457,7 +458,9 @@ REGISTER_GPU_HOST_KERNEL(ResourceHandle);
 
 #undef REGISTER_GPU_HOST_KERNEL
 
-LoopCondOp::LoopCondOp(OpKernelConstruction* context) : OpKernel(context) {}
+LoopCondOp::LoopCondOp(OpKernelConstruction* context) : OpKernel(context) {
+  LOG(ERROR) << "hello boy *************************** create loop cond op";
+}
 LoopCondOp::~LoopCondOp() = default;
 
 void LoopCondOp::Compute(OpKernelContext* context) {
