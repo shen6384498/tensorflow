@@ -110,6 +110,7 @@ class ExecuteNode : public EagerNode {
         stack_trace_(stack_trace) {}
 
   Status Run() override {
+    LOG(ERROR) << "hello boy ***************************** ExecuteNode run";
     int i = 0;
     for (TensorHandle* h : inputs_) {
       if (h->RefCountIsOne()) {
@@ -188,6 +189,7 @@ class AsyncExecuteNode : public EagerNode {
   }
 
   Status Run() override {
+    LOG(ERROR) << "hello boy **************************** AsyncExecuteNode run";
     int i = 0;
     for (TensorHandle* h : inputs_) {
       if (h->RefCountIsOne()) {

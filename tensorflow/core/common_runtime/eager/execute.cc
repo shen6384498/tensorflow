@@ -1196,11 +1196,15 @@ Status AddOrExecuteNode(core::RefCountPtr<KernelAndDevice> kernel,
     for (int i = 0, end = num_outputs; i < end; ++i) {
       Device* output_device = ctx.CanonicalDevice(kernel->OutputDevice(i));
       if (output_device == nullptr || output_device->IsLocal()) {
+        LOG(ERROR)
+            << "hello boy **************************** output device is local";
         retvals[i] = TensorHandle::CreateEmptyLocalHandle(
             /* d= */ output_device, /* op_device= */ kernel->device(),
             /* resource_device= */ kernel->OutputResourceDevice(i),
             output_dtypes[i], &ctx);
       } else {
+        LOG(ERROR)
+            << "hello boy **************************** output device is not local";
         TF_RETURN_IF_ERROR(
             CreateUnshapedOutput(*kernel, i, output_device, output_dtypes[i],
                                  eager_func_params, &ctx, &retvals[i]));
@@ -1270,6 +1274,8 @@ Status EagerLocalExecute(EagerOperation* op, TensorHandle** retvals,
   TF_RETURN_IF_ERROR(executor.status());
 
   core::RefCountPtr<KernelAndDevice> kernel;
+  LOG(ERROR) << "hello boy ********************** AddOrExecuteNode call "
+                "GetOrCreateKernelAndDevice";
   auto status = GetOrCreateKernelAndDevice(op, retvals, num_retvals, &kernel);
 
 #ifdef INTEL_MKL
@@ -1292,6 +1298,8 @@ Status EagerLocalExecute(EagerOperation* op, TensorHandle** retvals,
     // If the out op doesn't have device, either because it is a new op or
     // the op wasn't placed successfully, then we do the placement again.
     if (op->Device() == kVariantDeviceNull) {
+      LOG(ERROR) << "hello boy ********************** AddOrExecuteNode call "
+                    "GetOrCreateKernelAndDevice";
       status = GetOrCreateKernelAndDevice(op, retvals, num_retvals, &kernel);
     }
   }
@@ -1985,6 +1993,8 @@ void EagerLocalExecuteAsync(EagerOperation* op, TensorHandle** retvals,
   EagerContext& ctx = op->EagerContext();
 
   core::RefCountPtr<KernelAndDevice> kernel;
+  LOG(ERROR) << "hello boy ********************** EagerLocalExecuteAsync call "
+                "GetOrCreateKernelAndDevice";
   Status s = GetOrCreateKernelAndDevice(op, retvals, num_retvals, &kernel);
   if (!s.ok()) {
     done(s);

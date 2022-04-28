@@ -47,7 +47,12 @@ SimplePropagatorState::~SimplePropagatorState() {}
 
 void SimplePropagatorState::ActivateRoots(
     gtl::ArraySlice<const NodeItem*> roots, TaggedNodeSeq* ready) {
+  LOG(ERROR) << "hello boy *************************** "
+                "SimplePropagatorState::ActivateRoots";
   for (const NodeItem* item : roots) {
+    LOG(ERROR)
+        << "hello boy ******************************* push item to ready:"
+        << item->name();
     DCHECK_EQ(item->num_inputs, 0);
     ready->push_back(TaggedNode{item});
   }
