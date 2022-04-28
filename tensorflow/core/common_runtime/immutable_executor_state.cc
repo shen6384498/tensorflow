@@ -100,6 +100,9 @@ Status ImmutableExecutorState::Initialize(const Graph& graph) {
   // kernel for each node.
   requires_control_flow_ = false;
   for (const Node* n : graph.nodes()) {
+    LOG(ERROR) << "hello boy ***************************** "
+                  "ImmutableExecutorState Initialize node:"
+               << n->name() << " for graph" << graph;
     if (IsSink(n)) continue;
     if (IsSwitch(n) || IsMerge(n) || IsEnter(n) || IsExit(n)) {
       requires_control_flow_ = true;
