@@ -102,6 +102,9 @@ class SingleThreadedExecutorImpl : public Executor {
 
     // Create the kernel and input-related structures for each node in `graph`.
     for (Node* n : ordered_nodes) {
+      LOG(ERROR) << "hello boy ****************************** "
+                    "SingleThreadedExecutorImpl initialize node:"
+                 << n->name();
       TF_RETURN_IF_ERROR(ValidateOpIsSafeForSyncExecution(
           *n, params_.allow_control_flow_sync_execution));
       if (n->IsArg()) {

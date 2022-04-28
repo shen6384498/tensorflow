@@ -494,6 +494,8 @@ FunctionLibraryRuntimeImpl::FunctionLibraryRuntimeImpl(
   };
   create_kernel_ = [this](const std::shared_ptr<const NodeProperties>& props,
                           OpKernel** kernel) {
+    LOG(ERROR)
+        << "hello boy ******************************** CreateKernel by lambda";
     return CreateKernel(props, kernel);
   };
   thread::ThreadPool* pool = nullptr;
@@ -985,6 +987,8 @@ Status FunctionLibraryRuntimeImpl::CreateItem(Item** item) {
     params.create_kernel =
         [this, flr](const std::shared_ptr<const NodeProperties>& props,
                     OpKernel** kernel) {
+          LOG(ERROR)
+              << "hello boy ************************ CreateKernel by lambda";
           return CreateKernel(props, flr, kernel);
         };
   }
