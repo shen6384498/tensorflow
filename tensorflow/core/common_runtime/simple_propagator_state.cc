@@ -51,8 +51,7 @@ void SimplePropagatorState::ActivateRoots(
                 "SimplePropagatorState::ActivateRoots";
   for (const NodeItem* item : roots) {
     LOG(ERROR)
-        << "hello boy ******************************* push item to ready:"
-        << item->name();
+        << "hello boy ******************************* push item to ready:";
     DCHECK_EQ(item->num_inputs, 0);
     ready->push_back(TaggedNode{item});
   }

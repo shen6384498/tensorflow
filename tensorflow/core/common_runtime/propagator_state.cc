@@ -59,8 +59,7 @@ void PropagatorState::ActivateRoots(gtl::ArraySlice<const NodeItem*> roots,
   IterationState* root_iter = root_frame_->GetIteration(0);
   for (const NodeItem* item : roots) {
     LOG(ERROR)
-        << "hello boy ******************************* push item to ready:"
-        << item->name();
+        << "hello boy ******************************* push item to ready:";
     DCHECK_EQ(item->num_inputs, 0);
     ready->emplace_back(item, root_frame_, root_iter, false);
   }
