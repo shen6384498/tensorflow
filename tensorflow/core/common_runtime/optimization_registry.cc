@@ -51,8 +51,8 @@ Status OptimizationPassRegistry::RunGrouping(
     }
   };
 
-  VLOG(1) << "Starting optimization of a group " << grouping;
-  if (VLOG_IS_ON(2)) {
+  LOG(ERROR) << "Starting optimization of a group " << grouping;
+  if (true) {
     std::string prefix = strings::StrCat("before_grouping_", grouping);
     dump_graph(prefix);
   }
@@ -63,9 +63,9 @@ Status OptimizationPassRegistry::RunGrouping(
         tensorflow::metrics::GetGraphOptimizationCounter(),
         {kGraphOptimizationCategory, "*"});
     for (auto& phase : group->second) {
-      VLOG(1) << "Running optimization phase " << phase.first;
+      LOG(ERROR) << "Running optimization phase " << phase.first;
       for (auto& pass : phase.second) {
-        VLOG(1) << "Running optimization pass: " << pass->name();
+        LOG(ERROR) << "Running optimization pass: " << pass->name();
 
         tensorflow::metrics::ScopedCounter<2> pass_timings(
             tensorflow::metrics::GetGraphOptimizationCounter(),
@@ -74,7 +74,7 @@ Status OptimizationPassRegistry::RunGrouping(
 
         if (!s.ok()) return s;
         pass_timings.ReportAndStop();
-        if (VLOG_IS_ON(5)) {
+        if (true) {
           std::string prefix =
               strings::StrCat("after_group_", grouping, "_phase_", phase.first,
                               "_", pass->name());
@@ -84,8 +84,8 @@ Status OptimizationPassRegistry::RunGrouping(
     }
     group_timings.ReportAndStop();
   }
-  VLOG(1) << "Finished optimization of a group " << grouping;
-  if (VLOG_IS_ON(2)) {
+  LOG(ERROR) << "Finished optimization of a group " << grouping;
+  if (true) {
     std::string prefix = strings::StrCat("after_grouping_", grouping);
     dump_graph(prefix);
   }
