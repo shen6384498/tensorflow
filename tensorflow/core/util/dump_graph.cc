@@ -242,6 +242,8 @@ string DumpCostGraphDefToFile(const string& name, CostGraphDef const& graph_def,
 string DumpGraphToFile(const string& name, Graph const& graph,
                        const FunctionLibraryDefinition* flib_def,
                        const string& dirname) {
+  LOG(ERROR)
+      << "hello boy ******************************* call DumpGraphToFile";
   auto& dumper_config = GetGraphDumperConfig();
   if (dumper_config.IsSet()) {
     GraphDumperConfig::Config config;
